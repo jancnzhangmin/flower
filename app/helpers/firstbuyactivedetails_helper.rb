@@ -1,0 +1,2 @@
+module FirstbuyactivedetailsHelper
+end

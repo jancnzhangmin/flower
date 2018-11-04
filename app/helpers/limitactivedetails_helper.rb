@@ -1,0 +1,2 @@
+module LimitactivedetailsHelper
+end

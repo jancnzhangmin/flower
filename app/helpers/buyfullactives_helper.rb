@@ -1,0 +1,2 @@
+module BuyfullactivesHelper
+end

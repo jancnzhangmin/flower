@@ -1,0 +1,107 @@
+<script>
+    $(document).ready(function () {
+        $('.date-picker').datetimepicker({
+            format: "yyyy-mm-dd hh:ii:ss",
+            todayBtn:"linked",
+            autoclose:!0,
+            language: 'zh-CN',
+            minView: 0,
+            minuteStep: 1
+        });
+
+
+
+        $('#long').click(function () {
+            longcheck();
+        });
+
+        var longcheck = function () {
+            if ($('#long').is(':checked')){
+                $('#begintime').attr({'disabled':'disabled'});
+                $('#endtime').attr({'disabled':'disabled'});
+            }else{
+                $('#begintime').attr({'disabled':false});
+                $('#endtime').attr({'disabled':false});
+            }
+        }
+
+        longcheck();
+    });
+</script>
+<div class="alert alert-block alert-success" style="display:none;">
+  <button type="button" class="close" data-dismiss="alert">
+    <i class="icon-remove"></i>
+  </button>
+
+  <p>
+    <strong>
+      <i class="icon-ok"></i>
+    </strong>
+    保存成功
+  </p>
+
+</div>
+
+<%= form_with(model:buyfullactive,local:true,:html => {:class=>'form-horizontal m-t',:multipart => true}) do |f| %>
+  <h3 class="header smaller lighter blue">
+    买满送
+    <small></small>
+  </h3>
+  <div class="form-group">
+    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 活动名称 </label>
+    <div class="col-sm-10">
+      <%= f.text_field :name,class:"col-xs-10 col-sm-8" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 活动开始时间 </label>
+    <div class="col-sm-10">
+      <div class="col-xs-10 col-sm-8" style="padding-left: 0px;padding-right: 0px;">
+        <div class="input-group">
+          <%= f.text_field :begintime,id:'begintime',autocomplete:'off',class:'form-control date-picker',value:@buyfullactive.begintime ? @buyfullactive.begintime.strftime('%Y-%m-%d %H:%M:%S'):nil %>
+          <span class="input-group-addon">
+																		<i class="icon-calendar bigger-110"></i>
+																	</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 活动结束时间 </label>
+    <div class="col-sm-10">
+      <div class="col-xs-10 col-sm-8" style="padding-left: 0px;padding-right: 0px;">
+        <div class="input-group">
+          <%= f.text_field :endtime,id:'endtime',autocomplete:'off',class:'form-control date-picker',value:@buyfullactive.endtime ? @buyfullactive.endtime.strftime('%Y-%m-%d %H:%M:%S'):nil %>
+          <span class="input-group-addon">
+																		<i class="icon-calendar bigger-110"></i>
+																	</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 是否启用 </label>
+    <div class="col-sm-10">
+      <div class="col-xs-3">
+        <label>
+          <%= f.check_box :status,class:"ace ace-switch" %>
+          <span class="lbl"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="clearfix form-actions">
+    <div class="col-md-offset-2 col-md-10">
+      <button type="submit" name="commit" value="保存" class="btn btn-info" data-disable-with="保存" id="submit">
+        <i class="icon-ok bigger-110"></i>
+        保存
+      </button>
+
+    </div>
+  </div>
+<% end %>

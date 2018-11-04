@@ -1,0 +1,67 @@
+<script>
+    $(document).ready(function () {
+        $('.date-picker').datetimepicker({
+            format: "yyyy-mm-dd hh:ii:ss",
+            todayBtn:"linked",
+            autoclose:!0,
+            language: 'zh-CN',
+            minView: 0,
+            minuteStep: 1
+        });
+
+
+
+        $('#long').click(function () {
+            longcheck();
+        });
+
+        var longcheck = function () {
+            if ($('#long').is(':checked')){
+                $('#begintime').attr({'disabled':'disabled'});
+                $('#endtime').attr({'disabled':'disabled'});
+            }else{
+                $('#begintime').attr({'disabled':false});
+                $('#endtime').attr({'disabled':false});
+            }
+        }
+
+        longcheck();
+    });
+</script>
+<div class="alert alert-block alert-success" style="display:none;">
+  <button type="button" class="close" data-dismiss="alert">
+    <i class="icon-remove"></i>
+  </button>
+
+  <p>
+    <strong>
+      <i class="icon-ok"></i>
+    </strong>
+    保存成功
+  </p>
+
+</div>
+
+<%= form_with(model:cla,local:true,:html => {:class=>'form-horizontal m-t',:multipart => true}) do |f| %>
+  <h3 class="header smaller lighter blue">
+    分类标签
+    <small></small>
+  </h3>
+  <div class="form-group">
+    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 分类标签 </label>
+    <div class="col-sm-10">
+      <%= f.text_field :name,class:"col-xs-10 col-sm-8" %>
+    </div>
+  </div>
+
+
+  <div class="clearfix form-actions">
+    <div class="col-md-offset-2 col-md-10">
+      <button type="submit" name="commit" value="保存" class="btn btn-info" data-disable-with="保存" id="submit">
+        <i class="icon-ok bigger-110"></i>
+        保存
+      </button>
+
+    </div>
+  </div>
+<% end %>

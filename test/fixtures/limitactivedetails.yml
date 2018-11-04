@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  product_id: 
+  limitactive_id: 
+  price: 1.5
+  minnumber: 1.5
+  limitnumber: 1.5
+  disableprofit: 1
+  profitpercent: 1.5
+  disableowerprofit: 1
+  owerprofitpencent: 1.5
+
+two:
+  product_id: 
+  limitactive_id: 
+  price: 1.5
+  minnumber: 1.5
+  limitnumber: 1.5
+  disableprofit: 1
+  profitpercent: 1.5
+  disableowerprofit: 1
+  owerprofitpencent: 1.5

@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  product_id: 
+  secondactive_id: 
+  firstprofit: 1.5
+  secondprofit: 1.5
+
+two:
+  product_id: 
+  secondactive_id: 
+  firstprofit: 1.5
+  secondprofit: 1.5

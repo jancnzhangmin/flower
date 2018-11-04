@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  appid: MyString
+  appsecret: MyString
+  autocomment: 1.5
+  minbankamount: 1.5
+
+two:
+  appid: MyString
+  appsecret: MyString
+  autocomment: 1.5
+  minbankamount: 1.5

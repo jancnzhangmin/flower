@@ -1,0 +1,2 @@
+class Activecolor < ApplicationRecord
+end

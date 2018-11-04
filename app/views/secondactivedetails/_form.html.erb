@@ -1,0 +1,137 @@
+<script>
+    $(document).ready(function () {
+
+        var calprofit = function(){
+            fprofit = 0.00;
+            fprofitpercent = 0.00;
+            ffirstprofit = 0.00;
+            fsecondprofit = 0.00;
+            fprofit = parseFloat($('#price').val()) - parseFloat($('#cost').val());
+            var localprofit = fprofit;
+            fprofitpercent = parseFloat($('#cost').val()) / parseFloat($('#price').val()) * 100;
+
+            if(parseFloat($('#firstprofit').val())){
+                fprofit -= (localprofit * parseFloat($('#firstprofit').val()) / 100);
+                fprofitpercent = fprofit / parseFloat($('#price').val()) * 100;
+                //ffirstprofit = parseFloat($('#firstprofit').val()) / 100 * parseFloat($('#price').val());
+                ffirstprofit = parseFloat($('#firstprofit').val()) / 100 * localprofit;
+            }
+
+            if(parseFloat($('#secondprofit').val())){
+                fprofit -= (localprofit * parseFloat($('#secondprofit').val()) / 100);
+                fprofitpercent = fprofit / parseFloat($('#price').val()) * 100;
+                fsecondprofit = parseFloat($('#secondprofit').val()) / 100 * localprofit;
+            }
+
+            $('#profitspan').text(fprofit.toFixed(2) + '元（' + fprofitpercent.toFixed(2) + '%)');
+            $('#firstfitspan').text(ffirstprofit.toFixed(2) + '元');
+            $('#secondprofitspan').text(fsecondprofit.toFixed(2) + '元');
+
+        }
+        calprofit();
+
+        $('#firstprofit').change(function () {
+           calprofit();
+        });
+        $('#secondprofit').change(function () {
+           calprofit();
+        });
+
+    });
+</script>
+<div class="alert alert-block alert-success" style="display:none;">
+  <button type="button" class="close" data-dismiss="alert">
+    <i class="icon-remove"></i>
+  </button>
+
+  <p>
+    <strong>
+      <i class="icon-ok"></i>
+    </strong>
+    保存成功
+  </p>
+
+</div>
+
+<%= form_with(model:[@secondactive,@secondactive.secondactivedetails.build],local:true,:html => {:class=>'form-horizontal m-t',:multipart => true}) do |f| %>
+  <h3 class="header smaller lighter blue">
+    二级分润
+    <small></small>
+  </h3>
+  <div class="form-group">
+    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 产品 </label>
+    <div class="col-sm-10">
+      <% product = Product.find(params[:id]) %>
+      <%= f.hidden_field :product_id,value:product.id %>
+      <input type="text" class="col-xs-10 col-sm-8" value=<%= product.name %> readonly="true">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 厂商 </label>
+    <div class="col-sm-10">
+      <input type="text" class="col-xs-10 col-sm-8" value=<%= product.manufacturer.name %> readonly="true">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 单位 </label>
+    <div class="col-sm-10">
+      <input type="text" class="col-xs-10 col-sm-8" value=<%= product.unit %> readonly="true">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 规格 </label>
+    <div class="col-sm-10">
+      <input type="text" class="col-xs-10 col-sm-8" value=<%= product.spec %> readonly="true">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 成本 </label>
+    <div class="col-sm-10">
+      <input type="text" class="col-xs-10 col-sm-8" value=<%= product.cost %> readonly="true" id="cost">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 售价 </label>
+    <div class="col-sm-10">
+      <input type="text" class="col-xs-10 col-sm-8" value=<%= product.price %> readonly="true" id="price">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 一级分润（%） </label>
+    <div class="col-sm-10">
+      <%= f.text_field :firstprofit, class:'col-xs-10 col-sm-8', id:'firstprofit' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 二级分润（%） </label>
+    <div class="col-sm-10">
+      <%= f.text_field :secondprofit, class:'col-xs-10 col-sm-8', id:'secondprofit' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">  </label>
+    <div class="col-sm-10 red">
+      利润剩余：<span id="profitspan">65元（50%）</span><br>
+      一级级分润：<span id="firstfitspan">0.00元</span><br>
+      二级分润：<span id="secondprofitspan">0.00元</span>
+    </div>
+  </div>
+
+  <div class="clearfix form-actions">
+    <div class="col-md-offset-2 col-md-10">
+      <button type="submit" name="commit" value="保存" class="btn btn-info" data-disable-with="保存" id="submit">
+        <i class="icon-ok bigger-110"></i>
+        保存
+      </button>
+
+    </div>
+  </div>
+<% end %>

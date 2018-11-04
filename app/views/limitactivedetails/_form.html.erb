@@ -1,0 +1,226 @@
+<script>
+    $(document).ready(function () {
+        var checkdisable = function () {
+          if($('#disableprofit').is(':checked')){
+              $('#profitpercent').attr('disabled',true);
+          }else{
+              $('#profitpercent').attr('disabled',false);
+          }
+            if($('#disableowerprofit').is(':checked')){
+                $('#owerprofitpencent').attr('disabled',true);
+            }else{
+                $('#owerprofitpencent').attr('disabled',false);
+            }
+        };
+
+        $('#disableprofit').change(function () {
+           checkdisable();
+        });
+        $('#disableowerprofit').change(function () {
+            checkdisable();
+        });
+
+        checkdisable();
+
+        $('#validation-form').validate({
+            errorElement: 'div',
+            errorClass: 'help-block',
+            focusInvalid: false,
+            rules: {
+                'limitactivedetail[price]': {
+                    required: true
+                },
+                'limitactivedetail[minnumber]': {
+                    required: true
+                },
+                'limitactivedetail[limitnumber]': {
+                    required: true
+                },
+                'limitactivedetail[profitpercent]': {
+                    required: true
+                },
+                'limitactivedetail[owerprofitpencent]': {
+                    required: true
+                }
+            },
+
+            messages: {
+                'limitactivedetail[price]': {
+                    required: "&nbsp;&nbsp;活动单价不能为空"
+                },
+                'limitactivedetail[minnumber]': {
+                    required: "&nbsp;&nbsp;最小购买数量不能为空"
+                },
+                'limitactivedetail[limitnumber]': {
+                    required: "&nbsp;&nbsp;限制购买数量不能为空"
+                },
+                'limitactivedetail[profitpercent]': {
+                    required: "&nbsp;&nbsp;二级分润等比不能为空"
+                },
+                'limitactivedetail[owerprofitpencent]': {
+                    required: "&nbsp;&nbsp;返现等比不能为空"
+                }
+            },
+
+            invalidHandler: function (event, validator) { //display error alert on form submit
+                $('.alert-danger', $('.login-form')).show();
+            },
+
+            highlight: function (e) {
+                $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
+            },
+
+            success: function (e) {
+                $(e).closest('.form-group').removeClass('has-error').addClass('has-info');
+                $(e).remove();
+            }
+
+
+
+
+        });
+
+    });
+</script>
+<div class="alert alert-block alert-success" style="display:none;">
+  <button type="button" class="close" data-dismiss="alert">
+    <i class="icon-remove"></i>
+  </button>
+
+  <p>
+    <strong>
+      <i class="icon-ok"></i>
+    </strong>
+    保存成功
+  </p>
+
+</div>
+
+<%= form_with(model:[@limitactive,@limitactivedetail],local:true,id:'validation-form',:html => {:class=>'form-horizontal m-t',:multipart => true}) do |f| %>
+  <h3 class="header smaller lighter blue">
+    限时优惠
+    <small></small>
+  </h3>
+  <div class="form-group">
+    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 产品 </label>
+    <div class="col-sm-10">
+      <% if @product %>
+        <% product = @product %>
+        <% else %>
+      <% product = Product.find(params[:id]) %>
+        <% end %>
+      <%= f.hidden_field :product_id,value:product.id %>
+      <input type="text" class="col-xs-10 col-sm-8" value=<%= product.name %> readonly="true">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 厂商 </label>
+    <div class="col-sm-10">
+      <input type="text" class="col-xs-10 col-sm-8" value=<%= product.manufacturer.name %> readonly="true">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 单位 </label>
+    <div class="col-sm-10">
+      <input type="text" class="col-xs-10 col-sm-8" value=<%= product.unit %> readonly="true">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 规格 </label>
+    <div class="col-sm-10">
+      <input type="text" class="col-xs-10 col-sm-8" value=<%= product.spec %> readonly="true">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 成本 </label>
+    <div class="col-sm-10">
+      <input type="text" class="col-xs-10 col-sm-8" value=<%= product.cost %> readonly="true" id="cost">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 售价 </label>
+    <div class="col-sm-10">
+      <input type="text" class="col-xs-10 col-sm-8" value=<%= product.price %> readonly="true" id="price">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 活动单价 </label>
+    <div class="col-sm-10">
+      <%= f.text_field :price, class:'col-xs-10 col-sm-8', id:'price' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 最小购买数量 </label>
+    <div class="col-sm-10">
+      <%= f.text_field :minnumber, class:'col-xs-10 col-sm-8' %>
+    </div>
+    <div class="col-sm-10">
+      <span class="grey" style="margin-left: 10px;">0 不限制</span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 限制购买数量 </label>
+    <div class="col-sm-10">
+      <%= f.text_field :limitnumber, class:'col-xs-10 col-sm-8' %>
+    </div>
+    <div class="col-sm-10">
+      <span class="grey" style="margin-left: 10px;">0 不限制</span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 禁止二级分润 </label>
+    <div class="col-sm-10">
+      <div class="col-xs-3">
+        <label>
+          <%= f.check_box :disableprofit,class:"ace ace-switch", id:'disableprofit' %>
+          <span class="lbl"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 二级分润等比下调（%） </label>
+    <div class="col-sm-10">
+      <%= f.text_field :profitpercent, class:'col-xs-10 col-sm-8', id:'profitpercent' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 禁止返现 </label>
+    <div class="col-sm-10">
+      <div class="col-xs-3">
+        <label>
+          <%= f.check_box :disableowerprofit,class:"ace ace-switch", id:'disableowerprofit' %>
+          <span class="lbl"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 返现等比下调等比下调（%） </label>
+    <div class="col-sm-10">
+      <%= f.text_field :owerprofitpencent, class:'col-xs-10 col-sm-8', id:'owerprofitpencent' %>
+    </div>
+  </div>
+
+  <div class="clearfix form-actions">
+    <div class="col-md-offset-2 col-md-10">
+      <button type="submit" name="commit" value="保存" class="btn btn-info" data-disable-with="保存" id="submit">
+        <i class="icon-ok bigger-110"></i>
+        保存
+      </button>
+
+    </div>
+  </div>
+<% end %>

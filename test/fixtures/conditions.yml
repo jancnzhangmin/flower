@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  optional_id: 
+  name: MyString
+  weighting: 1.5
+
+two:
+  optional_id: 
+  name: MyString
+  weighting: 1.5

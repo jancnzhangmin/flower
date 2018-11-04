@@ -1,0 +1,2 @@
+module ActivecolorsHelper
+end

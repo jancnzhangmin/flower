@@ -1,0 +1,35 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 
+  ordernumber: MyString
+  deduction: 1.5
+  payprice: 1.5
+  paysum: 1.5
+  paystatus: 1
+  province: MyString
+  city: MyString
+  district: MyString
+  address: MyString
+  contact: MyString
+  contactphone: MyString
+  receiptstatus: 1
+  autoreceipttime: 2018-10-19 13:04:14
+  summary: MyString
+
+two:
+  user_id: 
+  ordernumber: MyString
+  deduction: 1.5
+  payprice: 1.5
+  paysum: 1.5
+  paystatus: 1
+  province: MyString
+  city: MyString
+  district: MyString
+  address: MyString
+  contact: MyString
+  contactphone: MyString
+  receiptstatus: 1
+  autoreceipttime: 2018-10-19 13:04:14
+  summary: MyString
