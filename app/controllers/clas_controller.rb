@@ -81,6 +81,6 @@ class ClasController < ApplicationController
   end
 
   def cla_params
-    params.require(:cla).permit(:name, :order)
+    params.require(:cla).permit(:name, :order, :keyword, :showinproduct)
   end
 end

@@ -3,7 +3,18 @@ class TestsController < ApplicationController
 
   # GET /tests
   # GET /tests.json
+
   def index
+    productarr = Array.new
+    productactivecla = Activeproductclass.new
+    productactivecla.product_id = 1
+    productactivecla.number = 3
+    productarr.push productactivecla
+    productactivecla = Activeproductclass.new
+    productactivecla.product_id = 2
+    productactivecla.number = 1
+    productarr.push productactivecla
+    pp = checkactive(productarr)
     @tests = Test.all
   end
 
@@ -62,13 +73,13 @@ class TestsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_test
-      @test = Test.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_test
+    @test = Test.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def test_params
-      params.require(:test).permit(:name, :age)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def test_params
+    params.require(:test).permit(:name, :age)
+  end
 end

@@ -1,0 +1,2 @@
+class Freepost < ApplicationRecord
+end

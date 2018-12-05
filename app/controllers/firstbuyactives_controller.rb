@@ -55,6 +55,6 @@ class FirstbuyactivesController < ApplicationController
   end
 
   def firstbuyactive_params
-    params.require(:firstbuyactive).permit(:name, :begintime, :endtime, :long, :status, :owerratio)
+    params.require(:firstbuyactive).permit(:name, :begintime, :endtime, :long, :status, :owerratio, :showlable, :summary)
   end
 end

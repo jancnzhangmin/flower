@@ -10,12 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_02_071932) do
+ActiveRecord::Schema.define(version: 2018_12_05_035626) do
 
   create_table "activecolors", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.string "frontcolor"
     t.string "shadowcolor"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "activetypes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "buycar_id"
+    t.string "active"
+    t.integer "showlable"
+    t.string "summary"
+    t.string "keywords"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -52,6 +62,8 @@ ActiveRecord::Schema.define(version: 2018_11_02_071932) do
     t.bigint "buycar_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "select_optional"
+    t.bigint "select_condition"
   end
 
   create_table "buycars", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -60,6 +72,14 @@ ActiveRecord::Schema.define(version: 2018_11_02_071932) do
     t.float "number"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "price"
+    t.float "cost"
+    t.float "discount"
+    t.string "cover"
+    t.float "firstprofit"
+    t.float "secondprofit"
+    t.float "owerprofit"
+    t.integer "producttype"
   end
 
   create_table "buyfullactivedetails", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -84,6 +104,8 @@ ActiveRecord::Schema.define(version: 2018_11_02_071932) do
     t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "showlable"
+    t.string "summary"
   end
 
   create_table "clas", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -91,6 +113,8 @@ ActiveRecord::Schema.define(version: 2018_11_02_071932) do
     t.integer "order"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "keyword"
+    t.integer "showinproduct"
   end
 
   create_table "clas_products", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -131,6 +155,18 @@ ActiveRecord::Schema.define(version: 2018_11_02_071932) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "explains", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.text "explain"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
+  end
+
+  create_table "explains_products", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "explain_id", null: false
+    t.bigint "product_id", null: false
+  end
+
   create_table "firstbuyactivedetails", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "product_id"
     t.bigint "firstbuyactive_id"
@@ -149,6 +185,14 @@ ActiveRecord::Schema.define(version: 2018_11_02_071932) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.float "owerratio"
+    t.integer "showlable"
+    t.string "summary"
+  end
+
+  create_table "freeposts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "limitactivedetails", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -172,6 +216,8 @@ ActiveRecord::Schema.define(version: 2018_11_02_071932) do
     t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "showlable"
+    t.string "summary"
   end
 
   create_table "manufacturers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -255,6 +301,11 @@ ActiveRecord::Schema.define(version: 2018_11_02_071932) do
     t.string "fullpinyin"
     t.string "pinyin"
     t.integer "addtop"
+    t.string "subtitle"
+    t.string "weight"
+    t.string "brand"
+    t.string "pack"
+    t.string "season"
   end
 
   create_table "receiptaddrs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -290,6 +341,7 @@ ActiveRecord::Schema.define(version: 2018_11_02_071932) do
     t.datetime "updated_at", null: false
     t.float "firstprofit"
     t.float "secondprofit"
+    t.integer "showlable"
   end
 
   create_table "stayincomes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

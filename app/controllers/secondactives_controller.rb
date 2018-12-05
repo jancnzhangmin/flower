@@ -56,7 +56,7 @@ class SecondactivesController < ApplicationController
   end
 
   def secondactive_params
-    params.require(:secondactive).permit(:name, :begintime, :endtime, :long, :status, :summary, :firstprofit, :secondprofit)
+    params.require(:secondactive).permit(:name, :begintime, :endtime, :long, :status, :summary, :firstprofit, :secondprofit, :showlable)
   end
 
 end

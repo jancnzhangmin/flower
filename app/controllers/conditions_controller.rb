@@ -18,7 +18,8 @@ class ConditionsController < ApplicationController
   end
 
   def update
-    @condition = @optional.conditions.update(optional_params)
+    @condition = Condition.find(params[:id])
+    @condition.update(optional_params)
     redirect_to product_optional_conditions_path(@product,@optional)
   end
 

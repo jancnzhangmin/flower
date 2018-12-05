@@ -55,6 +55,6 @@ class BuyfullactivesController < ApplicationController
   end
 
   def buyfullactive_params
-    params.require(:buyfullactive).permit(:name, :begintime, :endtime, :status)
+    params.require(:buyfullactive).permit(:name, :begintime, :endtime, :status, :showlable, :summary)
   end
 end

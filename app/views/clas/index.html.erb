@@ -18,6 +18,8 @@
               <thead>
               <tr>
                 <th class="text-center">分类标签</th>
+                <th class="text-center">关键字</th>
+                <th class="text-center">参与分类</th>
                 <th class="text-center" width="320px">操作</th>
               </tr>
               </thead>
@@ -26,6 +28,14 @@
                 <tr>
                   <td>
                     <%= cla.name %>
+                  </td>
+                  <td>
+                    <%= cla.keyword %>
+                  </td>
+                  <td align="center">
+                    <% if cla.showinproduct == 1 %>
+                      <i class="fa fa-check green"></i>
+                    <% end %>
                   </td>
                   <td>
                     <div class="visible-md visible-lg hidden-sm hidden-xs btn-group" data-turbolinks="false">

@@ -1,0 +1,2 @@
+class Activetype < ApplicationRecord
+end

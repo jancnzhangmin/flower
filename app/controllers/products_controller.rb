@@ -67,7 +67,7 @@ class ProductsController < ApplicationController
   end
 
   def product_params
-    params.require(:product).permit(:manufacturer_id, :name, :cost, :price, :content, :grounding, :unit, :spec)
+    params.require(:product).permit(:manufacturer_id, :name, :cost, :price, :content, :grounding, :unit, :spec, :subtitle, :weight, :brand, :pack, :season)
   end
 
   def pinyin(str)

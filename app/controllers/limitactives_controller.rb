@@ -55,6 +55,6 @@ class LimitactivesController < ApplicationController
   end
 
   def limitactive_params
-    params.require(:limitactive).permit(:name, :begintime, :endtime, :status, :owerratio)
+    params.require(:limitactive).permit(:name, :begintime, :endtime, :status, :owerratio, :showlable, :summary)
   end
 end

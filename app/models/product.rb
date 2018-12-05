@@ -10,4 +10,5 @@ class Product < ApplicationRecord
   has_many :orderdetails
   has_many :limitactivedetails
   has_many :firstbuyactivedetails
+  has_and_belongs_to_many :explains
 end

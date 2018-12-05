@@ -69,4 +69,25 @@ Rails.application.routes.draw do
     end
   end
   resources :activecolors
+  resources :api do
+    collection do
+      get 'get_recommend_product'
+      get 'get_product_detail'
+      get 'collection'
+    end
+  end
+  resources :getopenids
+  resources :explains do
+    resources :explainproducts do
+      member do
+        get 'singleadd'
+        get 'singleremove'
+      end
+      collection do
+        post 'addexplain'
+        post 'removeexplain'
+      end
+    end
+  end
+  resources :freeposts
 end
