@@ -7,6 +7,9 @@ gem "paperclip", "~> 6.1.0"
 gem 'font-awesome-rails'
 gem 'rails_kindeditor'
 gem 'ruby-pinyin'
+gem 'rack-cors', :require => 'rack/cors'
+gem 'uuidtools'
+gem 'sidekiq'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.1'

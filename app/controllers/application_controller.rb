@@ -23,6 +23,7 @@ class ApplicationController < ActionController::Base
     attr :pack,true
     attr :season,true
     attr :collection,true
+    attr :optional,true
   end
 
   class Activetypeclass
@@ -35,6 +36,7 @@ class ApplicationController < ActionController::Base
   class Activeproductclass
     attr :product_id,true
     attr :number,true
+    attr :optional,true
   end
 
   def checkactive(activeproduct,openid) #productarr[product_id,number]
@@ -56,6 +58,7 @@ class ApplicationController < ActionController::Base
       productcla.content = product.content.html_safe
       productcla.unit = product.unit
       productcla.spec = product.spec
+      productcla.optional = p.optional
       cover = product.productimgs.where('isdefault = 1')
       if cover.count > 0
         productcla.cover = cover.first.productimg.url
@@ -126,7 +129,7 @@ class ApplicationController < ActionController::Base
             numbercount += p.number
           end
         end
-        if numbercount >= firstbuyactivedetail.number
+        #if numbercount >= firstbuyactivedetail.number
           productarr.each do |p|
             if p.id == firstbuyactivedetail.product_id
               p.owerprofit = firstbuyactive.owerratio
@@ -144,7 +147,7 @@ class ApplicationController < ActionController::Base
               p.activetype.push activecla
             end
           end
-        end
+        #end
       end
     end
     productarr
@@ -157,12 +160,29 @@ class ApplicationController < ActionController::Base
       buyfullactivedetails = buyfullactive.buyfullactivedetails
       buyfullactivedetails.each do |buyfullactivedetail|
         numbercount = 0
+        has_give_product_id = Array.new
         productarr.each do |p|
-          if p.id == buyfullactivedetail.product_id
+          if p.id == buyfullactivedetail.product_id && p.producttype == 0
             numbercount += p.number
+            activecla = Activetypeclass.new
+            activecla.active = buyfullactive.name
+            activecla.showlable = buyfullactive.showlable
+            activecla.keywords = 'buyfull'
+            activecla.summary = buyfullactive.summary
+            giveproduct = Product.find(buyfullactivedetail.giveproduct_id)
+            activecla.summary.sub!("{productname}",p.name)
+            activecla.summary.sub!("{productnumber}",buyfullactivedetail.number.to_i.to_s)
+            activecla.summary.sub!("{productunit}",p.unit)
+            activecla.summary.sub!("{givename}",giveproduct.name)
+            activecla.summary.sub!("{givenumber}",buyfullactivedetail.givenumber.to_i.to_s)
+            activecla.summary.sub!("{giveunit}",giveproduct.unit)
+            p.activetype.push activecla
           end
+          has_give_product_id.push p.id
         end
+        has_give_product_id.uniq!
         if numbercount >= buyfullactivedetail.number
+
           productarr.each do |p|
             if p.id == buyfullactivedetail.product_id
               if buyfullactivedetail.disableprofit == 1
@@ -177,9 +197,7 @@ class ApplicationController < ActionController::Base
                 p.owerprofit -= buyfullactivedetail.owerprofitpercent
               end
             end
-          end
-          productarr.each do |p|
-            if p.id == buyfullactivedetail.product_id
+            if p.id == buyfullactivedetail.product_id && p.producttype == 0
               productcla = Productclass.new
               giveproduct = Product.find(buyfullactivedetail.giveproduct_id)
               productcla.id = giveproduct.id
@@ -189,7 +207,7 @@ class ApplicationController < ActionController::Base
                 productcla.cost = giveproduct.cost
               end
               productcla.price = 0
-              productcla.number = (p.number / buyfullactivedetail.number).to_i
+              productcla.number = (numbercount / buyfullactivedetail.number).to_i
               productcla.activetype = Array.new
               activecla = Activetypeclass.new
               activecla.active = buyfullactive.name
@@ -201,6 +219,7 @@ class ApplicationController < ActionController::Base
               productcla.firstprofit = 0
               productcla.secondprofit = 0
               productcla.owerprofit = 0
+              productcla.optional = []
               productcla.producttype = 1
               productcla.unit = giveproduct.unit
               productcla.spec = giveproduct.spec
@@ -220,8 +239,12 @@ class ApplicationController < ActionController::Base
                   productcla.images.push giveimage.productimg.url
                 end
               end
-              productarr.push productcla
+              if productcla.number > 0 && has_give_product_id.include?(p.id)
+                productarr.push productcla
+                has_give_product_id.delete(p.id)
+              end
             end
+
           end
         end
       end
@@ -238,11 +261,11 @@ class ApplicationController < ActionController::Base
         numbercount = 0
         productarr.each do |p|
           if p.id == limitactivedetail.product_id
-numbercount += p.number
+            numbercount += p.number
           end
         end
         productarr.each do |p|
-          if numbercount > limitactivedetail.minnumber && p.id == limitactivedetail.product_id
+          if numbercount >= limitactivedetail.minnumber && p.id == limitactivedetail.product_id
             p.discount = p.price - limitactivedetail.price
             p.price = limitactivedetail.price
             if limitactivedetail.disableprofit == 1
@@ -257,6 +280,8 @@ numbercount += p.number
             else
               p.owerprofit -= limitactivedetail.owerprofitpencent
             end
+          end
+          if p.id == limitactivedetail.product_id
             activetype = Activetypeclass.new
             activetype.active = limitactive.name
             activetype.showlable = limitactive.showlable

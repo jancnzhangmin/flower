@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_05_035626) do
+ActiveRecord::Schema.define(version: 2018_12_26_064231) do
 
   create_table "activecolors", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -57,13 +57,11 @@ ActiveRecord::Schema.define(version: 2018_12_05_035626) do
   end
 
   create_table "buycaroptionals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "optional_id"
-    t.bigint "condition_id"
     t.bigint "buycar_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "select_optional"
-    t.bigint "select_condition"
+    t.bigint "selectcondition_id"
+    t.string "selectcondition_name"
   end
 
   create_table "buycars", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -153,6 +151,7 @@ ActiveRecord::Schema.define(version: 2018_12_05_035626) do
     t.float "minbankamount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "amapareakey"
   end
 
   create_table "explains", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -319,6 +318,8 @@ ActiveRecord::Schema.define(version: 2018_12_05_035626) do
     t.integer "isdefault"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "street"
+    t.string "adcode"
   end
 
   create_table "secondactivedetails", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

@@ -74,6 +74,17 @@ Rails.application.routes.draw do
       get 'get_recommend_product'
       get 'get_product_detail'
       get 'collection'
+      post 'submitbuycar'
+      get 'force_collection'
+      get 'get_amapkey'
+      get 'set_address'
+      get 'get_address_list'
+      get 'get_address'
+      get 'del_address'
+      get 'get_collection'
+      get 'get_class'
+      get 'get_product_list'
+      get 'get_appoint_address'
     end
   end
   resources :getopenids
