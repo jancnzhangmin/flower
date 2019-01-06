@@ -85,6 +85,11 @@ Rails.application.routes.draw do
       get 'get_class'
       get 'get_product_list'
       get 'get_appoint_address'
+      post 'buycar_to_order'
+      get 'get_unpay_list'
+      get 'delete_order'
+      get 'get_unpay_count'
+      get 'get_unapyorder'
     end
   end
   resources :getopenids

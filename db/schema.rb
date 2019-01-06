@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_26_064231) do
+ActiveRecord::Schema.define(version: 2019_01_06_073835) do
 
   create_table "activecolors", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -154,6 +154,16 @@ ActiveRecord::Schema.define(version: 2018_12_26_064231) do
     t.string "amapareakey"
   end
 
+  create_table "enaccounts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "order_id"
+    t.float "amount"
+    t.string "summary"
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "explains", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.text "explain"
     t.datetime "created_at", null: false
@@ -236,12 +246,32 @@ ActiveRecord::Schema.define(version: 2018_12_26_064231) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "orderactivetypes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "orderdetail_id"
+    t.string "active"
+    t.integer "showlable"
+    t.string "summary"
+    t.string "keywords"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "orderdetails", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "order_id"
     t.bigint "product_id"
     t.float "number"
     t.float "price"
     t.float "sum"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "optional"
+    t.integer "producttype"
+  end
+
+  create_table "orderoptionals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "orderdetail_id"
+    t.bigint "selectcondition_id"
+    t.string "selectcondition_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -264,6 +294,16 @@ ActiveRecord::Schema.define(version: 2018_12_26_064231) do
     t.string "summary"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "street"
+    t.string "adcode"
+    t.integer "status"
+    t.string "frontuuid"
+    t.datetime "paytime"
+    t.integer "commentstatus"
+    t.datetime "autocommenttime"
+    t.float "owerprofit"
+    t.float "discount"
+    t.integer "deliverstatus"
   end
 
   create_table "owerstayincomes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

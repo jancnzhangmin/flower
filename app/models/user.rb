@@ -9,4 +9,5 @@ class User < ApplicationRecord
   has_many :banks
   has_many :owerstayincomes
   has_many :userfirstbuystatus
+  has_many :enaccounts
 end
