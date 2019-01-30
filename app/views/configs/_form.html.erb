@@ -35,6 +35,12 @@
       <%= f.text_field :amapareakey,class:"col-xs-10 col-sm-8" %>
     </div>
   </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 自动确认收货（天） </label>
+    <div class="col-sm-10">
+      <%= f.number_field :autoreceipt,class:"col-xs-10 col-sm-8" %>
+    </div>
+  </div>
     <div class="form-group">
       <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 自动确认评价（天） </label>
       <div class="col-sm-10">
@@ -47,6 +53,36 @@
         <%= f.number_field :minbankamount,class:"col-xs-10 col-sm-8" %>
       </div>
     </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 快递100key </label>
+    <div class="col-sm-10">
+      <%= f.text_field :deliverkey,class:"col-xs-10 col-sm-8" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 快递100实时查询customer </label>
+    <div class="col-sm-10">
+      <%= f.text_field :delivercustomer,class:"col-xs-10 col-sm-8" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 二维码示例图 </label>
+    <div class="col-sm-10" style="padding-right: 70px;">
+      <%= f.file_field :qrdemo,class:"col-xs-10 col-sm-8" %>
+      <% if @config.qrdemo %>
+        <img width="40px" src="<%= @config.qrdemo.url %>">
+      <% end %>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 用户头像示例图 </label>
+    <div class="col-sm-10" style="padding-right: 70px;">
+      <%= f.file_field :headdemo,class:"col-xs-10 col-sm-8" %>
+      <% if @config.headdemo %>
+        <img width="40px" src="<%= @config.headdemo.url %>">
+      <% end %>
+    </div>
+  </div>
 
     <div class="clearfix form-actions">
       <div class="col-md-offset-2 col-md-10">

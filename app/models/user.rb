@@ -10,4 +10,6 @@ class User < ApplicationRecord
   has_many :owerstayincomes
   has_many :userfirstbuystatus
   has_many :enaccounts
+  has_many :childrens, class_name: "User", foreign_key: "up_id"
+  belongs_to :parent, class_name: "User", foreign_key: "up_id", optional: true
 end

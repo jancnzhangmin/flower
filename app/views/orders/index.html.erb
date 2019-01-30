@@ -1,0 +1,139 @@
+<%= render 'layerbegin' %>
+
+<div class="page-content">
+  <div class="page-header">
+    <h1>
+      订单
+    </h1>
+  </div><!-- /.page-header -->
+
+  <div class="row">
+    <div class="col-xs-12">
+      <!-- PAGE CONTENT BEGINS -->
+
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="table-responsive">
+            <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+              <thead>
+              <tr>
+                <th class="text-center">订单号</th>
+                <th class="text-center">联系人</th>
+                <th class="text-center">联系方式</th>
+                <th class="text-center">收货地址</th>
+                <th class="text-center">订单金额</th>
+                <th class="text-center">抵扣金额</th>
+                <th class="text-center">优惠金额</th>
+                <th class="text-center">返现金额</th>
+                <th class="text-center">支付时间</th>
+                <th class="text-center">订单状态</th>
+                <th class="text-center" width="250px">操作</th>
+              </tr>
+              </thead>
+              <tbody>
+              <% @orders.each do |order| %>
+                <tr>
+                  <td>
+                    <%= order.ordernumber %>
+                  </td>
+                  <td>
+                    <%= order.contact %>
+                  </td>
+                  <td>
+                    <%= order.contactphone %>
+                  </td>
+                  <td>
+                    <%= order.province %><%= order.city %><%= order.district %><%= order.street %><%= order.address %>
+                  </td>
+                  <td>
+                    <%= order.paysum %>
+                  </td>
+                  <td>
+                    <%= order.deduction %>
+                  </td>
+                  <td>
+                    <%= order.discount %>
+                  </td>
+                  <td>
+                    <%= order.owerprofit %>
+                  </td>
+                  <td>
+                    <% if order.paytime %>
+                      <%= order.paytime.strftime('%Y-%m-%d %H:%M:%S') %>
+                    <% end %>
+                  </td>
+                  <td>
+                    <% ordermsg = '' %>
+                    <% if order.status == 0 %>
+                      <% ordermsg = '系统锁定' %>
+                    <% elsif order.paystatus == 0 %>
+                      <% ordermsg = '待支付' %>
+                    <% elsif order.deliverstatus == 0 %>
+                      <% ordermsg = '待发货' %>
+                    <% elsif order.receiptstatus == 0%>
+                      <% ordermsg = '待收货' %>
+                    <% elsif  order.commentstatus == 0 %>
+                      <% ordermsg = '待评价' %>
+                    <% elsif  order.commentstatus == 1 %>
+                      <% ordermsg =='交易完成' %>
+                    <% end %>
+                    <%= ordermsg %>
+                  </td>
+
+                  <td>
+                    <div class="visible-md visible-lg hidden-sm hidden-xs btn-group" data-turbolinks="false">
+                      <a class="btn btn-xs btn-primary" href=<%= order_orderdetails_path(order) %>>
+                        <i class="fa fa-edit bigger-120"></i>
+                        订单明细
+                      </a>
+                      <a class="btn btn-xs btn-primary" href=<%= order_orderdelivers_path(order) %>>
+                        <i class="fa fa-edit bigger-120"></i>
+                        快递
+                      </a>
+                      <div class="btn-group" style="margin-left: 1px;">
+                        <button data-toggle="dropdown" class="btn btn-xs btn-danger dropdown-toggle">
+                          更多操作
+                          <i class="icon-angle-down icon-on-right"></i>
+                        </button>
+
+                        <ul class="dropdown-menu dropdown-danger">
+                          <li>
+                            <a href="#">确认收货</a>
+                          </li>
+
+                          <li>
+                            <a href="#">确认评价</a>
+                          </li>
+
+                          <li>
+                            <a href="#">锁定订单</a>
+                          </li>
+
+                          <li class="divider"></li>
+
+                          <li>
+                            <a href="#">退货</a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </td>
+
+                </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+
+      <div data-turbolinks="false" class="text-center">
+        <%= will_paginate @order, renderer: BootstrapPagination::Rails %>
+      </div>
+
+
+
+
+
+<%= render 'layerend' %>

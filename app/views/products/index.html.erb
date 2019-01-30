@@ -43,7 +43,7 @@ $('.addtop').change(function () {
                 <th class="text-center">活动售价</th>
                 <th class="text-center">活动利润</th>
                 <th class="text-center">推荐</th>
-                <th class="text-center" width="320px">操作</th>
+                <th class="text-center" width="400px">操作</th>
               </tr>
               </thead>
               <tbody>
@@ -117,6 +117,10 @@ $('.addtop').change(function () {
                         <a class="btn btn-xs btn-success" href=<%= product_optionals_path(product) %>>
                           <i class="fa fa-share-alt bigger-120"></i>
                           可选条件（<%= product.optionals.count %>）
+                        </a>
+                        <a class="btn btn-xs btn-pink" href=<%= product_productqrs_path(product) %>>
+                          <i class="fa fa-picture-o bigger-120"></i>
+                          海报（<%= product.productqrs.count %>）
                         </a>
                         <a data-confirm="确认删除?" data-method="delete" class="btn btn-xs btn-danger" href=<%= product_path(product) %>>
                           <i class="fa fa-trash bigger-120"></i>

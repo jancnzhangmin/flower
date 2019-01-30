@@ -1,0 +1,17 @@
+<%= render 'layerbegin' %>
+<script>
+    function setIframeHeight(iframe) {
+        if (iframe) {
+            var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
+            if (iframeWin.document.body) {
+                iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight;
+            }
+        }
+    };
+
+    window.onload = function () {
+        setIframeHeight(document.getElementById('content_iframe'));
+    };
+</script>
+<iframe id="content_iframe" marginwidth=0 marginheight=0 width=100%  src="/sidekiq" frameborder=0></iframe>
+<%= render 'layerend' %>

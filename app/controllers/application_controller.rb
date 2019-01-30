@@ -84,7 +84,20 @@ class ApplicationController < ActionController::Base
     productarr = checkcollection(productarr,openid)
   end
 
+  def send_template_msg(touser, template_id, url, topcolor, data) #发送模板消息
+    $client ||= WeixinAuthorize::Client.new(Config.first.appid, Config.first.appsecret)
+    $client.send_temlate_msg(touser,template_id,url,topcolor,data)
+  end
+
   private
+
+  def checkrediscache
+    products = $rediscache.get('products')
+    if products.nil?
+      products.set('products',Product.all.to_json)
+    end
+  end
+
   def checksecond(productarr)
     productarr.each do |producta|
       secondactive = Secondactive.where("secondactives.long = 1 and status = 1")

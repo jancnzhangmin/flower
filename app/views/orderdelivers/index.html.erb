@@ -1,0 +1,143 @@
+<%= render 'layerbegin' %>
+
+<script>
+    $(document).ready(function(){
+        $('#newdiv').click(function(){
+            $('#newdiv').hide();
+            $('#formdiv').show();
+        });
+
+        deliverkey = '<%= Config.first.deliverkey %>';
+        $('#delivernum').keyup(function(){
+            $.ajax({
+                url:"orderdelivers/get_delivername",
+                type:'GET',
+                data:{
+                    num:$('#delivernum').val()
+                },
+                success:function(result){
+                    $('#namediv').empty();
+                    $.each(result.delivers,function(i,item){
+                        var hasbtn = false;
+                        var btn = '<button class="btn btn-yellow btn-minier" style="margin-left: 12px;margin-top: 5px;" value='+ item.comcode + '>' + item.name + '</button>';
+                        var span = '<span class="label label-warning" style="margin-left: 12px;margin-top: 5px;" value=' +item.comcode+' onclick="finsh(this)">'+item.name+'</span>';
+                        $('#namediv').children().each(function (ei,el) {
+                            if($.trim(el.textContent) == item.name){
+                                hasbtn = true
+                            }
+                        });
+                        if(!hasbtn) {
+                            $('#namediv').append(span);
+                        }
+                    });
+                }});
+        });
+    });
+
+    function finsh(event){
+        $('#delivername').val($.trim(event.textContent));
+        $('#delivercomcode').val($(event).attr('value'));
+        $('#namediv').empty();
+    }
+
+</script>
+
+<div class="page-content">
+  <div class="page-header">
+    <h1>
+      <%= @order.contact %>的快递信息
+    </h1>
+  </div><!-- /.page-header -->
+
+  <div class="row">
+    <div class="col-xs-12">
+      <!-- PAGE CONTENT BEGINS -->
+
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="table-responsive">
+            <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+              <thead>
+              <tr>
+                <th class="text-center">快递公司</th>
+                <th class="text-center">快递编码</th>
+                <th class="text-center">单号</th>
+                <th class="text-center" width="150px">操作</th>
+              </tr>
+              </thead>
+              <tbody>
+              <% @orderdelivers.each do |orderdeliver| %>
+                <tr>
+                  <td>
+                    <%= orderdeliver.name %>
+                  </td>
+                  <td>
+                    <%= orderdeliver.comcode %>
+                  </td>
+                  <td>
+                    <%= orderdeliver.num %>
+                  </td>
+
+                  <td>
+
+                  </td>
+
+                </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div id="formdiv" style="display: none;">
+        <%= form_with(model:[@order,@order.orderdelivers.build],local:true,:html => {:class=>'form-horizontal m-t',:multipart => true}) do |f| %>
+          <h3 class="header smaller lighter blue">
+            <small></small>
+          </h3>
+          <div class="form-group">
+            <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 快递单号 </label>
+            <div class="col-sm-10">
+              <%= f.text_field :num,class:"col-xs-10 col-sm-8",id:'delivernum' %>
+
+            </div>
+            <div id="namediv">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 快递公司 </label>
+            <div class="col-sm-10">
+              <%= f.text_field :name,class:"col-xs-10 col-sm-8",readonly:'true',id:'delivername' %>
+              <%= f.hidden_field :comcode,class:"col-xs-10 col-sm-8",id:'delivercomcode' %>
+            </div>
+          </div>
+
+
+
+
+          <div class="clearfix form-actions">
+            <div class="col-md-offset-2 col-md-10">
+              <button type="submit" name="commit" value="保存" class="btn btn-info" data-disable-with="保存" id="submit">
+                <i class="icon-ok bigger-110"></i>
+                保存
+              </button>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="clearfix form-actions" id="newdiv">
+        <div class="col-md-12 text-right" data-turbolinks="false">
+          <button class="btn btn-info">
+            <i class="fa fa-plus bigger-110"></i>
+            新增
+          </button>
+        </div>
+      </div>
+
+
+
+
+
+
+<%= render 'layerend' %>

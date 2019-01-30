@@ -132,6 +132,18 @@
                 免邮说明
               </a>
             </li>
+            <li data-turbolinks="false">
+              <a href=<%= delivercodes_path %>>
+                <i class="icon-double-angle-right"></i>
+                快递编码表
+              </a>
+            </li>
+            <li data-turbolinks="false">
+              <a href=<%= monitors_path %>>
+                <i class="icon-double-angle-right"></i>
+                队列监控
+              </a>
+            </li>
           </ul>
         </li>
 
@@ -197,9 +209,37 @@
           </ul>
         </li>
 
+        <li>
+          <a href="#" class="dropdown-toggle">
+            <i class="icon-suitcase"></i>
+            <span class="menu-text"> 订单 </span>
+            <b class="arrow icon-angle-down"></b>
+          </a>
+          <ul class="submenu">
+            <li data-turbolinks="false">
+              <a href=<%= orders_path %>>
+                <i class="icon-double-angle-right"></i>
+                订单
+              </a>
+            </li>
+          </ul>
+        </li>
 
-
-
+        <li>
+          <a href="#" class="dropdown-toggle">
+            <i class="icon-user"></i>
+            <span class="menu-text"> 用户 </span>
+            <b class="arrow icon-angle-down"></b>
+          </a>
+          <ul class="submenu">
+            <li data-turbolinks="false">
+              <a href=<%= users_path %>>
+                <i class="icon-double-angle-right"></i>
+                用户
+              </a>
+            </li>
+          </ul>
+        </li>
 
 
 

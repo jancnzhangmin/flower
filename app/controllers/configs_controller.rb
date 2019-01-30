@@ -29,7 +29,7 @@ class ConfigsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def config_params
-    params.require(:config).permit(:appid, :appsecret, :autocomment, :minbankamount, :amapareakey)
+    params.require(:config).permit(:appid, :appsecret, :autocomment, :minbankamount, :amapareakey, :autoreceipt, :deliverkey, :delivercustomer, :qrdemo, :headdemo)
   end
 
 end

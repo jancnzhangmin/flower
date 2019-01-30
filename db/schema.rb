@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_06_073835) do
+ActiveRecord::Schema.define(version: 2019_01_29_083117) do
 
   create_table "activecolors", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -127,6 +127,16 @@ ActiveRecord::Schema.define(version: 2019_01_06_073835) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "commentimgs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "comment_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "commentimg_file_name"
+    t.string "commentimg_content_type"
+    t.bigint "commentimg_file_size"
+    t.datetime "commentimg_updated_at"
+  end
+
   create_table "comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "product_id"
     t.text "comment"
@@ -134,6 +144,13 @@ ActiveRecord::Schema.define(version: 2019_01_06_073835) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "order_id"
+    t.integer "status"
+    t.integer "commentlevel"
+    t.integer "anonymous"
+    t.float "descscore"
+    t.float "deliverscore"
+    t.float "servicescore"
   end
 
   create_table "conditions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -152,6 +169,24 @@ ActiveRecord::Schema.define(version: 2019_01_06_073835) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "amapareakey"
+    t.float "autoreceipt"
+    t.string "deliverkey"
+    t.string "delivercustomer"
+    t.string "qrdemo_file_name"
+    t.string "qrdemo_content_type"
+    t.bigint "qrdemo_file_size"
+    t.datetime "qrdemo_updated_at"
+    t.string "headdemo_file_name"
+    t.string "headdemo_content_type"
+    t.bigint "headdemo_file_size"
+    t.datetime "headdemo_updated_at"
+  end
+
+  create_table "delivercodes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.string "comcode"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "enaccounts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -229,6 +264,12 @@ ActiveRecord::Schema.define(version: 2019_01_06_073835) do
     t.string "summary"
   end
 
+  create_table "logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.text "log"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "manufacturers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.string "contact"
@@ -252,6 +293,15 @@ ActiveRecord::Schema.define(version: 2019_01_06_073835) do
     t.integer "showlable"
     t.string "summary"
     t.string "keywords"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "orderdelivers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "order_id"
+    t.string "name"
+    t.string "comcode"
+    t.string "num"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -326,6 +376,16 @@ ActiveRecord::Schema.define(version: 2019_01_06_073835) do
     t.datetime "productimg_updated_at"
   end
 
+  create_table "productqrs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "product_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "productqrbase_file_name"
+    t.string "productqrbase_content_type"
+    t.bigint "productqrbase_file_size"
+    t.datetime "productqrbase_updated_at"
+  end
+
   create_table "products", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "manufacturer_id"
     t.string "name"
@@ -345,6 +405,15 @@ ActiveRecord::Schema.define(version: 2019_01_06_073835) do
     t.string "brand"
     t.string "pack"
     t.string "season"
+  end
+
+  create_table "profits", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "ordernumber"
+    t.float "amount"
+    t.string "summary"
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "receiptaddrs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -424,6 +493,7 @@ ActiveRecord::Schema.define(version: 2019_01_06_073835) do
     t.string "userbackgroundimg_content_type"
     t.bigint "userbackgroundimg_file_size"
     t.datetime "userbackgroundimg_updated_at"
+    t.bigint "up_id"
   end
 
   create_table "withdrawrecords", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

@@ -299,7 +299,7 @@ class ApiController < ApplicationController
 
   def get_unpay_list #获取未支付订单列表
     user = User.find_by_openid(params[:openid])
-    orders = user.orders.where('paystatus = 0')
+    orders = user.orders.where('paystatus = 0').paginate(:page => params[:page], :per_page => 10).order('id desc')
     orders.each do |order|
       productarr = []
       orderdetails = order.orderdetails
@@ -325,7 +325,7 @@ class ApiController < ApplicationController
       productarr = calactive(productarr.to_json,params[:openid])
       re_write_order(order.id,productarr)
     end
-    orders = user.orders.where('paystatus = 0').order('id desc')
+    orders = user.orders.where('paystatus = 0').paginate(:page => params[:page], :per_page => 10).order('id desc')
 
     productarr = []
     orders.each do |order|
@@ -422,6 +422,77 @@ class ApiController < ApplicationController
     end
 
     render json: params[:callback] + '({"orders":' + productarr.to_json + ',"ordercount":' +productarr.count.to_s + '})',content_type: "application/javascript"
+  end
+
+  def pay #支付回调
+    order = Order.find(params[:orderid])
+    user = User.find(params[:openid])
+    order.paystatus = 1
+    order.paytime = Time.now
+    order.save
+    pay_process(order.id,user.id)
+  end
+
+  def pay_process(orderid,userid) #支付后操作
+    order = Order.find(orderid)
+    productarr = []
+    orderdetails = order.orderdetails
+    orderdetails.each do |orderdetail|
+      buycaroptional = []
+      optionals = orderdetail.orderoptionals
+      optionals.each do |op|
+        op_params = {
+            selectcondition_id:op.selectcondition_id,
+            selectcondition_name:op.selectcondition_name
+        }
+        buycaroptional.push op_params
+      end
+      order_params = {
+          id:orderdetail.id,
+          product_id:orderdetail.product_id,
+          number:orderdetail.number,
+          buycaroptional:buycaroptional,
+          producttype:orderdetail.producttype
+      }
+      productarr.push order_params
+      user = User.find(userid)
+      productarr = calactive(productarr.to_json,user.openid)
+      owerprofit = 0
+      firstprofit = 0
+      secondprofit = 0
+      cost = 0
+      price = 0
+      productarr.each do |p|
+        if p.producttype == 0
+          owerprofit += p.owerprofit * p.number
+          firstprofit += p.owerprofit * p.number
+          secondprofit += p.secondprofit * p.number
+          price += p.price * p.number
+        end
+        cost += p.cost * p.number
+      end
+      Profit.create(ordernumber:order.ordernumber,amount:price - cost,summary:'正常入账',status:0)
+      firstuser = user.parent
+      if firstuser
+        if firstprofit > 0
+          firstuser.enaccounts.create(order_id:order.id,amount:firstprofit,summary:'一级分润',status:0)
+          Profit.create(ordernumber:order.ordernumber,amount:-firstprofit,summary:'一级分润',status:0)
+        end
+        seconduser = firstuser.parent
+        if seconduser
+          if secondprofit > 0
+            seconduser.enaccounts.create(order_id:order.id,amount:seconduser,summary:'二级分润',status:0)
+            Profit.create(ordernumber:order.ordernumber,amount:-seconduser,summary:'二级分润',status:0)
+          end
+        end
+      end
+      if owerprofit > 0
+        user.enaccounts.create(order_id:order.id,amount:owerprofit,summary:'返现',status:0)
+        Profit.create(ordernumber:order.ordernumber,amount:-owerprofit,summary:'返现',status:0)
+      end
+
+
+    end
   end
 
   def delete_order #删除订单
@@ -561,7 +632,267 @@ class ApiController < ApplicationController
     render json: callback + '({"order":' + params.to_json + ',"balance":' + balance.to_s + '})',content_type: "application/javascript"
   end
 
+  def get_undeliver_list #获取待发货订单列表
+    user = User.find_by_openid(params[:openid])
+    orders = user.orders.where('paystatus = 1 and deliverstatus = 0').paginate(:page => params[:page], :per_page => 10).order('id desc')
+    productarr = get_orders(orders)
+    render json: params[:callback] + '({"orders":' + productarr.to_json + ',"ordercount":' +productarr.count.to_s + '})',content_type: "application/javascript"
+  end
+
+  def get_unreceipt_list #获取待收货订单列表
+    user = User.find_by_openid(params[:openid])
+    orders = user.orders.where('paystatus = 1 and deliverstatus = 1 and receiptstatus = 0').paginate(:page => params[:page], :per_page => 10).order('id desc')
+    productarr = get_orders(orders)
+    render json: params[:callback] + '({"orders":' + productarr.to_json + ',"ordercount":' +productarr.count.to_s + '})',content_type: "application/javascript"
+  end
+
+  def get_uncomment_list #获取待收货订单列表
+    user = User.find_by_openid(params[:openid])
+    orders = user.orders.where('paystatus = 1 and deliverstatus = 1 and receiptstatus = 1 and commentstatus = 0').paginate(:page => params[:page], :per_page => 10).order('id desc')
+    productarr = get_orders(orders)
+    render json: params[:callback] + '({"orders":' + productarr.to_json + ',"ordercount":' +productarr.count.to_s + '})',content_type: "application/javascript"
+  end
+
+  def get_undeliver_count #获取待发货订单数量
+    user = User.find_by_openid(params[:openid])
+    orderscount = user.orders.where('paystatus = 1 and deliverstatus = 0').count
+    render json: params[:callback] + '({"ordercount":' +orderscount.to_s + '})',content_type: "application/javascript"
+  end
+
+  def get_unreceipt_count #获取待收货订单数量
+    user = User.find_by_openid(params[:openid])
+    orderscount = user.orders.where('paystatus = 1 and deliverstatus = 1 and receiptstatus = 0').count
+    render json: params[:callback] + '({"ordercount":' +orderscount.to_s + '})',content_type: "application/javascript"
+  end
+
+  def get_uncomment_count #获取待收货订单数量
+    user = User.find_by_openid(params[:openid])
+    orderscount = user.orders.where('paystatus = 1 and deliverstatus = 1 and receiptstatus = 1 and commentstatus = 0').count
+    render json: params[:callback] + '({"ordercount":' +orderscount.to_s + '})',content_type: "application/javascript"
+  end
+
+  def query_express #快递查询
+    order = Order.find(params[:orderid])
+    orderdelivers = order.orderdelivers
+    queryarr =[]
+    threadarr = []
+    customer = Config.first.delivercustomer
+    key = Config.first.deliverkey
+    orderdelivers.each do |deliver|
+      #param ="{\"com\":\"" + deliver.comcode + "\",\"num\":\"" + deliver.num + "\"}"
+      param = '{"com":"' + deliver.comcode.to_s + '","num":"' + deliver.num + '"}'
+      #sign = MD5.hexdigest(param + key + customer)
+      #sign = Digest::MD5.new(param + key + customer).hexdigest
+      sign = Digest::MD5.hexdigest(param + key + customer).upcase
+      thread = Thread.new do
+        conn = Faraday.new(:url => 'http://poll.kuaidi100.com') do |faraday|
+          faraday.request :url_encoded # form-encode POST params
+          faraday.response :logger # log requests to STDOUT
+          faraday.adapter Faraday.default_adapter # make requests with Net::HTTP
+        end
+        conn.params[:param] = param
+        conn.params[:sign] = sign
+        conn.params[:customer] = customer
+        request = conn.post do |req|
+          req.url '/poll/query.do'
+        end
+        option = {
+            name:deliver.name,
+            data:JSON.parse(request.body)
+        }
+        queryarr.push option
+      end
+      threadarr.push thread
+    end
+    threadarr.map(&:join)
+    render json: params[:callback] + '({"express":' +queryarr.to_json + '})',content_type: "application/javascript"
+  end
+
+  def confirm_receipt #确认收货
+    status  = 1
+    AutoreceiptJob.perform_later(params[:orderid])
+    render json: params[:callback] + '({"status":' + status.to_s + '})',content_type: "application/javascript"
+  end
+
+  def get_draft_comment #获取评价草稿
+    user = User.find_by_openid(params[:openid])
+    comment = Comment.where('user_id = ? and order_id = ?',user.id,params[:orderid])
+    if comment.count > 0
+      comment = comment.first
+    else
+      comment = Comment.create(user_id:user.id,order_id:params[:orderid],status:0)
+    end
+    commentimgs = comment.commentimgs
+    commentimgarr = []
+    commentimgs.each do |commentimg|
+      param = {
+          id:commentimg.id,
+          image:commentimg.commentimg.url
+      }
+      commentimgarr.push param
+    end
+    render json: params[:callback] + '({"comment":' + comment.to_json + ',"images":' + commentimgarr.to_json + '})',content_type: "application/javascript"
+  end
+
+  def upload_commentimg #上传评论照片
+    status = 1
+    user = User.find_by_openid(params[:openid])
+    comment = Comment.where('user_id = ? and order_id = ?',user.id,params[:orderid]).first
+    comment.commentimgs.create(commentimg:params[:image])
+    render json: '{"status":' + status.to_s + '}'
+  end
+
+  def delete_commentimg #删除评论照片
+    status = 1
+    commentimg = Commentimg.find(params[:commentimgid])
+    commentimg.destroy
+    render json: params[:callback] + '({"status":' + status.to_s + '})',content_type: "application/javascript"
+  end
+
+  def comment #评价
+    status  = 0
+    comment = Comment.find(params[:commentid])
+    if comment
+      comment.comment = params[:comment]
+      comment.status = 1
+      comment.commentlevel = params[:commentlevel]
+      comment.descscore = params[:descscore]
+      comment.deliverscore = params[:deliverscore]
+      comment.servicescore = params[:servicescore]
+      comment.anonymous = params[:anonymous]
+      comment.save
+      status = 1
+      order = comment.order
+      order.autocommenttime = Time.now
+      order.commentstatus = 1
+      order.save
+    end
+    render json: params[:callback] + '({"status":' + status.to_s + '})',content_type: "application/javascript"
+  end
+
+  def get_search #获取查询产品列表
+    products = Product.where('grounding = 1 and (name like ? or pinyin like ? or fullpinyin like ?)',"%#{params[:search]}%","%#{params[:search]}%","%#{params[:search]}%")
+    productarr = Array.new
+    products.each do |product|
+      cover = product.productimgs.where('isdefault = 1')
+      if cover.count > 0
+        cover = cover.first.productimg.url
+      end
+      param = {
+          id:product.id,
+          name:product.name,
+          price:product.price,
+          unit:product.unit,
+          spec:product.spec,
+          pinyin:product.pinyin,
+          fullpinyin:product.fullpinyin,
+          subtitle:product.subtitle,
+          cover:cover
+      }
+      productarr.push param
+    end
+
+    render json: params[:callback]+'({"products": ' + productarr.to_json + '})',content_type: "application/javascript"
+  end
+
   private
+
+  def get_orders(orders) #获取订单
+    productarr = []
+    orders.each do |order|
+      orderdetails = order.orderdetails
+      orderdetailarr = []
+      detailcount = 0
+      orderdetails.each do |orderdetail|
+        orderoptionals = orderdetail.orderoptionals
+        optionalarr = []
+        orderoptionals.each do |optional|
+          optional_params = {
+              id:optional.id,
+              orderdetail_id:optional.orderdetail_id,
+              selectcondition_id:optional.selectcondition_id,
+              selectcondition_name:optional.selectcondition_name
+          }
+          optionalarr.push optional_params
+        end
+
+        orderactivetypes = orderdetail.orderactivetypes
+        orderactivetypearr = []
+        orderactivetypes.each do |active|
+          active_params = {
+              id:active.id,
+              orderdetail_id:active.orderdetail_id,
+              active:active.active,
+              showlable:active.showlable,
+              summary:active.summary,
+              keywords:active.keywords
+          }
+          orderactivetypearr.push active_params
+        end
+
+        product = Product.find(orderdetail.product_id)
+        cover = nil
+        productimg = product.productimgs.where('isdefault = 1')
+        if productimg.count > 0
+          cover = productimg.first.productimg.url
+        end
+        orderdetail_params = {
+            id:orderdetail.id,
+            order_id:order.id,
+            product_id:orderdetail.product_id,
+            name:product.name,
+            number:orderdetail.number,
+            price:orderdetail.price,
+            unit:product.unit,
+            spec:product.spec,
+            subtitle:product.subtitle,
+            weight:product.weight,
+            brand:product.brand,
+            pack:product.pack,
+            season:product.season,
+            cover:cover,
+            producttype:orderdetail.producttype,
+            optional:optionalarr,
+            active:orderactivetypearr
+        }
+        detailcount += orderdetail.number
+        orderdetailarr.push orderdetail_params
+
+      end
+      params = {
+          id:order.id,
+          user_id:order.user_id,
+          ordernumber:order.ordernumber,
+          deduction:order.deduction,
+          payprice:order.payprice,
+          paysum:order.paysum,
+          paystatus:order.paystatus,
+          province:order.province,
+          city:order.city,
+          district:order.district,
+          street:order.street,
+          address:order.address,
+          adcode:order.adcode,
+          contact:order.contact,
+          contactphone:order.contactphone,
+          receiptstatus:order.receiptstatus,
+          autoreceipttime:order.autoreceipttime,
+          deliverstatus:order.deliverstatus,
+          summary:order.summary,
+          status:order.status,
+          frontuuid:order.frontuuid,
+          paytime:order.paytime,
+          commentstatus:order.commentstatus,
+          autocommenttime:order.autocommenttime,
+          discount:order.discount,
+          owerprofit:order.owerprofit,
+          detailcount:detailcount,
+          orderdetail:orderdetailarr
+      }
+      productarr.push params
+    end
+    productarr
+  end
 
   def re_write_order(orderid,productarr) #重新计算未支付订单
     Order.transaction do

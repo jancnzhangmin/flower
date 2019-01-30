@@ -1,20 +1,11 @@
 class TestsController < ApplicationController
   before_action :set_test, only: [:show, :edit, :update, :destroy]
-
+  skip_before_action :verify_authenticity_token
   # GET /tests
   # GET /tests.json
 
   def index
-    productarr = Array.new
-    productactivecla = Activeproductclass.new
-    productactivecla.product_id = 1
-    productactivecla.number = 3
-    productarr.push productactivecla
-    productactivecla = Activeproductclass.new
-    productactivecla.product_id = 2
-    productactivecla.number = 1
-    productarr.push productactivecla
-    pp = checkactive(productarr)
+
     @tests = Test.all
   end
 
@@ -69,6 +60,12 @@ class TestsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to tests_url, notice: 'Test was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def deliver
+    params[:Workbook]["Worksheet"]["Table"]["Row"].each do |f|
+      Delivercode.create(name:f["Cell"][0]["Data"]["text"],comcode:f["Cell"][1]["Data"]["text"])
     end
   end
 

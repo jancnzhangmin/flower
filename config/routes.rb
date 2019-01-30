@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  resources :tests
+  resources :tests do
+    collection do
+      #post 'deliver'
+    end
+  end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   resources :configs
   resources :manufacturers
@@ -15,6 +19,7 @@ Rails.application.routes.draw do
     resources :optionals do
       resources :conditions
     end
+    resources :productqrs
   end
   resources :secondactives do
     resources :secondactivedetails do
@@ -90,9 +95,28 @@ Rails.application.routes.draw do
       get 'delete_order'
       get 'get_unpay_count'
       get 'get_unapyorder'
+      get 'get_undeliver_list'
+      get 'get_undeliver_count'
+      get 'pay_process'
+      get 'pay'
+      get 'get_unreceipt_list'
+      get 'get_unreceipt_count'
+      get 'query_express'
+      get 'confirm_receipt'
+      get 'get_uncomment_list'
+      get 'get_uncomment_count'
+      get 'get_draft_comment'
+      post 'upload_commentimg'
+      get 'delete_commentimg'
+      get 'comment'
+      get 'get_search'
     end
   end
-  resources :getopenids
+  resources :getopenids do
+    collection do
+      get 'getopenid'
+    end
+  end
   resources :explains do
     resources :explainproducts do
       member do
@@ -106,4 +130,17 @@ Rails.application.routes.draw do
     end
   end
   resources :freeposts
+  resources :delivercodes
+  resources :orders do
+    resources :orderdetails
+    resources :orderdelivers do
+      collection do
+        get 'get_delivername'
+      end
+    end
+  end
+  resources :users
+  require 'sidekiq/web'
+  mount Sidekiq::Web => '/sidekiq'
+  resources :monitors
 end

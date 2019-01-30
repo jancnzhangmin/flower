@@ -37,4 +37,5 @@
 //= require echarts.min
 //= require kindeditor
 //= require shine
+//= require fabric.min
 

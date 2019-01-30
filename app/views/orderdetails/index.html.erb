@@ -1,0 +1,72 @@
+<%= render 'layerbegin' %>
+
+<div class="page-content">
+  <div class="page-header">
+    <h1>
+      订单明细
+    </h1>
+  </div><!-- /.page-header -->
+
+  <div class="row">
+    <div class="col-xs-12">
+      <!-- PAGE CONTENT BEGINS -->
+
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="table-responsive">
+            <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+              <thead>
+              <tr>
+                <th class="text-center">产品名称</th>
+                <th class="text-center">选择参数</th>
+                <th class="text-center">单价</th>
+                <th class="text-center">数量</th>
+                <th class="text-center">合计</th>
+                <th class="text-center">产品类型</th>
+              </tr>
+              </thead>
+              <tbody>
+              <% @orderdetails.each do |orderdetail| %>
+                <% product = Product.find(orderdetail.product_id) %>
+                <% orderoptionals = orderdetail.orderoptionals %>
+                <tr>
+                  <td>
+                    <%= product.name %>
+                  </td>
+                  <td>
+                    <% orderoptionals.each do |orderoptional| %>
+                      <%= orderoptional.selectcondition_name %>
+                    <% end %>
+                  </td>
+                  <td>
+                    <%= orderdetail.price %>
+                  </td>
+                  <td>
+                    <%= orderdetail.number %>
+                  </td>
+                  <td>
+                    <%= orderdetail.sum %>
+                  </td>
+                  <td>
+                    <% if orderdetail.producttype == 0 %>
+                      正常
+                    <% else %>
+                      赠送
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+<%= render 'layerend' %>

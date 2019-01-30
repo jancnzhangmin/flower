@@ -1,0 +1,2 @@
+class Delivercode < ApplicationRecord
+end
