@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_29_083117) do
+ActiveRecord::Schema.define(version: 2019_02_11_085841) do
 
   create_table "activecolors", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -384,6 +384,7 @@ ActiveRecord::Schema.define(version: 2019_01_29_083117) do
     t.string "productqrbase_content_type"
     t.bigint "productqrbase_file_size"
     t.datetime "productqrbase_updated_at"
+    t.text "qrjson"
   end
 
   create_table "products", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -461,6 +462,15 @@ ActiveRecord::Schema.define(version: 2019_01_29_083117) do
     t.float "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "sysqrs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "sysqr_file_name"
+    t.string "sysqr_content_type"
+    t.bigint "sysqr_file_size"
+    t.datetime "sysqr_updated_at"
   end
 
   create_table "tests", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

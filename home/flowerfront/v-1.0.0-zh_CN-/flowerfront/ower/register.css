@@ -1,0 +1,11 @@
+.input-class {
+	border: 0px;
+}
+
+.input-class:focus {
+	box-shadow: 0 0 0px rgba(102, 175, 233, 0);
+}
+
+.row-class {
+	border-bottom:solid 1px #f6f6f6;
+}

@@ -30,6 +30,7 @@
           <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 海报背景 </label>
           <div class="col-sm-10">
             <%= f.file_field :productqrbase,class:"col-xs-10 col-sm-8" %>
+            <%= f.hidden_field :qrjson,class:"col-xs-10 col-sm-8",id:'qrjson' %>
           </div>
         </div>
 
@@ -58,55 +59,96 @@
     $(document).ready(function(){
         var canvas = new fabric.Canvas('canvas');
 
-        fabric.Image.fromURL('<%= Config.last.headdemo.url %>', function(headdemo) {
-            headdemo.scale(0.5).set({
-                left: 20,
-                top: 20,
-                clipTo: function (ctx) {
-                    ctx.arc(0, 0, 65, 0, Math.PI * 2, true);
-                }
+        if('<%= @productqr.qrjson %>'){
+
+            // $.each(jsonstr["objects"],function(index,item){
+            //     if(item["type"] == 'group'){
+            //         $.each(item["objects"],function(oindex,oitem){
+            //            if(oitem["type"] == 'image'){
+            //                debugger
+            //            }
+            //         });
+            //     }
+            //  });
+
+
+
+            try {
+                canvas.loadFromJSON('<%= @productqr.qrjson.html_safe %>');
+            }catch (e) {}
+
+        }else {
+
+            fabric.Image.fromURL('<%= Config.last.headdemo.url %>', function (headdemo) {
+                var head = headdemo.scale(0.4).set({
+                    left: 5,
+                    top: 5,
+                    clipTo: function(ctx){ctx.arc(0, 0, 65, 0, Math.PI * 2, true)}
+                });
+                var circle = new fabric.Circle({
+                    radius: 31,
+                    strokeWidth: 1,
+                    stroke: '#fff',
+                    fill: 'rgba(0,0,0,0)'
+                });
+
+                var group = new fabric.Group([head, circle], {
+                    left: 20,
+                    top: 20
+                });
+                canvas.add(group);
             });
-            canvas.add(headdemo);
-        });
 
-        fabric.Image.fromURL('<%= Config.last.qrdemo.url %>', function(qrdemo) {
-            qrdemo.scale(0.4).set({
-                left: 220,
-                top: 505
+            fabric.Image.fromURL('<%= Config.last.qrdemo.url %>', function (qrdemo) {
+                qrdemo.scale(0.4).set({
+                    left: 220,
+                    top: 505
+                });
+                canvas.add(qrdemo);
             });
-            canvas.add(qrdemo);
-        });
 
-        var nickname = new fabric.Textbox('风信子', {
-            left: 100,
-            top: 30,
-            fill: '#fff'
-        });
-        nickname.setShadow({
-            color: 'rgba(0,0,0,0.3)',
-            offsetX:2,
-            offsetY:1
-        });
-        nickname.scale(0.4);
-        canvas.add(nickname);
+            var nickname = new fabric.Textbox('花当家', {
+                left: 90,
+                top: 30,
+                fill: '#fff'
+            });
+            nickname.setShadow({
+                color: 'rgba(0,0,0,0.3)',
+                offsetX: 2,
+                offsetY: 1
+            });
+            nickname.scale(0.4);
+            canvas.add(nickname);
 
-        var vid = new fabric.Textbox('10001', {
-            left: 100,
-            top: 55,
-            fill: '#fff'
-        });
-        vid.setShadow({
-            color: 'rgba(0,0,0,0.3)',
-            offsetX:2,
-            offsetY:1
-        });
-        vid.scale(0.4);
-        canvas.add(vid);
+            var vid = new fabric.Textbox('10001', {
+                left: 90,
+                top: 60,
+                fill: '#fff'
+            });
+            vid.setShadow({
+                color: 'rgba(0,0,0,0.3)',
+                offsetX: 2,
+                offsetY: 1
+            });
+            vid.scale(0.4);
+            canvas.add(vid);
 
-        fabric.Image.fromURL('<%= @productqr.productqrbase.url  %>', function(img) {
-            img.set({ left: 0, top: 0}).scale(0.5);
-            canvas.backgroundImage = img;
-        });
+            fabric.Image.fromURL('<%= @productqr.productqrbase.url  %>', function (img) {
+                img.set({left: 0, top: 0}).scale(0.5);
+                canvas.backgroundImage = img;
+            });
+        }
+
+
+        $('#submit').click(function () {
+            $('#qrjson').val(JSON.stringify(canvas));
+            //$('#qrjson').val(canvas.toSVG());
+            //debugger
+            //console.log(canvas.toSVG())
+            //console.log(canvas.toJSON());
+            //return false;
+        })
+
     });
 
 

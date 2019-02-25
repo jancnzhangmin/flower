@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<div component="$model/UI2/system/components/justep/window/window" design="device:m;" xid="window" class="window cFrMFzm" data-bind="component:{name:'$model/UI2/system/components/justep/window/window'}" __cid="cFrMFzm" components="$model/UI2/system/components/justep/model/model,$model/UI2/system/components/justep/windowContainer/windowContainer,$model/UI2/system/components/justep/loadingBar/loadingBar,$model/UI2/system/components/justep/button/button,$model/UI2/system/components/justep/row/row,$model/UI2/system/components/justep/list/list,$model/UI2/system/components/justep/titleBar/titleBar,$model/UI2/system/components/justep/panel/child,$model/UI2/system/components/justep/data/data,$model/UI2/system/components/justep/window/window,$model/UI2/system/components/justep/panel/panel,">
+  <style>.firstname.cFrMFzm{width: 35px; height: 35px; border-radius: 50%; background: rgb(170, 170, 170); color: white; display: table-cell; vertical-align: middle}</style>  
+  <div component="$model/UI2/system/components/justep/model/model" xid="model" style="display:none" data-bind="component:{name:'$model/UI2/system/components/justep/model/model'}" data-events="onLoad:modelLoad;onParamsReceive:modelParamsReceive" __cid="cFrMFzm" class="cFrMFzm"></div>  
+  <div component="$model/UI2/system/components/justep/panel/panel" class="x-panel x-full pcJJBVn2-iosstatusbar cFrMFzm" xid="panel1" data-bind="component:{name:'$model/UI2/system/components/justep/panel/panel'}" __cid="cFrMFzm"> 
+    <div class="x-panel-top cFrMFzm" xid="top1" component="$model/UI2/system/components/justep/panel/child" data-bind="component:{name:'$model/UI2/system/components/justep/panel/child'}" __cid="cFrMFzm"> 
+      <div component="$model/UI2/system/components/justep/titleBar/titleBar" class="x-titlebar cFrMFzm" style="background-color:white;" data-bind="component:{name:'$model/UI2/system/components/justep/titleBar/titleBar'}" data-config="{&#34;title&#34;:&#34;我的收货地址&#34;}" __cid="cFrMFzm"> 
+        <div class="x-titlebar-left cFrMFzm" style="color:#333333;" __cid="cFrMFzm"> 
+          <a component="$model/UI2/system/components/justep/button/button" class="btn btn-link btn-only-icon cFrMFzm" xid="backBtn" data-bind="component:{name:'$model/UI2/system/components/justep/button/button'}" data-events="onClick:{operation:'window.close'}" data-config="{&#34;icon&#34;:&#34;icon-chevron-left&#34;,&#34;label&#34;:&#34;&#34;}" __cid="cFrMFzm"> 
+            <i class="icon-chevron-left cFrMFzm" __cid="cFrMFzm"></i>  
+            <span __cid="cFrMFzm" class="cFrMFzm"></span> 
+          </a> 
+        </div>  
+        <div class="x-titlebar-title cFrMFzm" style="font-weight:normal;color:#333333;" __cid="cFrMFzm">我的收货地址</div>  
+        <div class="x-titlebar-right  cFrMFzm" __cid="cFrMFzm">
+          <div class="empty cFrMFzm" __cid="cFrMFzm"></div>
+          <a component="$model/UI2/system/components/justep/button/button" class="btn btn-link cFrMFzm" xid="addbtn" style="color:#333333;" data-bind="component:{name:'$model/UI2/system/components/justep/button/button'}" data-events="onClick:addbtnClick" data-config="{&#34;label&#34;:&#34;添加新地址&#34;}" __cid="cFrMFzm"> 
+            <i xid="i1" __cid="cFrMFzm" class="cFrMFzm"></i>  
+            <span xid="span1" style="font-size:16px;" __cid="cFrMFzm" class="cFrMFzm">添加新地址</span>
+          </a>
+        </div> 
+      </div> 
+    </div>  
+    <div class="x-panel-content x-cards cFrMFzm" xid="content1" component="$model/UI2/system/components/justep/panel/child" data-bind="component:{name:'$model/UI2/system/components/justep/panel/child'}" __cid="cFrMFzm">
+      <div component="$model/UI2/system/components/justep/list/list" class="x-list cFrMFzm" xid="list1" style="background-color:white;" data-bind="component:{name:'$model/UI2/system/components/justep/list/list'}" data-config="{&#34;data&#34;:&#34;receiptData&#34;}" __cid="cFrMFzm"> 
+        <ul class="x-list-template hide cFrMFzm" xid="listTemplateUl1" style="padding-top:15px;padding-bottom:15px;" __cid="cFrMFzm" data-bind="foreach:{data:$model.foreach_list1($element),afterRender:$model.foreach_afterRender_list1.bind($model,$element)}"> 
+          <div component="$model/UI2/system/components/justep/row/row" class="x-row x-row-center cFrMFzm" xid="row1" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="cFrMFzm"> 
+            <div class="x-col x-col-fixed text-center cFrMFzm" xid="col1" style="width:50px;" __cid="cFrMFzm" data-bind="event:{click:$model._callModelFn.bind($model, 'col1Click')}">
+              <div xid="div1" class="firstname cFrMFzm" __cid="cFrMFzm">
+                <span xid="span2" style="font-size:large;" __cid="cFrMFzm" class="cFrMFzm" data-bind="text:val(&#34;contact&#34;).substr(0,1)">张</span>
+              </div>
+            </div>  
+            <div class="x-col cFrMFzm" xid="col2" __cid="cFrMFzm" data-bind="event:{click:$model._callModelFn.bind($model, 'col1Click')}">
+              <div xid="div2" __cid="cFrMFzm" class="cFrMFzm">
+                <span xid="span3" style="font-size:large;" __cid="cFrMFzm" class="cFrMFzm" data-bind="text:val(&#34;contact&#34;)"></span>  
+                <span xid="span4" class="text-muted cFrMFzm" style="margin-left:10px;" __cid="cFrMFzm" data-bind="text:val(&#34;contactphone&#34;)"></span>
+              </div>  
+              <div xid="div3" __cid="cFrMFzm" class="cFrMFzm">
+                <span xid="span5" style="background-color:#ffeae9;color:#fe2e23;font-weight:lighter;padding:1px;border-radius:3px;font-size:small;" __cid="cFrMFzm" class="cFrMFzm" data-bind="visible:val(&#34;isdefault&#34;) == 1">默认</span>  
+                <span xid="span6" __cid="cFrMFzm" class="cFrMFzm" data-bind="text:val(&#34;province&#34;)"></span>  
+                <span xid="span7" __cid="cFrMFzm" class="cFrMFzm" data-bind="text:val(&#34;city&#34;)"></span>  
+                <span xid="span8" __cid="cFrMFzm" class="cFrMFzm" data-bind="text:val(&#34;district&#34;)"></span>  
+                <span xid="span9" __cid="cFrMFzm" class="cFrMFzm" data-bind="text:val(&#34;street&#34;)"></span>  
+                <span xid="span10" __cid="cFrMFzm" class="cFrMFzm" data-bind="text:val(&#34;address&#34;)"></span>
+              </div>
+            </div>  
+            <div class="x-col x-col-fixed text-right cFrMFzm" xid="col3" style="width:1px;padding-top:18px;" __cid="cFrMFzm">
+              <label xid="label2" style="height:30px;border-right-style:solid;border-right-width:1px;border-right-color:#f6f6f6;" __cid="cFrMFzm" class="cFrMFzm"></label> 
+            </div>  
+            <div class="x-col x-col-fixed cFrMFzm" xid="col4" style="width:60px;padding-left:0px;" __cid="cFrMFzm">
+              <a component="$model/UI2/system/components/justep/button/button" class="btn btn-link cFrMFzm" xid="editbtn" data-bind="component:{name:'$model/UI2/system/components/justep/button/button'}" data-events="onClick:editbtnClick" data-config="{&#34;label&#34;:&#34;编辑&#34;}" __cid="cFrMFzm"> 
+                <i xid="i2" __cid="cFrMFzm" class="cFrMFzm"></i>  
+                <span xid="span11" class="text-muted cFrMFzm" __cid="cFrMFzm">编辑</span>
+              </a>
+            </div>
+          </div>
+        </ul> 
+      </div>
+    </div>  
+    <style __cid="cFrMFzm" class="cFrMFzm">.x-panel.pcJJBVn2-iosstatusbar >.x-panel-top {height: 48px;}.x-panel.pcJJBVn2-iosstatusbar >.x-panel-content { top: 48px;bottom: nullpx;}.x-panel.pcJJBVn2-iosstatusbar >.x-panel-bottom {height: nullpx;}.iosstatusbar .x-panel.pcJJBVn2-iosstatusbar >.x-panel-top,.iosstatusbar .x-panel .x-panel-content .x-has-iosstatusbar.x-panel.pcJJBVn2-iosstatusbar >.x-panel-top {height: 68px;}.iosstatusbar .x-panel.pcJJBVn2-iosstatusbar >.x-panel-content,.iosstatusbar .x-panel .x-panel-content .x-has-iosstatusbar.x-panel.pcJJBVn2-iosstatusbar >.x-panel-content { top: 68px;}.iosstatusbar .x-panel .x-panel-content .x-panel.pcJJBVn2-iosstatusbar >.x-panel-top {height: 48px;}.iosstatusbar .x-panel .x-panel-content .x-panel.pcJJBVn2-iosstatusbar >.x-panel-content {top: 48px;}</style>
+  </div>  
+  <div component="$model/UI2/system/components/justep/windowContainer/windowContainer" class="x-window-container cFrMFzm" xid="windowContainer1" __component-context__="block" data-bind="component:{name:'$model/UI2/system/components/justep/windowContainer/windowContainer'}" __cid="cFrMFzm"></div>
+</div>

@@ -795,6 +795,22 @@ class ApiController < ApplicationController
     render json: params[:callback]+'({"products": ' + productarr.to_json + '})',content_type: "application/javascript"
   end
 
+  def check_subscribe #检查是否关注公众号
+    status = 0
+    $client ||= WeixinAuthorize::Client.new(Config.first.appid, Config.first.appsecret)
+    user_info = $client.user(params[:openid])
+    result = user_info.result
+    if result['subscribe']
+      status = 1
+    end
+    render json: params[:callback]+'({"status": ' + status.to_s + '})',content_type: "application/javascript"
+  end
+
+  def get_sysqr #获取平台二维码
+    sysqrimg = Sysqr.last.sysqr.url
+    render json: params[:callback]+'({"sysqr": "' + sysqrimg.to_s + '"})',content_type: "application/javascript"
+  end
+
   private
 
   def get_orders(orders) #获取订单

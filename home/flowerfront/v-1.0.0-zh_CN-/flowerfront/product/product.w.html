@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<div component="$model/UI2/system/components/justep/window/window" design="device:m;" xid="window" class="window cfQzuq2" data-bind="component:{name:'$model/UI2/system/components/justep/window/window'}" __cid="cfQzuq2" components="$model/UI2/system/components/justep/model/model,$model/UI2/system/components/justep/loadingBar/loadingBar,$model/UI2/system/components/justep/button/button,$model/UI2/system/components/justep/row/row,$model/UI2/system/components/justep/input/input,$model/UI2/system/components/justep/list/list,$model/UI2/system/components/bootstrap/row/row,$model/UI2/system/components/justep/titleBar/titleBar,$model/UI2/system/components/justep/panel/child,$model/UI2/system/components/justep/data/data,$model/UI2/system/components/justep/window/window,$model/UI2/system/components/justep/panel/panel,">
+  <style>.x-inputText.cfQzuq2{border-radius: 20px; background-color: rgba(255, 255, 255, 0.8); height: 34px; text-indent: 20px} .form-control-feedback.cfQzuq2{height: 34px; line-height: 34px} .hasselect.cfQzuq2{background: rgb(255, 255, 255)} .noselect.cfQzuq2{color: rgb(255, 255, 255)} .tb-box.cfQzuq2, .tb-box.cfQzuq2 > .col.cfQzuq2{height: 100%; margin: 0; padding: 0} .tb-box.cfQzuq2 > .col.cfQzuq2{overflow: auto} .tb-box.cfQzuq2 > .col.cfQzuq2:first-child{padding-right: 10px} .ev.cfQzuq2{padding: 10px; padding-right: 5px} .od.cfQzuq2{padding: 10px; padding-left: 5px} .btnclass.cfQzuq2{background: linear-gradient(to bottom, rgb(255, 66, 86), rgb(254, 89, 147)); -webkit-background-clip: text; -webkit-text-fill-color: transparent}</style>  
+  <div component="$model/UI2/system/components/justep/model/model" xid="model" style="display:none" data-bind="component:{name:'$model/UI2/system/components/justep/model/model'}" data-events="onLoad:modelLoad" __cid="cfQzuq2" class="cfQzuq2"></div>  
+  <div component="$model/UI2/system/components/justep/panel/panel" class="x-panel x-full pc7fqMra-iosstatusbar cfQzuq2" xid="panel1" data-bind="component:{name:'$model/UI2/system/components/justep/panel/panel'}" __cid="cfQzuq2"> 
+    <div class="x-panel-top cfQzuq2" xid="top1" component="$model/UI2/system/components/justep/panel/child" data-bind="component:{name:'$model/UI2/system/components/justep/panel/child'}" __cid="cfQzuq2"> 
+      <div component="$model/UI2/system/components/justep/titleBar/titleBar" class="x-titlebar cfQzuq2" style="background-color:white;" data-bind="component:{name:'$model/UI2/system/components/justep/titleBar/titleBar'}" data-config="{&#34;title&#34;:&#34;全部商品&#34;}" __cid="cfQzuq2"> 
+        <div class="x-titlebar-left cfQzuq2" __cid="cfQzuq2"> 
+          <a component="$model/UI2/system/components/justep/button/button" class="btn btn-link btn-only-icon cfQzuq2" xid="backBtn" data-bind="component:{name:'$model/UI2/system/components/justep/button/button'}" data-events="onClick:{operation:'window.close'}" data-config="{&#34;icon&#34;:&#34;icon-chevron-left&#34;,&#34;label&#34;:&#34;&#34;}" __cid="cfQzuq2"> 
+            <i class="icon-chevron-left cfQzuq2" __cid="cfQzuq2"></i>  
+            <span __cid="cfQzuq2" class="cfQzuq2"></span> 
+          </a> 
+        </div>  
+        <div class="x-titlebar-title cfQzuq2" style="font-weight:normal;color:#333333;" __cid="cfQzuq2">全部商品</div>  
+        <div class="x-titlebar-right  cfQzuq2" __cid="cfQzuq2">
+          <div class="empty cfQzuq2" __cid="cfQzuq2"></div>
+        </div> 
+      </div> 
+    </div>  
+    <div class="x-panel-content x-cards cfQzuq2" xid="content1" style="padding-top:0px;" component="$model/UI2/system/components/justep/panel/child" data-bind="component:{name:'$model/UI2/system/components/justep/panel/child'}" __cid="cfQzuq2">
+      <div component="$model/UI2/system/components/justep/row/row" class="x-row cfQzuq2" xid="row5" style="padding-top:0px;padding-bottom:0px;" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="cfQzuq2"> 
+        <div class="x-col cfQzuq2" xid="col17" __cid="cfQzuq2"> 
+          <div class="form-group has-feedback text-muted cfQzuq2" xid="formGroup1" style="margin-bottom:0px;" __cid="cfQzuq2"> 
+            <i class="icon-ios7-search-strong form-control-feedback cfQzuq2" xid="col1" style="left:0;font-size:large;" __cid="cfQzuq2"></i>  
+            <input component="$model/UI2/system/components/justep/input/input" class="form-control x-inputText cfQzuq2" xid="key" data-bind="component:{name:'$model/UI2/system/components/justep/input/input'}" data-config="{&#34;placeHolder&#34;:&#34;玫瑰花茶&#34;}" __cid="cfQzuq2">
+          </div> 
+        </div> 
+      </div>  
+      <div component="$model/UI2/system/components/bootstrap/row/row" class="row tb-box cfQzuq2" xid="row1" style="height:100%;" data-bind="component:{name:'$model/UI2/system/components/bootstrap/row/row'}" __cid="cfQzuq2"> 
+        <div class="col col-xs-3 text-center cfQzuq2" xid="col2" style="background-color:#ff5b7a;padding-right:0px;" __cid="cfQzuq2">
+          <div component="$model/UI2/system/components/justep/list/list" class="x-list cfQzuq2" xid="list1" data-bind="component:{name:'$model/UI2/system/components/justep/list/list'}" data-config="{&#34;data&#34;:&#34;claData&#34;}" __cid="cfQzuq2"> 
+            <ul class="x-list-template hide cfQzuq2" xid="listTemplateUl1" __cid="cfQzuq2" data-bind="foreach:{data:$model.foreach_list1($element),afterRender:$model.foreach_afterRender_list1.bind($model,$element)}"> 
+              <li xid="li1" style="padding-top:15px;padding-bottom:15px;" __cid="cfQzuq2" class="cfQzuq2" data-bind="css:val(&#34;isselect&#34;) == 1 ? 'hasselect' : 'noselect',event:{click:$model._callModelFn.bind($model, 'li1Click')}">
+                <span xid="span1" __cid="cfQzuq2" class="cfQzuq2" data-bind="text:val(&#34;name&#34;)"></span>
+              </li>
+            </ul> 
+          </div>
+        </div>  
+        <div class="col col-xs-9 cfQzuq2" xid="col3" __cid="cfQzuq2">
+          <div component="$model/UI2/system/components/justep/row/row" class="x-row cfQzuq2" xid="row2" style="padding-top:0px;" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="cfQzuq2"> 
+            <div class="x-col cfQzuq2" xid="col4" style="padding-top:0px;" __cid="cfQzuq2">
+              <img src="@justepContextPath@/flowerfront/image/product_top.png" alt="" xid="image1" style="width:100%;" __cid="cfQzuq2" class="cfQzuq2">
+            </div> 
+          </div>
+          <div component="$model/UI2/system/components/justep/row/row" class="x-row x-row-center cfQzuq2" xid="row3" style="padding-bottom:0px;" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="cfQzuq2"> 
+            <div class="x-col text-right cfQzuq2" xid="col7" __cid="cfQzuq2">
+              <label xid="label1" style="width:70%;height:1px;border-bottom-style:solid;border-bottom-width:1px;border-bottom-color:#C0C0C0;" __cid="cfQzuq2" class="cfQzuq2"></label>
+            </div>  
+            <div class="x-col text-center cfQzuq2" xid="col8" __cid="cfQzuq2">
+              <span xid="span2" class="text-muted cfQzuq2" __cid="cfQzuq2"></span>
+            </div>  
+            <div class="x-col cfQzuq2" xid="col9" __cid="cfQzuq2">
+              <label xid="label2" style="width:70%;height:1px;border-bottom-style:solid;border-bottom-width:1px;border-bottom-color:#C0C0C0;" __cid="cfQzuq2" class="cfQzuq2"></label>
+            </div>
+          </div>
+          <div component="$model/UI2/system/components/justep/list/list" class="x-list cfQzuq2" xid="list2" style="margin-top:-10px;" data-bind="component:{name:'$model/UI2/system/components/justep/list/list'}" data-events="onAfterRender:list1AfterRender" data-config="{&#34;data&#34;:&#34;productData&#34;}" __cid="cfQzuq2"> 
+            <ul class="x-list-template hide cfQzuq2" xid="listTemplateUl2" __cid="cfQzuq2" data-bind="foreach:{data:$model.foreach_list2($element),afterRender:$model.foreach_afterRender_list2.bind($model,$element)}"> 
+              <div xid="div25" class="col-xs-6 col-sm-4 cfQzuq2" style="padding-top:5px;padding-bottom:5px;" __cid="cfQzuq2" data-bind="css:val(&#34;odd&#34;) == 0 ? 'ev' : 'od',event:{click:$model._callModelFn.bind($model, 'div25Click')}"> 
+                <div xid="div24" style="border-radius:5px 5px 0px 0px;overflow: hidden;background-color:#eaeaea;" class="imagediv cfQzuq2" __cid="cfQzuq2"> 
+                  <img src=" " alt="" xid="image13" style="width:100%;" __cid="cfQzuq2" class="cfQzuq2" data-bind="attr:{src:val(&#34;cover&#34;)}">  
+                  <i xid="i5" style="position:relative;font-size:x-large;margin-top:-30px;margin-right:10px;" class="follow pull-right btnclass cfQzuq2" __cid="cfQzuq2" data-bind="css:val(&#34;collection&#34;) == 1 ? &#34;my my-xinxingshi&#34; : &#34;my my-xinxingxian&#34;,event:{click:$model._callModelFn.bind($model, 'i5Click')}"></i>
+                </div>  
+                <div xid="div28" style="background-color:white;padding-bottom:5px;border-radius: 0 0 5px 5px;" __cid="cfQzuq2" class="cfQzuq2"> 
+                  <div xid="div26" style="padding-top:10px;padding-left:10px;" __cid="cfQzuq2" class="cfQzuq2"> 
+                    <span xid="span21" style="font-size:medium;" __cid="cfQzuq2" class="cfQzuq2" data-bind="text:val(&#34;name&#34;)"></span>
+                  </div>  
+                  <div xid="div27" style="padding-left:10px;" __cid="cfQzuq2" class="cfQzuq2"> 
+                    <span xid="span22" style="background-color:white;font-size:small;" class="text-muted cfQzuq2" __cid="cfQzuq2" data-bind="text:val(&#34;subtitle&#34;),visible:false"></span>
+                  </div>  
+                  <div xid="div29" style="padding-left:10px;padding-right:5px;" __cid="cfQzuq2" class="cfQzuq2"> 
+                    <span xid="span23" style="font-size:large;color:#fe2e23;" __cid="cfQzuq2" class="cfQzuq2" data-bind="text:'￥' + val(&#34;price&#34;)"></span>  
+                    <span xid="span24" style="font-size:x-small;background-color:#ffeae9;color:#fe2e23;font-weight:lighter;padding:1px;border-radius:3px;" __cid="cfQzuq2" class="cfQzuq2" data-bind="text:'省' + val(&#34;discount&#34;) + '元',visible:val(&#34;discount&#34;) &gt; 0"></span>  
+                    <span xid="span25" class="pull-right text-muted cfQzuq2" style="font-size:x-small;font-weight:lighter;margin-top:9px;" __cid="cfQzuq2">已售100件</span>
+                  </div> 
+                </div> 
+              </div> 
+            </ul> 
+          </div> 
+        </div> 
+      </div>
+    </div>  
+    <style __cid="cfQzuq2" class="cfQzuq2">.x-panel.pc7fqMra-iosstatusbar >.x-panel-top {height: 48px;}.x-panel.pc7fqMra-iosstatusbar >.x-panel-content { top: 48px;bottom: nullpx;}.x-panel.pc7fqMra-iosstatusbar >.x-panel-bottom {height: nullpx;}.iosstatusbar .x-panel.pc7fqMra-iosstatusbar >.x-panel-top,.iosstatusbar .x-panel .x-panel-content .x-has-iosstatusbar.x-panel.pc7fqMra-iosstatusbar >.x-panel-top {height: 68px;}.iosstatusbar .x-panel.pc7fqMra-iosstatusbar >.x-panel-content,.iosstatusbar .x-panel .x-panel-content .x-has-iosstatusbar.x-panel.pc7fqMra-iosstatusbar >.x-panel-content { top: 68px;}.iosstatusbar .x-panel .x-panel-content .x-panel.pc7fqMra-iosstatusbar >.x-panel-top {height: 48px;}.iosstatusbar .x-panel .x-panel-content .x-panel.pc7fqMra-iosstatusbar >.x-panel-content {top: 48px;}</style>
+  </div> 
+</div>

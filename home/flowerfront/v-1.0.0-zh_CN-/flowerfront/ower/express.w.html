@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<div component="$model/UI2/system/components/justep/window/window" design="device:m;" xid="window" class="window crqqMNb" data-bind="component:{name:'$model/UI2/system/components/justep/window/window'}" __cid="crqqMNb" components="$model/UI2/system/components/justep/model/model,$model/UI2/system/components/justep/loadingBar/loadingBar,$model/UI2/system/components/justep/button/button,$model/UI2/system/components/justep/row/row,$model/UI2/system/components/justep/list/list,$model/UI2/system/components/justep/titleBar/titleBar,$model/UI2/system/components/justep/panel/child,$model/UI2/system/components/justep/data/data,$model/UI2/system/components/justep/window/window,$model/UI2/system/components/justep/panel/panel,">
+  <style>ul.crqqMNb li.crqqMNb{list-style: none} .track-rcol.crqqMNb{border: 1px solid rgb(238, 238, 238)} .track-list.crqqMNb{margin: 10px; padding-left: 5px; position: relative} .track-list.crqqMNb li.crqqMNb{position: relative; line-height: 18px; border-left: 1px solid rgb(217, 217, 217); color: rgb(153, 153, 153)} .track-list.crqqMNb li.first.crqqMNb{color: rgb(255, 66, 86); padding-top: 0; border: 0px; border-left: 1px solid rgb(217, 217, 217); border-image: -webkit-linear-gradient(white, white, white, white, white, white, white, white, white, white, white, white, white, white, white, rgb(217, 217, 217), rgb(217, 217, 217), rgb(217, 217, 217), rgb(217, 217, 217), rgb(217, 217, 217), rgb(217, 217, 217), rgb(217, 217, 217), rgb(217, 217, 217), rgb(217, 217, 217), rgb(217, 217, 217)) 1} .track-list.crqqMNb li.crqqMNb .node-icon.crqqMNb{position: absolute; left: -7.5px; top: 50%; width: 11px; height: 11px} .track-list.crqqMNb li.first.crqqMNb .node-icon.crqqMNb{background-position: 0 -72px} .track-list.crqqMNb li.crqqMNb .time.crqqMNb{margin-left: 10px; position: relative; top: 4px; display: inline-block; vertical-align: middle; position: relative} .track-list.crqqMNb li.crqqMNb .txt.crqqMNb{margin-left: 10px; position: relative; top: 0px; display: inline-block; vertical-align: middle; position: relative} .track-list.crqqMNb li.first.crqqMNb .time.crqqMNb{margin-right: 20px}</style>  
+  <div component="$model/UI2/system/components/justep/model/model" xid="model" style="display:none" data-bind="component:{name:'$model/UI2/system/components/justep/model/model'}" data-events="onParamsReceive:modelParamsReceive" __cid="crqqMNb" class="crqqMNb"></div>  
+  <div component="$model/UI2/system/components/justep/panel/panel" class="x-panel x-full pcVzmm2y-iosstatusbar crqqMNb" xid="panel1" data-bind="component:{name:'$model/UI2/system/components/justep/panel/panel'}" __cid="crqqMNb"> 
+    <div class="x-panel-top crqqMNb" xid="top1" component="$model/UI2/system/components/justep/panel/child" data-bind="component:{name:'$model/UI2/system/components/justep/panel/child'}" __cid="crqqMNb"> 
+      <div component="$model/UI2/system/components/justep/titleBar/titleBar" class="x-titlebar crqqMNb" style="background-color:white;" data-bind="component:{name:'$model/UI2/system/components/justep/titleBar/titleBar'}" data-config="{&#34;title&#34;:&#34;快递信息&#34;}" __cid="crqqMNb"> 
+        <div class="x-titlebar-left crqqMNb" style="color:#333333;" __cid="crqqMNb"> 
+          <a component="$model/UI2/system/components/justep/button/button" class="btn btn-link btn-only-icon crqqMNb" xid="backBtn" data-bind="component:{name:'$model/UI2/system/components/justep/button/button'}" data-events="onClick:{operation:'window.close'}" data-config="{&#34;icon&#34;:&#34;icon-chevron-left&#34;,&#34;label&#34;:&#34;&#34;}" __cid="crqqMNb"> 
+            <i class="icon-chevron-left crqqMNb" __cid="crqqMNb"></i>  
+            <span __cid="crqqMNb" class="crqqMNb"></span> 
+          </a> 
+        </div>  
+        <div class="x-titlebar-title crqqMNb" style="font-weight:normal;color:#333333;" __cid="crqqMNb">快递信息</div>  
+        <div class="x-titlebar-right  crqqMNb" __cid="crqqMNb">
+          <div class="empty crqqMNb" __cid="crqqMNb"></div>
+        </div> 
+      </div> 
+    </div>  
+    <div class="x-panel-content x-cards crqqMNb" xid="content1" component="$model/UI2/system/components/justep/panel/child" data-bind="component:{name:'$model/UI2/system/components/justep/panel/child'}" __cid="crqqMNb">
+      <div component="$model/UI2/system/components/justep/list/list" class="x-list crqqMNb" xid="list1" data-bind="component:{name:'$model/UI2/system/components/justep/list/list'}" data-config="{&#34;data&#34;:&#34;expressData&#34;}" __cid="crqqMNb"> 
+        <ul class="x-list-template hide crqqMNb" xid="listTemplateUl1" style="padding:5px;" __cid="crqqMNb" data-bind="foreach:{data:$model.foreach_list1($element),afterRender:$model.foreach_afterRender_list1.bind($model,$element)}"> 
+          <div xid="div1" style="background-color:white;border-radius:5px;" __cid="crqqMNb" class="crqqMNb">
+            <ul xid="ul1" style="padding-top:10px;padding-left:30px;" __cid="crqqMNb" class="crqqMNb">
+              <li xid="li2" style="font-size:medium;color:#555;" __cid="crqqMNb" class="crqqMNb">
+                <span xid="span1" __cid="crqqMNb" class="crqqMNb" data-bind="text:val(&#34;name&#34;)"></span>  
+                <span xid="span14" style="margin-left:5px;" __cid="crqqMNb" class="crqqMNb" data-bind="text:val(&#34;nu&#34;)"></span>
+              </li>
+            </ul>  
+            <div component="$model/UI2/system/components/justep/list/list" class="x-list crqqMNb" xid="list2" data-bind="component:{name:'$model/UI2/system/components/justep/list/list'}" data-config="{&#34;data&#34;:&#34;detailData&#34;,&#34;filter&#34;:&#34; $row.val(\&#34;express_id\&#34;) == val(\&#34;id\&#34;)&#34;}" __cid="crqqMNb"> 
+              <ul class="x-list-template track-list hide crqqMNb" xid="listTemplateUl2" style="padding-bottom:10px;" __cid="crqqMNb" data-bind="foreach:{data:$model.foreach_list2($element),afterRender:$model.foreach_afterRender_list2.bind($model,$element)}"> 
+                <ul xid="ul2" __cid="crqqMNb" class="crqqMNb">
+                  <li xid="li4" __cid="crqqMNb" class="crqqMNb" data-bind="css:val(&#34;ffirst&#34;) == 1 ? 'first' : ''">
+                    <i xid="i1" class="dataControl dataControl-oc node-icon crqqMNb" __cid="crqqMNb"></i>  
+                    <div component="$model/UI2/system/components/justep/row/row" class="x-row crqqMNb" xid="row1" style="padding:2px;padding-right:0px;" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="crqqMNb"> 
+                      <div class="x-col crqqMNb" xid="col1" __cid="crqqMNb">
+                        <span xid="span2" class="time crqqMNb" __cid="crqqMNb" data-bind="text:val(&#34;ftime&#34;)"></span>
+                      </div> 
+                    </div>  
+                    <div component="$model/UI2/system/components/justep/row/row" class="x-row crqqMNb" xid="row2" style="padding:2px;padding-right:0px;" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="crqqMNb"> 
+                      <div class="x-col crqqMNb" xid="col4" __cid="crqqMNb"> 
+                        <span xid="span3" class="txt crqqMNb" __cid="crqqMNb" data-bind="text:val(&#34;context&#34;)"></span>
+                      </div> 
+                    </div>
+                  </li>
+                </ul>
+              </ul> 
+            </div>
+          </div>
+        </ul> 
+      </div>
+    </div>  
+    <style __cid="crqqMNb" class="crqqMNb">.x-panel.pcVzmm2y-iosstatusbar >.x-panel-top {height: 48px;}.x-panel.pcVzmm2y-iosstatusbar >.x-panel-content { top: 48px;bottom: nullpx;}.x-panel.pcVzmm2y-iosstatusbar >.x-panel-bottom {height: nullpx;}.iosstatusbar .x-panel.pcVzmm2y-iosstatusbar >.x-panel-top,.iosstatusbar .x-panel .x-panel-content .x-has-iosstatusbar.x-panel.pcVzmm2y-iosstatusbar >.x-panel-top {height: 68px;}.iosstatusbar .x-panel.pcVzmm2y-iosstatusbar >.x-panel-content,.iosstatusbar .x-panel .x-panel-content .x-has-iosstatusbar.x-panel.pcVzmm2y-iosstatusbar >.x-panel-content { top: 68px;}.iosstatusbar .x-panel .x-panel-content .x-panel.pcVzmm2y-iosstatusbar >.x-panel-top {height: 48px;}.iosstatusbar .x-panel .x-panel-content .x-panel.pcVzmm2y-iosstatusbar >.x-panel-content {top: 48px;}</style>
+  </div> 
+</div>

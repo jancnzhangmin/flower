@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<div component="$model/UI2/system/components/justep/window/window" design="device:m;" xid="window" class="window cEzEnmm" data-bind="component:{name:'$model/UI2/system/components/justep/window/window'}" __cid="cEzEnmm" components="$model/UI2/system/components/justep/model/model,$model/UI2/system/components/justep/loadingBar/loadingBar,$model/UI2/system/components/justep/button/button,$model/UI2/system/components/justep/list/list,$model/UI2/system/components/justep/titleBar/titleBar,$model/UI2/system/components/justep/panel/child,$model/UI2/system/components/justep/data/data,$model/UI2/system/components/justep/window/window,$model/UI2/system/components/justep/panel/panel,">
+  <style>.ev.cEzEnmm{padding: 10px; padding-right: 5px} .od.cEzEnmm{padding: 10px; padding-left: 5px} .btnclass.cEzEnmm{background: linear-gradient(to bottom, rgb(255, 66, 86), rgb(254, 89, 147)); -webkit-background-clip: text; -webkit-text-fill-color: transparent}</style>  
+  <div component="$model/UI2/system/components/justep/model/model" xid="model" style="display:none" data-bind="component:{name:'$model/UI2/system/components/justep/model/model'}" data-events="onLoad:modelLoad" __cid="cEzEnmm" class="cEzEnmm"></div>  
+  <div component="$model/UI2/system/components/justep/panel/panel" class="x-panel x-full pcnuiE7n-iosstatusbar cEzEnmm" xid="panel1" data-bind="component:{name:'$model/UI2/system/components/justep/panel/panel'}" __cid="cEzEnmm"> 
+    <div class="x-panel-top cEzEnmm" xid="top1" component="$model/UI2/system/components/justep/panel/child" data-bind="component:{name:'$model/UI2/system/components/justep/panel/child'}" __cid="cEzEnmm">
+      <div component="$model/UI2/system/components/justep/titleBar/titleBar" class="x-titlebar cEzEnmm" style="background-color:white;" xid="titleBar1" data-bind="component:{name:'$model/UI2/system/components/justep/titleBar/titleBar'}" data-config="{&#34;title&#34;:&#34;待发货&#34;}" __cid="cEzEnmm"> 
+        <div class="x-titlebar-left cEzEnmm" style="color:#333333;" xid="left1" __cid="cEzEnmm"> 
+          <a component="$model/UI2/system/components/justep/button/button" class="btn btn-link btn-only-icon cEzEnmm" xid="backBtn" data-bind="component:{name:'$model/UI2/system/components/justep/button/button'}" data-events="onClick:{operation:'window.close'}" data-config="{&#34;icon&#34;:&#34;icon-chevron-left&#34;,&#34;label&#34;:&#34;&#34;}" __cid="cEzEnmm"> 
+            <i class="icon-chevron-left cEzEnmm" xid="i1" __cid="cEzEnmm"></i>  
+            <span xid="span1" __cid="cEzEnmm" class="cEzEnmm"></span>
+          </a> 
+        </div>  
+        <div class="x-titlebar-title cEzEnmm" style="font-weight:normal;color:#333333;" xid="title1" __cid="cEzEnmm">待发货</div>  
+        <div class="x-titlebar-right  cEzEnmm" xid="right1" __cid="cEzEnmm">
+          <div class="empty cEzEnmm" __cid="cEzEnmm"></div>
+        </div>
+      </div>
+    </div>
+    <div class="x-panel-content x-cards cEzEnmm" xid="content1" component="$model/UI2/system/components/justep/panel/child" data-bind="component:{name:'$model/UI2/system/components/justep/panel/child'}" __cid="cEzEnmm">
+      <div component="$model/UI2/system/components/justep/list/list" class="x-list cEzEnmm" xid="list2" style="margin-top:-10px;" data-bind="component:{name:'$model/UI2/system/components/justep/list/list'}" data-events="onAfterRender:list1AfterRender" data-config="{&#34;data&#34;:&#34;productData&#34;}" __cid="cEzEnmm"> 
+        <ul class="x-list-template hide cEzEnmm" xid="listTemplateUl2" __cid="cEzEnmm" data-bind="foreach:{data:$model.foreach_list2($element),afterRender:$model.foreach_afterRender_list2.bind($model,$element)}"> 
+          <div xid="div25" class="col-xs-6 col-sm-4 cEzEnmm" style="padding-top:5px;padding-bottom:5px;" __cid="cEzEnmm" data-bind="css:val(&#34;odd&#34;) == 0 ? 'ev' : 'od',event:{click:$model._callModelFn.bind($model, 'div25Click')}"> 
+            <div xid="div24" style="border-radius:5px 5px 0px 0px;overflow: hidden;background-color:#eaeaea;" class="imagediv cEzEnmm" __cid="cEzEnmm"> 
+              <img src=" " alt="" xid="image13" style="width:100%;" __cid="cEzEnmm" class="cEzEnmm" data-bind="attr:{src:val(&#34;cover&#34;)}">  
+              <i xid="i5" style="position:relative;font-size:x-large;margin-top:-30px;margin-right:10px;" class="follow pull-right btnclass cEzEnmm" __cid="cEzEnmm" data-bind="css:val(&#34;collection&#34;) == 1 ? &#34;my my-xinxingshi&#34; : &#34;my my-xinxingxian&#34;,event:{click:$model._callModelFn.bind($model, 'i5Click')}"></i>
+            </div>  
+            <div xid="div28" style="background-color:white;padding-bottom:5px;border-radius: 0 0 5px 5px;" __cid="cEzEnmm" class="cEzEnmm"> 
+              <div xid="div26" style="padding-top:10px;padding-left:10px;" __cid="cEzEnmm" class="cEzEnmm"> 
+                <span xid="span21" style="font-size:medium;" __cid="cEzEnmm" class="cEzEnmm" data-bind="text:val(&#34;name&#34;)"></span>
+              </div>  
+              <div xid="div27" style="padding-left:10px;" __cid="cEzEnmm" class="cEzEnmm"> 
+                <span xid="span22" style="background-color:white;font-size:small;" class="text-muted cEzEnmm" __cid="cEzEnmm" data-bind="text:val(&#34;subtitle&#34;),visible:false"></span>
+              </div>  
+              <div xid="div29" style="padding-left:10px;padding-right:5px;" __cid="cEzEnmm" class="cEzEnmm"> 
+                <span xid="span23" style="font-size:large;color:#fe2e23;" __cid="cEzEnmm" class="cEzEnmm" data-bind="text:'￥' + val(&#34;price&#34;)"></span>  
+                <span xid="span24" style="font-size:x-small;background-color:#ffeae9;color:#fe2e23;font-weight:lighter;padding:1px;border-radius:3px;" __cid="cEzEnmm" class="cEzEnmm" data-bind="text:'省' + val(&#34;discount&#34;) + '元',visible:val(&#34;discount&#34;) &gt; 0"></span>  
+                <span xid="span25" class="pull-right text-muted cEzEnmm" style="font-size:x-small;font-weight:lighter;margin-top:9px;" __cid="cEzEnmm">已售100件</span>
+              </div> 
+            </div> 
+          </div> 
+        </ul> 
+      </div>
+    </div>  
+    <style __cid="cEzEnmm" class="cEzEnmm">.x-panel.pcnuiE7n-iosstatusbar >.x-panel-top {height: 48px;}.x-panel.pcnuiE7n-iosstatusbar >.x-panel-content { top: 48px;bottom: nullpx;}.x-panel.pcnuiE7n-iosstatusbar >.x-panel-bottom {height: nullpx;}.iosstatusbar .x-panel.pcnuiE7n-iosstatusbar >.x-panel-top,.iosstatusbar .x-panel .x-panel-content .x-has-iosstatusbar.x-panel.pcnuiE7n-iosstatusbar >.x-panel-top {height: 68px;}.iosstatusbar .x-panel.pcnuiE7n-iosstatusbar >.x-panel-content,.iosstatusbar .x-panel .x-panel-content .x-has-iosstatusbar.x-panel.pcnuiE7n-iosstatusbar >.x-panel-content { top: 68px;}.iosstatusbar .x-panel .x-panel-content .x-panel.pcnuiE7n-iosstatusbar >.x-panel-top {height: 48px;}.iosstatusbar .x-panel .x-panel-content .x-panel.pcnuiE7n-iosstatusbar >.x-panel-content {top: 48px;}</style>
+  </div> 
+</div>

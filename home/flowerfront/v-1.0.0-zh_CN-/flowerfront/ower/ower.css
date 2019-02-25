@@ -1,0 +1,71 @@
+.topimg {
+	background-image: url(../image/ower_back.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	-moz-background-size: 100% 100%;
+}
+
+.fronthead {
+	border-radius: 50%;
+	width: 50px;
+}
+
+.backhead {
+	border-radius: 50%;
+	border: solid 1px #fff;
+	width: 60px;
+	height: 60px;
+	padding-top: 4px;
+}
+
+
+
+.angle {
+	position: absolute;
+	top:0px;
+	margin-top:12px;
+	border: 1px solid #ff4256;
+	font-weight: lighter;
+	font-size: x-small;
+	color: #ff4256;
+	background:#ffffff;
+	-webkit-background-clip: none;
+	-webkit-text-fill-color: #ff4256;
+	border-radius: 10px;
+	padding-left: 6px;
+	padding-right: 6px;
+	padding-top: 2px;
+	padding-bottom: 1px;
+}
+
+.btnclass{
+		background: linear-gradient(to bottom, #ff4256, #fe5993);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.btnangleBox {
+  width:55px; left; position:relative;
+}
+
+.btnangle {
+	position: absolute;
+top:5px;
+right:0px;
+	border: 1px solid #ff4256;
+	font-weight: lighter;
+	font-size: x-small;
+	color: #ff4256;
+	background:#ffffff;
+	-webkit-background-clip: none;
+	-webkit-text-fill-color: #ff4256;
+	border-radius: 10px;
+	padding-left: 6px;
+	padding-right: 6px;
+	padding-top: 2px;
+	padding-bottom: 1px;
+}
+
+.bottom-line{
+	border-bottom-style:solid;border-bottom-width:1px;border-bottom-color:#F6F6F6;
+}

@@ -1,0 +1,54 @@
+.givebackcolor{
+	background:#f6f6f6;
+}
+
+.process-btn{
+	background:transparent;
+	color:#999999;
+	border-radius:20px;
+	border-color:#f0f0f0;
+	margin-left:5px;
+}
+
+.Yes{
+	color:#99999 !important;
+}
+
+.x-modal-button{
+	color:#555555;
+}
+
+.surebtn{
+	border-radius:0px;
+	border:0px;
+	background: linear-gradient(to bottom,#ff6ca0,#ff4256);
+}
+
+.x-popOver-content{
+	bottom:0px !important;
+}
+
+.x-toggle input:checked + label {
+    background-color:#ff4665;
+    line-height: -1em;
+}
+
+.wxcolor{
+	background:#44b549;
+	border-color:#44b549;
+	color:#white;
+}
+
+.input-class {
+	border: 0px;
+}
+
+.input-class:focus {
+	box-shadow: 0 0 0px rgba(102, 175, 233, 0);
+}
+
+.row-class {
+	border-bottom:solid 1px #f6f6f6;
+	padding-top:5px;
+	padding-bottom:0px;
+}

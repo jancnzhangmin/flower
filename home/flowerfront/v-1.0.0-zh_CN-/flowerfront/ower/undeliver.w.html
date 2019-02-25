@@ -1,0 +1,189 @@
+<!DOCTYPE HTML>
+<div component="$model/UI2/system/components/justep/window/window" design="device:m;" xid="window" class="window czyqYBn" data-bind="component:{name:'$model/UI2/system/components/justep/window/window'}" __cid="czyqYBn" components="$model/UI2/system/components/justep/model/model,$model/UI2/system/components/justep/loadingBar/loadingBar,$model/UI2/system/components/justep/button/button,$model/UI2/system/components/justep/scrollView/scrollView,$model/UI2/system/components/justep/list/list,$model/UI2/system/components/justep/panel/child,$model/UI2/system/components/justep/button/toggle,$model/UI2/system/components/justep/messageDialog/messageDialog,$model/UI2/system/components/justep/panel/panel,$model/UI2/system/components/justep/popOver/popOver,$model/UI2/system/components/justep/row/row,$model/UI2/system/components/justep/titleBar/titleBar,$model/UI2/system/components/justep/data/data,$model/UI2/system/components/justep/window/window,">
+  <style>.givebackcolor.czyqYBn{background: rgb(246, 246, 246)} .process-btn.czyqYBn{background: transparent; color: rgb(153, 153, 153); border-radius: 20px; border-color: rgb(240, 240, 240); margin-left: 5px} .Yes.czyqYBn{} .x-modal-button.czyqYBn{color: rgb(85, 85, 85)} .surebtn.czyqYBn{border-radius: 0px; border: 0px; background: linear-gradient(to bottom, rgb(255, 108, 160), rgb(255, 66, 86))} .x-popOver-content.czyqYBn{bottom: 0px !important} .x-toggle.czyqYBn input.czyqYBn:checked + label.czyqYBn{background-color: rgb(255, 70, 101); line-height: -1em} .wxcolor.czyqYBn{background: rgb(68, 181, 73); border-color: rgb(68, 181, 73)} .input-class.czyqYBn{border: 0px} .input-class.czyqYBn:focus{box-shadow: 0 0 0px rgba(102, 175, 233, 0)} .row-class.czyqYBn{border-bottom: solid 1px rgb(246, 246, 246); padding-top: 5px; padding-bottom: 0px}</style>  
+  <div component="$model/UI2/system/components/justep/model/model" xid="model" style="display:none" data-bind="component:{name:'$model/UI2/system/components/justep/model/model'}" data-events="onLoad:modelLoad" __cid="czyqYBn" class="czyqYBn"></div>  
+  <div component="$model/UI2/system/components/justep/panel/panel" class="x-panel x-full pcNjUnaa-iosstatusbar czyqYBn" xid="panel1" data-bind="component:{name:'$model/UI2/system/components/justep/panel/panel'}" __cid="czyqYBn"> 
+    <div class="x-panel-top czyqYBn" xid="top1" component="$model/UI2/system/components/justep/panel/child" data-bind="component:{name:'$model/UI2/system/components/justep/panel/child'}" __cid="czyqYBn"> 
+      <div component="$model/UI2/system/components/justep/titleBar/titleBar" class="x-titlebar czyqYBn" style="background-color:white;" data-bind="component:{name:'$model/UI2/system/components/justep/titleBar/titleBar'}" data-config="{&#34;title&#34;:&#34;待发货&#34;}" __cid="czyqYBn"> 
+        <div class="x-titlebar-left czyqYBn" style="color:#333333;" __cid="czyqYBn"> 
+          <a component="$model/UI2/system/components/justep/button/button" class="btn btn-link btn-only-icon czyqYBn" xid="backBtn" data-bind="component:{name:'$model/UI2/system/components/justep/button/button'}" data-events="onClick:{operation:'window.close'}" data-config="{&#34;icon&#34;:&#34;icon-chevron-left&#34;,&#34;label&#34;:&#34;&#34;}" __cid="czyqYBn"> 
+            <i class="icon-chevron-left czyqYBn" __cid="czyqYBn"></i>  
+            <span __cid="czyqYBn" class="czyqYBn"></span> 
+          </a> 
+        </div>  
+        <div class="x-titlebar-title czyqYBn" style="font-weight:normal;color:#333333;" __cid="czyqYBn">待发货</div>  
+        <div class="x-titlebar-right  czyqYBn" __cid="czyqYBn">
+          <div class="empty czyqYBn" __cid="czyqYBn"></div>
+        </div> 
+      </div> 
+    </div>  
+    <div class="x-panel-content x-cards  x-scroll-view czyqYBn" xid="content1" _xid="C848A2A98F600001FA32D660193017DC" component="$model/UI2/system/components/justep/panel/child" data-bind="component:{name:'$model/UI2/system/components/justep/panel/child'}" __cid="czyqYBn"> 
+      <div class="x-scroll czyqYBn" component="$model/UI2/system/components/justep/scrollView/scrollView" xid="scrollView1" data-bind="component:{name:'$model/UI2/system/components/justep/scrollView/scrollView'}" data-events="onPullDown:scrollView1PullDown;onPullUp:scrollView1PullUp" data-config="{&#34;noMoreLoadLabel&#34;:&#34;　&#34;}" __cid="czyqYBn"> 
+        <div class="x-content-center x-pull-down container czyqYBn" xid="div4" __cid="czyqYBn"> 
+          <i class="x-pull-down-img glyphicon x-icon-pull-down czyqYBn" xid="i5" __cid="czyqYBn"></i>  
+          <span class="x-pull-down-label czyqYBn" xid="span17" __cid="czyqYBn">下拉刷新...</span>
+        </div>  
+        <div class="x-scroll-content czyqYBn" xid="div5" __cid="czyqYBn">
+          <div component="$model/UI2/system/components/justep/list/list" class="x-list czyqYBn" xid="list1" data-bind="component:{name:'$model/UI2/system/components/justep/list/list'}" data-config="{&#34;data&#34;:&#34;orderData&#34;}" __cid="czyqYBn"> 
+            <ul class="x-list-template hide czyqYBn" xid="listTemplateUl1" style="padding:5px;" __cid="czyqYBn" data-bind="foreach:{data:$model.foreach_list1($element),afterRender:$model.foreach_afterRender_list1.bind($model,$element)}"> 
+              <div xid="div1" style="background-color:white;border-radius:5px;margin-bottom:10px;" __cid="czyqYBn" class="czyqYBn">
+                <div component="$model/UI2/system/components/justep/list/list" class="x-list czyqYBn" xid="list2" data-bind="component:{name:'$model/UI2/system/components/justep/list/list'}" data-config="{&#34;data&#34;:&#34;orderdetailData&#34;,&#34;disableInfiniteLoad&#34;:true,&#34;disablePullToRefresh&#34;:true,&#34;filter&#34;:&#34; $row.val(\&#34;order_id\&#34;) == val(\&#34;id\&#34;)&#34;}" __cid="czyqYBn"> 
+                  <ul class="x-list-template hide czyqYBn" xid="listTemplateUl2" __cid="czyqYBn" data-bind="foreach:{data:$model.foreach_list2($element),afterRender:$model.foreach_afterRender_list2.bind($model,$element)}"> 
+                    <div component="$model/UI2/system/components/justep/row/row" class="x-row czyqYBn" xid="row1" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'},css:val(&#34;producttype&#34;) == 1 ? 'givebackcolor' : ''" __cid="czyqYBn"> 
+                      <div class="x-col x-col-25 czyqYBn" xid="col1" __cid="czyqYBn">
+                        <img src=" " alt="" xid="image1" style="width:100%;" __cid="czyqYBn" class="czyqYBn" data-bind="attr:{src:val(&#34;cover&#34;)}">
+                      </div>  
+                      <div class="x-col czyqYBn" xid="col2" __cid="czyqYBn">
+                        <div component="$model/UI2/system/components/justep/row/row" class="x-row czyqYBn" xid="row2" style="padding:0px;" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="czyqYBn"> 
+                          <div class="x-col czyqYBn" xid="col4" style="padding:0px;" __cid="czyqYBn">
+                            <span xid="span1" __cid="czyqYBn" class="czyqYBn" data-bind="text:val(&#34;name&#34;)"></span>  
+                            <span xid="span2" __cid="czyqYBn" class="czyqYBn" data-bind="text:val(&#34;subtitle&#34;)"></span>
+                          </div> 
+                        </div>  
+                        <div component="$model/UI2/system/components/justep/row/row" class="x-row czyqYBn" xid="row4" style="padding:0px;" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="czyqYBn"> 
+                          <div class="x-col czyqYBn" xid="col5" style="padding:0px;padding-top:5px;" __cid="czyqYBn">
+                            <div component="$model/UI2/system/components/justep/list/list" class="x-list czyqYBn" xid="list3" data-bind="component:{name:'$model/UI2/system/components/justep/list/list'}" data-config="{&#34;data&#34;:&#34;optionalData&#34;,&#34;disableInfiniteLoad&#34;:true,&#34;disablePullToRefresh&#34;:true,&#34;filter&#34;:&#34; $row.val(\&#34;orderdetail_id\&#34;) == val(\&#34;id\&#34;)&#34;}" __cid="czyqYBn"> 
+                              <ul class="x-list-template hide czyqYBn" xid="listTemplateUl3" __cid="czyqYBn" data-bind="foreach:{data:$model.foreach_list3($element),afterRender:$model.foreach_afterRender_list3.bind($model,$element)}"> 
+                                <span xid="span4" class="text-muted czyqYBn" style="font-size:small;" __cid="czyqYBn" data-bind="text:val(&#34;selectcondition_name&#34;)"></span>
+                              </ul> 
+                            </div>
+                          </div> 
+                        </div>  
+                        <div component="$model/UI2/system/components/justep/row/row" class="x-row czyqYBn" xid="row5" style="padding:0px;" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="czyqYBn"> 
+                          <div class="x-col czyqYBn" xid="col9" style="padding:0px;padding:5px;" __cid="czyqYBn">
+                            <div component="$model/UI2/system/components/justep/list/list" class="x-list czyqYBn" xid="list5" style="margin-left:-4px;" data-bind="component:{name:'$model/UI2/system/components/justep/list/list'}" data-config="{&#34;data&#34;:&#34;activeData&#34;,&#34;disableInfiniteLoad&#34;:true,&#34;disablePullToRefresh&#34;:true,&#34;filter&#34;:&#34; $row.val(\&#34;orderdetail_id\&#34;) == val(\&#34;id\&#34;)&#34;}" __cid="czyqYBn"> 
+                              <ul class="x-list-template hide czyqYBn" xid="listTemplateUl5" __cid="czyqYBn" data-bind="foreach:{data:$model.foreach_list5($element),afterRender:$model.foreach_afterRender_list5.bind($model,$element)}"> 
+                                <span xid="span24" style="font-size:x-small;background-color:#ffeae9;color:#fe2e23;font-weight:lighter;padding:1px;border-radius:3px;" __cid="czyqYBn" class="czyqYBn" data-bind="text:val(&#34;active&#34;)"></span>
+                              </ul> 
+                            </div>
+                          </div> 
+                        </div>
+                      </div>  
+                      <div class="x-col x-col-fixed czyqYBn" xid="col3" style="width:80px;" __cid="czyqYBn">
+                        <div component="$model/UI2/system/components/justep/row/row" class="x-row czyqYBn" xid="row3" style="padding:0px;" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="czyqYBn"> 
+                          <div class="x-col text-right czyqYBn" xid="col7" style="padding:0px;" __cid="czyqYBn">
+                            <span xid="span3" style="color:#ff9c50;" __cid="czyqYBn" class="czyqYBn" data-bind="visible:$index() == 0,text:val(&#34;ordermessage&#34;)">交易成功</span>  
+                            <span xid="span7" __cid="czyqYBn" class="czyqYBn" data-bind="visible:$index() != 0">　</span>
+                          </div> 
+                        </div>  
+                        <div component="$model/UI2/system/components/justep/row/row" class="x-row czyqYBn" xid="row7" style="padding-top:5px;padding-right:0px;" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="czyqYBn"> 
+                          <div class="x-col text-right czyqYBn" xid="col15" style="padding-right:0px;" __cid="czyqYBn">
+                            <span xid="span6" __cid="czyqYBn" class="czyqYBn" data-bind="text:'￥' + val(&#34;price&#34;)"></span>
+                          </div> 
+                        </div>  
+                        <div component="$model/UI2/system/components/justep/row/row" class="x-row czyqYBn" xid="row8" style="padding:0px;padding-right:0px;" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="czyqYBn"> 
+                          <div class="x-col text-right czyqYBn" xid="col18" style="padding:0px;padding-right:0px;" __cid="czyqYBn">
+                            <span xid="span8" class="text-muted czyqYBn" __cid="czyqYBn" data-bind="text:'×' + val(&#34;number&#34;)"></span>
+                          </div> 
+                        </div>
+                      </div>
+                    </div>
+                  </ul> 
+                </div>  
+                <div component="$model/UI2/system/components/justep/row/row" class="x-row text-muted czyqYBn" xid="row9" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'},visible:val(&#34;discount&#34;) &gt; 0  ||  val(&#34;owerprofit&#34;) &gt; 0" __cid="czyqYBn"> 
+                  <div class="x-col czyqYBn" xid="col6" __cid="czyqYBn">
+                    <i xid="i6" class="my my-shouyi czyqYBn" __cid="czyqYBn" data-bind="visible:val(&#34;discount&#34;) &gt; 0"></i>  
+                    <span xid="span10" style="margin-right:10px;" __cid="czyqYBn" class="czyqYBn" data-bind="text:'节省￥' + val(&#34;discount&#34;) + '元',visible:val(&#34;discount&#34;) &gt; 0"></span>  
+                    <i xid="i7" class="my my-tixian1 czyqYBn" __cid="czyqYBn" data-bind="visible:val(&#34;owerprofit&#34;) &gt; 0"></i>  
+                    <span xid="span11" style="margin-right:10px;" __cid="czyqYBn" class="czyqYBn" data-bind="text:'获得￥' + val(&#34;owerprofit&#34;) + '元返现',visible:val(&#34;owerprofit&#34;) &gt; 0"></span>
+                  </div> 
+                </div>
+                <div component="$model/UI2/system/components/justep/row/row" class="x-row czyqYBn" xid="row6" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="czyqYBn"> 
+                  <div class="x-col text-right czyqYBn" xid="col12" __cid="czyqYBn">
+                    <span xid="span5" __cid="czyqYBn" class="czyqYBn" data-bind="text:'共计' +   val(&#34;detailcount&#34;) + '件商品 合计：￥'">共计1件商品</span>  
+                    <span xid="span9" style="font-size:medium;" __cid="czyqYBn" class="czyqYBn" data-bind="text:val(&#34;paysum&#34;)"></span>
+                  </div> 
+                </div>  
+                <div component="$model/UI2/system/components/justep/row/row" class="x-row czyqYBn" xid="row10" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="czyqYBn"> 
+                  <div class="x-col text-right czyqYBn" xid="col11" __cid="czyqYBn">
+                    <a component="$model/UI2/system/components/justep/button/button" class="btn btn-default btn-sm process-btn czyqYBn" xid="button1" data-bind="component:{name:'$model/UI2/system/components/justep/button/button'},visible:val(&#34;orderstatus&#34;) == 3" data-config="{&#34;label&#34;:&#34;评价商品&#34;}" __cid="czyqYBn"> 
+                      <i xid="i1" __cid="czyqYBn" class="czyqYBn"></i>  
+                      <span xid="span12" __cid="czyqYBn" class="czyqYBn">评价商品</span>
+                    </a>  
+                    <a component="$model/UI2/system/components/justep/button/button" class="btn btn-default btn-sm process-btn czyqYBn" xid="button2" data-bind="component:{name:'$model/UI2/system/components/justep/button/button'},visible:val(&#34;orderstatus&#34;) == 2" data-config="{&#34;label&#34;:&#34;确认收货&#34;}" __cid="czyqYBn"> 
+                      <i xid="i2" __cid="czyqYBn" class="czyqYBn"></i>  
+                      <span xid="span13" __cid="czyqYBn" class="czyqYBn">确认收货</span>
+                    </a>  
+                    <a component="$model/UI2/system/components/justep/button/button" class="btn btn-default btn-sm process-btn czyqYBn" xid="paynowBtn" data-bind="component:{name:'$model/UI2/system/components/justep/button/button'},visible:val(&#34;orderstatus&#34;) == 0" data-events="onClick:paynowBtnClick" data-config="{&#34;label&#34;:&#34;立即支付&#34;}" __cid="czyqYBn"> 
+                      <i xid="i3" __cid="czyqYBn" class="czyqYBn"></i>  
+                      <span xid="span14" __cid="czyqYBn" class="czyqYBn">立即支付</span>
+                    </a>  
+                    <a component="$model/UI2/system/components/justep/button/button" class="btn btn-default btn-sm process-btn czyqYBn" xid="deleteBtn" data-bind="component:{name:'$model/UI2/system/components/justep/button/button'},visible:val(&#34;orderstatus&#34;) == 0" data-events="onClick:deleteBtnClick" data-config="{&#34;label&#34;:&#34;删除订单&#34;}" __cid="czyqYBn"> 
+                      <i xid="i4" __cid="czyqYBn" class="czyqYBn"></i>  
+                      <span xid="span15" __cid="czyqYBn" class="czyqYBn">删除订单</span>
+                    </a>
+                  </div> 
+                </div>
+              </div>
+            </ul> 
+          </div>
+        </div>  
+        <div class="x-content-center x-pull-up czyqYBn" xid="div6" __cid="czyqYBn"> 
+          <span class="x-pull-up-label czyqYBn" xid="span18" __cid="czyqYBn">加载更多...</span>
+        </div> 
+      </div>
+    </div>  
+    <style __cid="czyqYBn" class="czyqYBn">.x-panel.pcNjUnaa-iosstatusbar >.x-panel-top {height: 48px;}.x-panel.pcNjUnaa-iosstatusbar >.x-panel-content { top: 48px;bottom: nullpx;}.x-panel.pcNjUnaa-iosstatusbar >.x-panel-bottom {height: nullpx;}.iosstatusbar .x-panel.pcNjUnaa-iosstatusbar >.x-panel-top,.iosstatusbar .x-panel .x-panel-content .x-has-iosstatusbar.x-panel.pcNjUnaa-iosstatusbar >.x-panel-top {height: 68px;}.iosstatusbar .x-panel.pcNjUnaa-iosstatusbar >.x-panel-content,.iosstatusbar .x-panel .x-panel-content .x-has-iosstatusbar.x-panel.pcNjUnaa-iosstatusbar >.x-panel-content { top: 68px;}.iosstatusbar .x-panel .x-panel-content .x-panel.pcNjUnaa-iosstatusbar >.x-panel-top {height: 48px;}.iosstatusbar .x-panel .x-panel-content .x-panel.pcNjUnaa-iosstatusbar >.x-panel-content {top: 48px;}</style>
+  </div>  
+  <span component="$model/UI2/system/components/justep/messageDialog/messageDialog" xid="deletemessageDialog" data-bind="component:{name:'$model/UI2/system/components/justep/messageDialog/messageDialog'}" data-events="onNo:deletemessageDialogNo" data-config="{&#34;message&#34;:&#34;确认删除订单？&#34;,&#34;type&#34;:&#34;YesNo&#34;}" __cid="czyqYBn" class="czyqYBn">
+    <div class="x-modal-overlay czyqYBn" __cid="czyqYBn"></div>
+    <div class="x-modal czyqYBn" __cid="czyqYBn">
+      <div class="x-modal-inner czyqYBn" __cid="czyqYBn">
+        <div class="x-modal-title czyqYBn" __cid="czyqYBn"></div>
+        <div class="x-modal-text czyqYBn" __cid="czyqYBn">确认删除订单？</div>
+        <input class="x-modal-prompt-input czyqYBn" type="text" __cid="czyqYBn">
+      </div>
+      <div class="x-modal-buttons czyqYBn" __cid="czyqYBn">
+        <a class="x-modal-button x-modal-button-bold OK czyqYBn" value="ok" __cid="czyqYBn">确定</a>
+        <a class="x-modal-button x-modal-button-bold Yes czyqYBn" value="yes" __cid="czyqYBn">是</a>
+        <a class="x-modal-button x-modal-button-bold No czyqYBn" value="no" __cid="czyqYBn">否</a>
+        <a class="x-modal-button x-modal-button-bold Cancel czyqYBn" value="cancel" __cid="czyqYBn">取消</a>
+      </div>
+    </div>
+  </span>  
+  <div component="$model/UI2/system/components/justep/popOver/popOver" class="x-popOver czyqYBn" xid="popOver1" data-bind="component:{name:'$model/UI2/system/components/justep/popOver/popOver'}" data-config="{&#34;direction&#34;:&#34;auto&#34;,&#34;position&#34;:&#34;bottom&#34;}" __cid="czyqYBn"> 
+    <div class="x-popOver-overlay czyqYBn" xid="div2" __cid="czyqYBn"></div>  
+    <div class="x-popOver-content czyqYBn" xid="div3" style="background-color:white;width:100%;height:70%;" __cid="czyqYBn"> 
+      <div component="$model/UI2/system/components/justep/row/row" class="x-row czyqYBn" xid="row14" style="border-bottom-style:solid;border-bottom-width:1px;border-bottom-color:#f6f6f6;" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="czyqYBn"> 
+        <div class="x-col czyqYBn" xid="col23" __cid="czyqYBn"></div>  
+        <div class="x-col text-center czyqYBn" xid="col24" __cid="czyqYBn"> 
+          <span xid="span20" style="font-size:medium;" __cid="czyqYBn" class="czyqYBn">确认付款</span>
+        </div>  
+        <div class="x-col text-right czyqYBn" xid="col25" __cid="czyqYBn"> 
+          <i xid="i9" class="linear linear-cross text-muted czyqYBn" __cid="czyqYBn" data-bind="event:{click:$model._callModelFn.bind($model, 'i9Click')}"></i>
+        </div> 
+      </div>  
+      <div component="$model/UI2/system/components/justep/row/row" class="x-row czyqYBn" xid="row15" style="margin-top:20px;" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="czyqYBn"> 
+        <div class="x-col czyqYBn" xid="col26" __cid="czyqYBn"></div>  
+        <div class="x-col text-center czyqYBn" xid="col27" __cid="czyqYBn"> 
+          <span xid="span23" style="color:#fe2e23;font-size:x-large;" __cid="czyqYBn" class="czyqYBn">￥0.00</span>
+        </div>  
+        <div class="x-col czyqYBn" xid="col28" __cid="czyqYBn"></div>
+      </div>  
+      <div component="$model/UI2/system/components/justep/row/row" class="x-row czyqYBn" xid="row16" style="margin-top:20px;border-bottom-style:solid;border-bottom-width:1px;border-bottom-color:#f6f6f6;" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="czyqYBn"> 
+        <div class="x-col x-col-25 czyqYBn" xid="col29" __cid="czyqYBn"> 
+          <span xid="span16" __cid="czyqYBn" class="czyqYBn">余额抵扣</span>
+        </div>  
+        <div class="x-col text-center czyqYBn" xid="col30" __cid="czyqYBn"> 
+          <span xid="span25" __cid="czyqYBn" class="czyqYBn">可用余额：￥0.00</span>
+        </div>  
+        <div class="x-col x-col-25 text-right czyqYBn" xid="col31" __cid="czyqYBn"> 
+          <span component="$model/UI2/system/components/justep/button/toggle" class="x-toggle czyqYBn" xid="toggle1" style="display: inline-block;padding:0px;" ON="　" OFF="　" data-config="{&#34;checked&#34;:false,&#34;disabled&#34;:false,&#34;label&#34;:{&#34;off&#34;:&#34;　&#34;,&#34;on&#34;:&#34;　&#34;}}" data-bind="component:{name:'$model/UI2/system/components/justep/button/toggle'}" data-events="onChange:toggle1Change" __cid="czyqYBn">
+            <input type="checkbox" __cid="czyqYBn" class="czyqYBn">
+            <label data-on="　" data-off="　" __cid="czyqYBn" class="czyqYBn">
+              <span __cid="czyqYBn" class="czyqYBn"></span>
+            </label>
+          </span>
+        </div> 
+      </div>  
+      <div component="$model/UI2/system/components/justep/row/row" class="x-row czyqYBn" xid="row17" style="position:absolute;bottom:20px;" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="czyqYBn"> 
+        <div class="x-col czyqYBn" xid="col32" __cid="czyqYBn"> 
+          <a component="$model/UI2/system/components/justep/button/button" class="btn btn-default btn-block wxcolor czyqYBn" xid="payBtn" data-bind="component:{name:'$model/UI2/system/components/justep/button/button'}" data-config="{&#34;label&#34;:&#34;立即支付&#34;}" __cid="czyqYBn"> 
+            <i xid="i10" __cid="czyqYBn" class="czyqYBn"></i>  
+            <span xid="span26" __cid="czyqYBn" class="czyqYBn">立即支付</span>
+          </a> 
+        </div> 
+      </div> 
+    </div> 
+  </div>
+</div>

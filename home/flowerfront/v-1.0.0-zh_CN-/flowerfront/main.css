@@ -1,0 +1,81 @@
+.x-titlebar {
+	background-color: rgba(0, 0, 0, 0);
+}
+
+.x-titlebar .x-titlebar-title {
+	padding: 6px 0;
+}
+
+.x-titlebar .x-titlebar-right .btn {
+	padding-left: 0;
+}
+
+.x-inputText {
+	background-color: rgba(255, 255, 255, 0.8);
+} /*搜索框*/
+.form-control-feedback {
+	height: 34px;
+	line-height: 34px;
+}
+
+.x-cards {
+	padding-top: 0px;
+}
+
+.top-trans .x-panel-top {
+	z-index: 100;
+}
+
+.top-trans .text-success {
+	color: white;
+}
+
+.top-trans.x-panel>.x-panel-content {
+	top: 0 !important;
+}
+
+.top-trans.x-panel .no-iosstatusbar>.x-panel-content {
+	top: -20px !important;
+}
+
+/*页脚按钮组*/
+.x-flower.btn-group {
+	background-color: #fff;
+	border-top: 1px solid #f6f6f6;
+}
+
+.x-flower.btn-group .btn {
+	border-top: 0;
+	    
+}
+
+.x-flower.btn-group .btn span {
+	font-size: 14px;
+	font-weight: normal;
+}
+
+.x-card.btn-group .btn.active {
+	background: linear-gradient(to bottom, #ff4256, #fe5993);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.angleBox {
+  width:50px; left; position:relative;
+}
+.angle {
+  position:absolute;right:30%;  top:1px;
+   background-color: #ffffff;
+   border:1px solid #ff4256;
+  font-weight:lighter;font-size:x-small;
+  color:#ff4256;
+  -webkit-background-clip: none;
+  -webkit-text-fill-color: #ff4256;
+ border-radius: 10px;
+ 
+ padding-left:6px;
+ padding-right:6px;
+ padding-top:2px;
+ padding-bottom:1px;
+ 
+}

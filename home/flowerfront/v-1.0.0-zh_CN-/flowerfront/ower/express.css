@@ -1,0 +1,61 @@
+ul li {
+	list-style: none;
+}
+
+.track-rcol {
+	border: 1px solid #eee;
+}
+
+.track-list {
+	margin: 10px;
+	padding-left: 5px;
+	position: relative;
+}
+
+.track-list li {
+	position: relative;
+	line-height: 18px;
+	border-left: 1px solid #d9d9d9;
+	color: #999;
+}
+
+.track-list li.first {
+	color: #ff4256;
+	padding-top: 0;
+	border: 0px;
+	border-left: 1px solid #d9d9d9;
+	border-image: -webkit-linear-gradient(white,white,white,white,white,white,white, white, white, white,white,white,white,white,white, #d9d9d9,
+		#d9d9d9,#d9d9d9,#d9d9d9,#d9d9d9,#d9d9d9,#d9d9d9, #d9d9d9, #d9d9d9, #d9d9d9) 1;
+}
+
+.track-list li .node-icon {
+	position: absolute;
+	left: -7.5px;
+	top: 50%;
+	width: 11px;
+	height: 11px;
+}
+
+.track-list li.first .node-icon {
+	background-position: 0 -72px;
+}
+
+.track-list li .time {
+	margin-left: 10px; position : relative;
+	top: 4px;
+	display: inline-block;
+	vertical-align: middle;
+	position: relative;
+}
+
+.track-list li .txt {
+	margin-left: 10px; position : relative;
+	top: 0px;
+	display: inline-block;
+	vertical-align: middle;
+	position: relative;
+}
+
+.track-list li.first .time {
+	margin-right: 20px;
+}

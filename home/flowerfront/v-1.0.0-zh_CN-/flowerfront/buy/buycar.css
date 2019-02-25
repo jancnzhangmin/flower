@@ -1,0 +1,26 @@
+.imageradius{
+	border-radius:5px;overflow: hidden;
+}
+
+.lastborder{
+	border-bottom-style:solid;border-bottom-width:1px;border-bottom-color:#f6f6f6;
+}
+.lastborder div:last{
+	border-bottom-style:solid;border-bottom-width:1px;border-bottom-color:#f6f6f6;
+}
+
+.addbtn{
+	background:transparent;
+	border-radius:50%;
+	border:1px solid #ff4256;
+	color:#ff4256;
+	padding:2px;
+	padding-left:5px;
+	padding-right:5px;
+}
+
+.surebtn{
+	border-radius:18px;
+	border:0px;
+	background: linear-gradient(to right,#ff6ca0,#ff4256);
+}

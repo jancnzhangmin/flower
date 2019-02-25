@@ -1,0 +1,36 @@
+.x-inputText {
+	border-radius: 20px;
+	background-color: rgba(255, 255, 255, 0.8);
+	height: 34px;
+	text-indent: 20px;
+} /*搜索框*/
+.form-control-feedback {
+	height: 34px;
+	line-height: 34px;
+}
+
+.hasselect{
+	background:#fff;
+}
+.noselect{
+	color:#fff;
+}
+
+.tb-box, .tb-box>.col{ height:100%; margin:0; padding:0;}
+.tb-box>.col{ overflow:auto;}
+.tb-box>.col:first-child{ padding-right:10px;}
+
+.ev{
+	padding:10px;
+	padding-right:5px;
+}
+.od{
+	padding:10px;
+	padding-left:5px;
+}
+
+.btnclass{
+		background: linear-gradient(to bottom, #ff4256, #fe5993);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}

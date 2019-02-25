@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<div component="$model/UI2/system/components/justep/window/window" design="device:m;" xid="window" class="window c77FrIf" data-bind="component:{name:'$model/UI2/system/components/justep/window/window'}" __cid="c77FrIf" components="$model/UI2/system/components/justep/model/model,$model/UI2/system/components/justep/loadingBar/loadingBar,$model/UI2/system/components/justep/button/button,$model/UI2/system/components/justep/input/input,$model/UI2/system/components/justep/list/list,$model/UI2/system/components/justep/smartContainer/smartContainer,$model/UI2/system/components/justep/panel/child,$model/UI2/system/components/justep/button/toggle,$model/UI2/system/components/justep/textarea/textarea,$model/UI2/system/components/justep/panel/panel,$model/UI2/system/components/justep/popOver/popOver,$model/UI2/system/components/justep/row/row,$model/UI2/system/components/justep/titleBar/titleBar,$model/UI2/system/components/justep/data/data,$model/UI2/system/components/justep/window/window,">
+  <style>.input-class.c77FrIf{border: 0px} .input-class.c77FrIf:focus{box-shadow: 0 0 0px rgba(102, 175, 233, 0)} .row-class.c77FrIf{border-bottom: solid 1px rgb(246, 246, 246); padding-top: 5px; padding-bottom: 0px} .x-toggle.c77FrIf input.c77FrIf:checked + label.c77FrIf{background-color: rgb(255, 70, 101); line-height: -1em} .x-popOver-content.c77FrIf{bottom: 0px !important; border-radius: 10px 10px 0 0} .spancolor.c77FrIf{color: rgb(255, 66, 86)} .notext.c77FrIf{color: rgb(153, 153, 153)}</style>  
+  <div component="$model/UI2/system/components/justep/model/model" xid="model" style="display:none" data-bind="component:{name:'$model/UI2/system/components/justep/model/model'}" data-events="onLoad:modelLoad;onParamsReceive:modelParamsReceive" __cid="c77FrIf" class="c77FrIf"></div>  
+  <div component="$model/UI2/system/components/justep/panel/panel" class="x-panel x-full pcZry6R3-iosstatusbar c77FrIf" xid="panel1" data-bind="component:{name:'$model/UI2/system/components/justep/panel/panel'}" __cid="c77FrIf"> 
+    <div class="x-panel-top c77FrIf" xid="top1" component="$model/UI2/system/components/justep/panel/child" data-bind="component:{name:'$model/UI2/system/components/justep/panel/child'}" __cid="c77FrIf"> 
+      <div component="$model/UI2/system/components/justep/titleBar/titleBar" class="x-titlebar c77FrIf" style="background-color:white;" xid="title" data-bind="component:{name:'$model/UI2/system/components/justep/titleBar/titleBar'}" data-config="{&#34;title&#34;:&#34;添加收货地址&#34;}" __cid="c77FrIf"> 
+        <div class="x-titlebar-left c77FrIf" __cid="c77FrIf"> 
+          <a component="$model/UI2/system/components/justep/button/button" class="btn btn-link btn-only-icon c77FrIf" xid="backBtn" style="color:#333333;" data-bind="component:{name:'$model/UI2/system/components/justep/button/button'}" data-events="onClick:{operation:'window.close'}" data-config="{&#34;icon&#34;:&#34;icon-chevron-left&#34;,&#34;label&#34;:&#34;&#34;}" __cid="c77FrIf"> 
+            <i class="icon-chevron-left c77FrIf" __cid="c77FrIf"></i>  
+            <span __cid="c77FrIf" class="c77FrIf"></span> 
+          </a> 
+        </div>  
+        <div class="x-titlebar-title c77FrIf" style="color:#333333;font-weight:normal;" __cid="c77FrIf">添加收货地址</div>  
+        <div class="x-titlebar-right  c77FrIf" __cid="c77FrIf">
+          <div class="empty c77FrIf" __cid="c77FrIf"></div>
+          <a component="$model/UI2/system/components/justep/button/button" class="btn btn-link c77FrIf" xid="savebtn" style="color:#ff4665;" data-bind="component:{name:'$model/UI2/system/components/justep/button/button'}" data-events="onClick:savebtnClick" data-config="{&#34;label&#34;:&#34;保存&#34;}" __cid="c77FrIf"> 
+            <i xid="i1" __cid="c77FrIf" class="c77FrIf"></i>  
+            <span xid="span1" style="font-size:16px;" __cid="c77FrIf" class="c77FrIf">保存</span>
+          </a>
+        </div> 
+      </div> 
+    </div>  
+    <div class="x-panel-content x-cards c77FrIf" xid="content1" component="$model/UI2/system/components/justep/panel/child" data-bind="component:{name:'$model/UI2/system/components/justep/panel/child'}" __cid="c77FrIf"> 
+      <div component="$model/UI2/system/components/justep/smartContainer/smartContainer" class="x-smartcontainer c77FrIf" xid="smartContainer1" style="background-color:white;" data-bind="component:{name:'$model/UI2/system/components/justep/smartContainer/smartContainer'}" __cid="c77FrIf">
+        <div component="$model/UI2/system/components/justep/row/row" class="x-row row-class c77FrIf" xid="row1" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="c77FrIf"> 
+          <div class="x-col c77FrIf" xid="col1" __cid="c77FrIf">
+            <input component="$model/UI2/system/components/justep/input/input" class="form-control input-class c77FrIf" xid="input1" style="font-size:medium;" data-bind="component:{name:'$model/UI2/system/components/justep/input/input'}" data-config="{&#34;placeHolder&#34;:&#34;收货人&#34;}" __cid="c77FrIf">
+          </div> 
+        </div>
+        <div component="$model/UI2/system/components/justep/row/row" class="x-row row-class c77FrIf" xid="row2" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="c77FrIf"> 
+          <div class="x-col c77FrIf" xid="col4" __cid="c77FrIf"> 
+            <input component="$model/UI2/system/components/justep/input/input" class="form-control input-class c77FrIf" xid="input2" style="font-size:medium;" data-bind="component:{name:'$model/UI2/system/components/justep/input/input'}" data-config="{&#34;placeHolder&#34;:&#34;收货人电话&#34;}" __cid="c77FrIf">
+          </div> 
+        </div>  
+        <div component="$model/UI2/system/components/justep/row/row" class="x-row x-row-center row-class c77FrIf" xid="row3" style="margin-top:0px;margin-bottom:0px;" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'},event:{click:$model._callModelFn.bind($model, 'row3Click')}" __cid="c77FrIf"> 
+          <div class="x-col c77FrIf" xid="col5" __cid="c77FrIf"> 
+            <div component="$model/UI2/system/components/justep/list/list" class="x-list c77FrIf" xid="list3" data-bind="component:{name:'$model/UI2/system/components/justep/list/list'}" data-config="{&#34;data&#34;:&#34;mainData&#34;,&#34;filter&#34;:&#34;$row.val(\&#34;address\&#34;) != ''  &amp;&amp; $row.val(\&#34;address\&#34;) != '暂不选择'&#34;}" __cid="c77FrIf"> 
+              <ul class="x-list-template hide c77FrIf" xid="listTemplateUl3" __cid="c77FrIf" data-bind="foreach:{data:$model.foreach_list3($element),afterRender:$model.foreach_afterRender_list3.bind($model,$element)}"> 
+                <li xid="li3" style="padding-left:12px;padding-top:5px;" __cid="c77FrIf" class="c77FrIf">
+                  <span xid="span7" style="font-size:medium;" __cid="c77FrIf" class="c77FrIf" data-bind="text:val(&#34;address&#34;),css:val(&#34;address&#34;) == '收货地址' ? 'notext' : ''"></span>
+                </li>
+              </ul> 
+            </div>
+          </div>  
+          <div class="x-col x-col-fixed text-right c77FrIf" xid="col6" style="width:20px;" __cid="c77FrIf">
+            <i xid="i2" class="linear linear-chevronright text-muted c77FrIf" __cid="c77FrIf"></i>
+          </div>
+        </div>  
+        <div component="$model/UI2/system/components/justep/row/row" class="x-row row-class c77FrIf" xid="row4" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="c77FrIf"> 
+          <div class="x-col c77FrIf" xid="col7" __cid="c77FrIf"> 
+            <textarea component="$model/UI2/system/components/justep/textarea/textarea" class="form-control input-class c77FrIf" xid="textarea1" style="font-size:medium;" data-bind="component:{name:'$model/UI2/system/components/justep/textarea/textarea'}" data-config="{&#34;placeHolder&#34;:&#34;详细地址：如道路、门牌号、小区、楼栋号，单元室等&#34;}" __cid="c77FrIf"></textarea>
+          </div> 
+        </div>
+      </div>  
+      <div component="$model/UI2/system/components/justep/row/row" class="x-row row-class c77FrIf" xid="row5" style="background-color:white;padding-top:10px;margin-top:10px;" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="c77FrIf"> 
+        <div class="x-col c77FrIf" xid="col8" __cid="c77FrIf">
+          <span xid="span2" style="font-size:medium;" __cid="c77FrIf" class="c77FrIf">设为默认地址</span>
+        </div>  
+        <div class="x-col text-right c77FrIf" xid="col9" __cid="c77FrIf">
+          <span component="$model/UI2/system/components/justep/button/toggle" class="x-toggle c77FrIf" xid="toggle1" style="display: inline-block;padding:0px;" ON="　" OFF="　" data-config="{&#34;checked&#34;:false,&#34;disabled&#34;:false,&#34;label&#34;:{&#34;off&#34;:&#34;　&#34;,&#34;on&#34;:&#34;　&#34;}}" data-bind="component:{name:'$model/UI2/system/components/justep/button/toggle'}" __cid="c77FrIf">
+            <input type="checkbox" __cid="c77FrIf" class="c77FrIf">
+            <label data-on="　" data-off="　" __cid="c77FrIf" class="c77FrIf">
+              <span __cid="c77FrIf" class="c77FrIf"></span>
+            </label>
+          </span>
+        </div> 
+      </div>  
+      <div component="$model/UI2/system/components/justep/row/row" class="x-row row-class c77FrIf" xid="row6" style="background-color:white;margin-top:10px;display:none;" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="c77FrIf"> 
+        <div class="x-col c77FrIf" xid="col11" __cid="c77FrIf"> 
+          <a component="$model/UI2/system/components/justep/button/button" class="btn btn-link btn-block c77FrIf" xid="delbtn" style="color:#ff4665;font-size:medium;" data-bind="component:{name:'$model/UI2/system/components/justep/button/button'}" data-events="onClick:delbtnClick" data-config="{&#34;label&#34;:&#34;删除收货地址&#34;}" __cid="c77FrIf"> 
+            <i xid="i3" __cid="c77FrIf" class="c77FrIf"></i>  
+            <span xid="span3" __cid="c77FrIf" class="c77FrIf">删除收货地址</span>
+          </a>
+        </div> 
+      </div>
+    </div>  
+    <style __cid="c77FrIf" class="c77FrIf">.x-panel.pcZry6R3-iosstatusbar >.x-panel-top {height: 48px;}.x-panel.pcZry6R3-iosstatusbar >.x-panel-content { top: 48px;bottom: nullpx;}.x-panel.pcZry6R3-iosstatusbar >.x-panel-bottom {height: nullpx;}.iosstatusbar .x-panel.pcZry6R3-iosstatusbar >.x-panel-top,.iosstatusbar .x-panel .x-panel-content .x-has-iosstatusbar.x-panel.pcZry6R3-iosstatusbar >.x-panel-top {height: 68px;}.iosstatusbar .x-panel.pcZry6R3-iosstatusbar >.x-panel-content,.iosstatusbar .x-panel .x-panel-content .x-has-iosstatusbar.x-panel.pcZry6R3-iosstatusbar >.x-panel-content { top: 68px;}.iosstatusbar .x-panel .x-panel-content .x-panel.pcZry6R3-iosstatusbar >.x-panel-top {height: 48px;}.iosstatusbar .x-panel .x-panel-content .x-panel.pcZry6R3-iosstatusbar >.x-panel-content {top: 48px;}</style>
+  </div>  
+  <div component="$model/UI2/system/components/justep/popOver/popOver" class="x-popOver c77FrIf" xid="popOver1" data-bind="component:{name:'$model/UI2/system/components/justep/popOver/popOver'}" data-config="{&#34;direction&#34;:&#34;auto&#34;,&#34;position&#34;:&#34;bottom&#34;}" __cid="c77FrIf"> 
+    <div class="x-popOver-overlay c77FrIf" xid="div1" __cid="c77FrIf"></div>  
+    <div class="x-popOver-content c77FrIf" xid="div2" style="width:100%;height:80%;" __cid="c77FrIf">
+      <div xid="div3" style="width:100%;background-color:white;height:100%;" __cid="c77FrIf" class="c77FrIf">
+        <div component="$model/UI2/system/components/justep/row/row" class="x-row c77FrIf" xid="row7" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="c77FrIf"> 
+          <div class="x-col c77FrIf" xid="col12" __cid="c77FrIf"></div>  
+          <div class="x-col text-center c77FrIf" xid="col13" __cid="c77FrIf">
+            <span xid="span4" style="font-size:medium;" __cid="c77FrIf" class="c77FrIf">请选择</span>
+          </div>  
+          <div class="x-col text-right c77FrIf" xid="col14" __cid="c77FrIf">
+            <i xid="i4" class="linear linear-cross text-muted c77FrIf" __cid="c77FrIf" data-bind="event:{click:$model._callModelFn.bind($model, 'i4Click')}"></i>
+          </div>
+        </div>  
+        <div component="$model/UI2/system/components/justep/list/list" class="x-list c77FrIf" xid="list1" style="border-bottom-style:solid;border-bottom-width:1px;border-bottom-color:#f6f6f6;" data-bind="component:{name:'$model/UI2/system/components/justep/list/list'}" data-config="{&#34;data&#34;:&#34;mainData&#34;}" __cid="c77FrIf"> 
+          <ul class="x-list-template hide c77FrIf" xid="listTemplateUl1" __cid="c77FrIf" data-bind="foreach:{data:$model.foreach_list1($element),afterRender:$model.foreach_afterRender_list1.bind($model,$element)}"> 
+            <li xid="li1" __cid="c77FrIf" class="c77FrIf"> 
+              <div component="$model/UI2/system/components/justep/row/row" class="x-row c77FrIf" xid="row8" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'},event:{click:$model._callModelFn.bind($model, 'row8Click')}" __cid="c77FrIf"> 
+                <div class="x-col c77FrIf" xid="col2" __cid="c77FrIf">
+                  <span xid="span5" style="font-size:medium;" __cid="c77FrIf" class="c77FrIf" data-bind="text:val(&#34;address&#34;),css:val(&#34;isselect&#34;) == 1 ? 'spancolor' : ''"></span>
+                </div> 
+              </div>
+            </li>
+          </ul> 
+        </div>  
+        <div component="$model/UI2/system/components/justep/panel/panel" class="x-panel x-full pcmANZ7j-iosstatusbar c77FrIf" xid="panel2" style="margin-top:240px;" data-bind="component:{name:'$model/UI2/system/components/justep/panel/panel'}" __cid="c77FrIf"> 
+          <div class="x-panel-content c77FrIf" xid="content2" component="$model/UI2/system/components/justep/panel/child" data-bind="component:{name:'$model/UI2/system/components/justep/panel/child'}" __cid="c77FrIf">
+            <div component="$model/UI2/system/components/justep/list/list" class="x-list c77FrIf" xid="list2" data-bind="component:{name:'$model/UI2/system/components/justep/list/list'}" data-config="{&#34;data&#34;:&#34;districtData&#34;}" __cid="c77FrIf"> 
+              <ul class="x-list-template hide c77FrIf" xid="listTemplateUl2" __cid="c77FrIf" data-bind="foreach:{data:$model.foreach_list2($element),afterRender:$model.foreach_afterRender_list2.bind($model,$element)}"> 
+                <li xid="li2" __cid="c77FrIf" class="c77FrIf"> 
+                  <div component="$model/UI2/system/components/justep/row/row" class="x-row c77FrIf" xid="row9" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'},event:{click:$model._callModelFn.bind($model, 'row9Click')}" __cid="c77FrIf"> 
+                    <div class="x-col x-col-fixed text-center c77FrIf" xid="col15" style="width:25px;" __cid="c77FrIf">
+                      <span xid="span8" style="font-size:medium;" __cid="c77FrIf" class="c77FrIf" data-bind="text:val(&#34;myorder&#34;)"></span>
+                    </div>  
+                    <div class="x-col c77FrIf" xid="col16" __cid="c77FrIf">
+                      <span xid="span6" style="font-size:medium;" __cid="c77FrIf" class="c77FrIf" data-bind="text:val(&#34;name&#34;),css:$model.contrastdata( val(&#34;name&#34;)) ? 'spancolor' : '',event:{click:$model._callModelFn.bind($model, 'span6Click')}"></span>
+                    </div> 
+                  </div>
+                </li>
+              </ul> 
+            </div>
+          </div>  
+          <style __cid="c77FrIf" class="c77FrIf">.x-panel.pcmANZ7j-iosstatusbar >.x-panel-top {height: 0px;}.x-panel.pcmANZ7j-iosstatusbar >.x-panel-content { top: 0px;bottom: nullpx;}.x-panel.pcmANZ7j-iosstatusbar >.x-panel-bottom {height: nullpx;}.iosstatusbar .x-panel.pcmANZ7j-iosstatusbar >.x-panel-top,.iosstatusbar .x-panel .x-panel-content .x-has-iosstatusbar.x-panel.pcmANZ7j-iosstatusbar >.x-panel-top {height: 0px;}.iosstatusbar .x-panel.pcmANZ7j-iosstatusbar >.x-panel-content,.iosstatusbar .x-panel .x-panel-content .x-has-iosstatusbar.x-panel.pcmANZ7j-iosstatusbar >.x-panel-content { top: 0px;}.iosstatusbar .x-panel .x-panel-content .x-panel.pcmANZ7j-iosstatusbar >.x-panel-top {height: 0px;}.iosstatusbar .x-panel .x-panel-content .x-panel.pcmANZ7j-iosstatusbar >.x-panel-content {top: 0px;}</style>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

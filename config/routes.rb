@@ -110,6 +110,8 @@ Rails.application.routes.draw do
       get 'delete_commentimg'
       get 'comment'
       get 'get_search'
+      get 'check_subscribe'
+      get 'get_sysqr'
     end
   end
   resources :getopenids do
@@ -143,4 +145,5 @@ Rails.application.routes.draw do
   require 'sidekiq/web'
   mount Sidekiq::Web => '/sidekiq'
   resources :monitors
+  resources :sysqrs
 end

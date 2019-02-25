@@ -1,0 +1,209 @@
+<!DOCTYPE HTML>
+<div component="$model/UI2/system/components/justep/window/window" design="device:m;" xid="window" class="window cb6V7ve" data-bind="component:{name:'$model/UI2/system/components/justep/window/window'}" __cid="cb6V7ve" components="$model/UI2/system/components/justep/model/model,$model/UI2/system/components/justep/loadingBar/loadingBar,$model/UI2/system/components/justep/button/button,$model/UI2/system/components/justep/scrollView/scrollView,$model/UI2/system/components/justep/list/list,$model/UI2/system/components/justep/panel/child,$model/UI2/system/components/justep/button/toggle,$model/UI2/system/components/justep/messageDialog/messageDialog,$model/UI2/system/components/justep/panel/panel,$model/UI2/system/components/justep/popOver/popOver,$model/UI2/system/components/justep/row/row,$model/UI2/system/components/justep/titleBar/titleBar,$model/UI2/system/components/justep/data/data,$model/UI2/system/components/justep/window/window,">
+  <style>.givebackcolor.cb6V7ve{background: rgb(246, 246, 246)} .process-btn.cb6V7ve{background: transparent; color: rgb(153, 153, 153); border-radius: 20px; border-color: rgb(240, 240, 240); margin-left: 5px} .Yes.cb6V7ve{} .x-modal-button.cb6V7ve{color: rgb(85, 85, 85)} .surebtn.cb6V7ve{border-radius: 0px; border: 0px; background: linear-gradient(to bottom, rgb(255, 108, 160), rgb(255, 66, 86))} .x-popOver-content.cb6V7ve{bottom: 0px !important} .x-toggle.cb6V7ve input.cb6V7ve:checked + label.cb6V7ve{background-color: rgb(255, 70, 101); line-height: -1em} .wxcolor.cb6V7ve{background: rgb(68, 181, 73); border-color: rgb(68, 181, 73)} .input-class.cb6V7ve{border: 0px} .input-class.cb6V7ve:focus{box-shadow: 0 0 0px rgba(102, 175, 233, 0)} .row-class.cb6V7ve{border-bottom: solid 1px rgb(246, 246, 246); padding-top: 5px; padding-bottom: 0px}</style>  
+  <div component="$model/UI2/system/components/justep/model/model" xid="model" style="display:none" data-bind="component:{name:'$model/UI2/system/components/justep/model/model'}" data-events="onLoad:modelLoad" __cid="cb6V7ve" class="cb6V7ve"></div>  
+  <div component="$model/UI2/system/components/justep/panel/panel" class="x-panel x-full pcV77ryy-iosstatusbar cb6V7ve" xid="panel1" data-bind="component:{name:'$model/UI2/system/components/justep/panel/panel'}" __cid="cb6V7ve"> 
+    <div class="x-panel-top cb6V7ve" xid="top1" component="$model/UI2/system/components/justep/panel/child" data-bind="component:{name:'$model/UI2/system/components/justep/panel/child'}" __cid="cb6V7ve"> 
+      <div component="$model/UI2/system/components/justep/titleBar/titleBar" class="x-titlebar cb6V7ve" style="background-color:white;" data-bind="component:{name:'$model/UI2/system/components/justep/titleBar/titleBar'}" data-config="{&#34;title&#34;:&#34;待评价&#34;}" __cid="cb6V7ve"> 
+        <div class="x-titlebar-left cb6V7ve" style="color:#333333;" __cid="cb6V7ve"> 
+          <a component="$model/UI2/system/components/justep/button/button" class="btn btn-link btn-only-icon cb6V7ve" xid="backBtn" data-bind="component:{name:'$model/UI2/system/components/justep/button/button'}" data-events="onClick:{operation:'window.close'}" data-config="{&#34;icon&#34;:&#34;icon-chevron-left&#34;,&#34;label&#34;:&#34;&#34;}" __cid="cb6V7ve"> 
+            <i class="icon-chevron-left cb6V7ve" __cid="cb6V7ve"></i>  
+            <span __cid="cb6V7ve" class="cb6V7ve"></span> 
+          </a> 
+        </div>  
+        <div class="x-titlebar-title cb6V7ve" style="font-weight:normal;color:#333333;" __cid="cb6V7ve">待评价</div>  
+        <div class="x-titlebar-right  cb6V7ve" __cid="cb6V7ve">
+          <div class="empty cb6V7ve" __cid="cb6V7ve"></div>
+        </div> 
+      </div> 
+    </div>  
+    <div class="x-panel-content x-cards  x-scroll-view cb6V7ve" xid="content1" _xid="C848A2A98F600001FA32D660193017DC" component="$model/UI2/system/components/justep/panel/child" data-bind="component:{name:'$model/UI2/system/components/justep/panel/child'}" __cid="cb6V7ve"> 
+      <div class="x-scroll cb6V7ve" component="$model/UI2/system/components/justep/scrollView/scrollView" xid="scrollView1" data-bind="component:{name:'$model/UI2/system/components/justep/scrollView/scrollView'}" data-events="onPullDown:scrollView1PullDown;onPullUp:scrollView1PullUp" data-config="{&#34;noMoreLoadLabel&#34;:&#34;　&#34;}" __cid="cb6V7ve"> 
+        <div class="x-content-center x-pull-down container cb6V7ve" xid="div4" __cid="cb6V7ve"> 
+          <i class="x-pull-down-img glyphicon x-icon-pull-down cb6V7ve" xid="i5" __cid="cb6V7ve"></i>  
+          <span class="x-pull-down-label cb6V7ve" xid="span17" __cid="cb6V7ve">下拉刷新...</span>
+        </div>  
+        <div class="x-scroll-content cb6V7ve" xid="div5" __cid="cb6V7ve">
+          <div component="$model/UI2/system/components/justep/list/list" class="x-list cb6V7ve" xid="list1" data-bind="component:{name:'$model/UI2/system/components/justep/list/list'}" data-config="{&#34;data&#34;:&#34;orderData&#34;}" __cid="cb6V7ve"> 
+            <ul class="x-list-template hide cb6V7ve" xid="listTemplateUl1" style="padding:5px;" __cid="cb6V7ve" data-bind="foreach:{data:$model.foreach_list1($element),afterRender:$model.foreach_afterRender_list1.bind($model,$element)}"> 
+              <div xid="div1" style="background-color:white;border-radius:5px;margin-bottom:10px;" __cid="cb6V7ve" class="cb6V7ve">
+                <div component="$model/UI2/system/components/justep/list/list" class="x-list cb6V7ve" xid="list2" data-bind="component:{name:'$model/UI2/system/components/justep/list/list'}" data-config="{&#34;data&#34;:&#34;orderdetailData&#34;,&#34;disableInfiniteLoad&#34;:true,&#34;disablePullToRefresh&#34;:true,&#34;filter&#34;:&#34; $row.val(\&#34;order_id\&#34;) == val(\&#34;id\&#34;)&#34;}" __cid="cb6V7ve"> 
+                  <ul class="x-list-template hide cb6V7ve" xid="listTemplateUl2" __cid="cb6V7ve" data-bind="foreach:{data:$model.foreach_list2($element),afterRender:$model.foreach_afterRender_list2.bind($model,$element)}"> 
+                    <div component="$model/UI2/system/components/justep/row/row" class="x-row cb6V7ve" xid="row1" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'},css:val(&#34;producttype&#34;) == 1 ? 'givebackcolor' : ''" __cid="cb6V7ve"> 
+                      <div class="x-col x-col-25 cb6V7ve" xid="col1" __cid="cb6V7ve">
+                        <img src=" " alt="" xid="image1" style="width:100%;" __cid="cb6V7ve" class="cb6V7ve" data-bind="attr:{src:val(&#34;cover&#34;)}">
+                      </div>  
+                      <div class="x-col cb6V7ve" xid="col2" __cid="cb6V7ve">
+                        <div component="$model/UI2/system/components/justep/row/row" class="x-row cb6V7ve" xid="row2" style="padding:0px;" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="cb6V7ve"> 
+                          <div class="x-col cb6V7ve" xid="col4" style="padding:0px;" __cid="cb6V7ve">
+                            <span xid="span1" __cid="cb6V7ve" class="cb6V7ve" data-bind="text:val(&#34;name&#34;)"></span>  
+                            <span xid="span2" __cid="cb6V7ve" class="cb6V7ve" data-bind="text:val(&#34;subtitle&#34;)"></span>
+                          </div> 
+                        </div>  
+                        <div component="$model/UI2/system/components/justep/row/row" class="x-row cb6V7ve" xid="row4" style="padding:0px;" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="cb6V7ve"> 
+                          <div class="x-col cb6V7ve" xid="col5" style="padding:0px;padding-top:5px;" __cid="cb6V7ve">
+                            <div component="$model/UI2/system/components/justep/list/list" class="x-list cb6V7ve" xid="list3" data-bind="component:{name:'$model/UI2/system/components/justep/list/list'}" data-config="{&#34;data&#34;:&#34;optionalData&#34;,&#34;disableInfiniteLoad&#34;:true,&#34;disablePullToRefresh&#34;:true,&#34;filter&#34;:&#34; $row.val(\&#34;orderdetail_id\&#34;) == val(\&#34;id\&#34;)&#34;}" __cid="cb6V7ve"> 
+                              <ul class="x-list-template hide cb6V7ve" xid="listTemplateUl3" __cid="cb6V7ve" data-bind="foreach:{data:$model.foreach_list3($element),afterRender:$model.foreach_afterRender_list3.bind($model,$element)}"> 
+                                <span xid="span4" class="text-muted cb6V7ve" style="font-size:small;" __cid="cb6V7ve" data-bind="text:val(&#34;selectcondition_name&#34;)"></span>
+                              </ul> 
+                            </div>
+                          </div> 
+                        </div>  
+                        <div component="$model/UI2/system/components/justep/row/row" class="x-row cb6V7ve" xid="row5" style="padding:0px;" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="cb6V7ve"> 
+                          <div class="x-col cb6V7ve" xid="col9" style="padding:0px;padding:5px;" __cid="cb6V7ve">
+                            <div component="$model/UI2/system/components/justep/list/list" class="x-list cb6V7ve" xid="list5" style="margin-left:-4px;" data-bind="component:{name:'$model/UI2/system/components/justep/list/list'}" data-config="{&#34;data&#34;:&#34;activeData&#34;,&#34;disableInfiniteLoad&#34;:true,&#34;disablePullToRefresh&#34;:true,&#34;filter&#34;:&#34; $row.val(\&#34;orderdetail_id\&#34;) == val(\&#34;id\&#34;)&#34;}" __cid="cb6V7ve"> 
+                              <ul class="x-list-template hide cb6V7ve" xid="listTemplateUl5" __cid="cb6V7ve" data-bind="foreach:{data:$model.foreach_list5($element),afterRender:$model.foreach_afterRender_list5.bind($model,$element)}"> 
+                                <span xid="span24" style="font-size:x-small;background-color:#ffeae9;color:#fe2e23;font-weight:lighter;padding:1px;border-radius:3px;" __cid="cb6V7ve" class="cb6V7ve" data-bind="text:val(&#34;active&#34;)"></span>
+                              </ul> 
+                            </div>
+                          </div> 
+                        </div>
+                      </div>  
+                      <div class="x-col x-col-fixed cb6V7ve" xid="col3" style="width:80px;" __cid="cb6V7ve">
+                        <div component="$model/UI2/system/components/justep/row/row" class="x-row cb6V7ve" xid="row3" style="padding:0px;" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="cb6V7ve"> 
+                          <div class="x-col text-right cb6V7ve" xid="col7" style="padding:0px;" __cid="cb6V7ve">
+                            <span xid="span3" style="color:#ff9c50;" __cid="cb6V7ve" class="cb6V7ve" data-bind="visible:$index() == 0,text:val(&#34;ordermessage&#34;)">交易成功</span>  
+                            <span xid="span7" __cid="cb6V7ve" class="cb6V7ve" data-bind="visible:$index() != 0">　</span>
+                          </div> 
+                        </div>  
+                        <div component="$model/UI2/system/components/justep/row/row" class="x-row cb6V7ve" xid="row7" style="padding-top:5px;padding-right:0px;" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="cb6V7ve"> 
+                          <div class="x-col text-right cb6V7ve" xid="col15" style="padding-right:0px;" __cid="cb6V7ve">
+                            <span xid="span6" __cid="cb6V7ve" class="cb6V7ve" data-bind="text:'￥' + val(&#34;price&#34;)"></span>
+                          </div> 
+                        </div>  
+                        <div component="$model/UI2/system/components/justep/row/row" class="x-row cb6V7ve" xid="row8" style="padding:0px;padding-right:0px;" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="cb6V7ve"> 
+                          <div class="x-col text-right cb6V7ve" xid="col18" style="padding:0px;padding-right:0px;" __cid="cb6V7ve">
+                            <span xid="span8" class="text-muted cb6V7ve" __cid="cb6V7ve" data-bind="text:'×' + val(&#34;number&#34;)"></span>
+                          </div> 
+                        </div>
+                      </div>
+                    </div>
+                  </ul> 
+                </div>  
+                <div component="$model/UI2/system/components/justep/row/row" class="x-row text-muted cb6V7ve" xid="row9" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'},visible:val(&#34;discount&#34;) &gt; 0  ||  val(&#34;owerprofit&#34;) &gt; 0" __cid="cb6V7ve"> 
+                  <div class="x-col cb6V7ve" xid="col6" __cid="cb6V7ve">
+                    <i xid="i6" class="my my-shouyi cb6V7ve" __cid="cb6V7ve" data-bind="visible:val(&#34;discount&#34;) &gt; 0"></i>  
+                    <span xid="span10" style="margin-right:10px;" __cid="cb6V7ve" class="cb6V7ve" data-bind="text:'节省￥' + val(&#34;discount&#34;) + '元',visible:val(&#34;discount&#34;) &gt; 0"></span>  
+                    <i xid="i7" class="my my-tixian1 cb6V7ve" __cid="cb6V7ve" data-bind="visible:val(&#34;owerprofit&#34;) &gt; 0"></i>  
+                    <span xid="span11" style="margin-right:10px;" __cid="cb6V7ve" class="cb6V7ve" data-bind="text:'获得￥' + val(&#34;owerprofit&#34;) + '元返现',visible:val(&#34;owerprofit&#34;) &gt; 0"></span>
+                  </div> 
+                </div>
+                <div component="$model/UI2/system/components/justep/row/row" class="x-row cb6V7ve" xid="row6" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="cb6V7ve"> 
+                  <div class="x-col text-right cb6V7ve" xid="col12" __cid="cb6V7ve">
+                    <span xid="span5" __cid="cb6V7ve" class="cb6V7ve" data-bind="text:'共计' +   val(&#34;detailcount&#34;) + '件商品 合计：￥'">共计1件商品</span>  
+                    <span xid="span9" style="font-size:medium;" __cid="cb6V7ve" class="cb6V7ve" data-bind="text:val(&#34;paysum&#34;)"></span>
+                  </div> 
+                </div>  
+                <div component="$model/UI2/system/components/justep/row/row" class="x-row cb6V7ve" xid="row10" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="cb6V7ve"> 
+                  <div class="x-col text-right cb6V7ve" xid="col11" __cid="cb6V7ve">
+                    <a component="$model/UI2/system/components/justep/button/button" class="btn btn-default btn-sm process-btn cb6V7ve" xid="expressBtn" data-bind="component:{name:'$model/UI2/system/components/justep/button/button'},visible:val(&#34;orderstatus&#34;) == 2" data-events="onClick:expressBtnClick" data-config="{&#34;label&#34;:&#34;查看物流&#34;}" __cid="cb6V7ve"> 
+                      <i xid="i8" __cid="cb6V7ve" class="cb6V7ve"></i>  
+                      <span xid="span19" __cid="cb6V7ve" class="cb6V7ve">查看物流</span>
+                    </a>
+                    <a component="$model/UI2/system/components/justep/button/button" class="btn btn-default btn-sm process-btn cb6V7ve" xid="commentBtn" data-bind="component:{name:'$model/UI2/system/components/justep/button/button'},visible:val(&#34;orderstatus&#34;) == 3" data-events="onClick:commentBtnClick" data-config="{&#34;label&#34;:&#34;评价商品&#34;}" __cid="cb6V7ve"> 
+                      <i xid="i1" __cid="cb6V7ve" class="cb6V7ve"></i>  
+                      <span xid="span12" __cid="cb6V7ve" class="cb6V7ve">评价商品</span>
+                    </a>  
+                    <a component="$model/UI2/system/components/justep/button/button" class="btn btn-default btn-sm process-btn cb6V7ve" xid="receiptBtn" data-bind="component:{name:'$model/UI2/system/components/justep/button/button'},visible:val(&#34;orderstatus&#34;) == 2" data-events="onClick:receiptBtnClick" data-config="{&#34;label&#34;:&#34;确认收货&#34;}" __cid="cb6V7ve"> 
+                      <i xid="i2" __cid="cb6V7ve" class="cb6V7ve"></i>  
+                      <span xid="span13" __cid="cb6V7ve" class="cb6V7ve">确认收货</span>
+                    </a>  
+                    <a component="$model/UI2/system/components/justep/button/button" class="btn btn-default btn-sm process-btn cb6V7ve" xid="paynowBtn" data-bind="component:{name:'$model/UI2/system/components/justep/button/button'},visible:val(&#34;orderstatus&#34;) == 0" data-events="onClick:paynowBtnClick" data-config="{&#34;label&#34;:&#34;立即支付&#34;}" __cid="cb6V7ve"> 
+                      <i xid="i3" __cid="cb6V7ve" class="cb6V7ve"></i>  
+                      <span xid="span14" __cid="cb6V7ve" class="cb6V7ve">立即支付</span>
+                    </a>  
+                    <a component="$model/UI2/system/components/justep/button/button" class="btn btn-default btn-sm process-btn cb6V7ve" xid="deleteBtn" data-bind="component:{name:'$model/UI2/system/components/justep/button/button'},visible:val(&#34;orderstatus&#34;) == 0" data-events="onClick:deleteBtnClick" data-config="{&#34;label&#34;:&#34;删除订单&#34;}" __cid="cb6V7ve"> 
+                      <i xid="i4" __cid="cb6V7ve" class="cb6V7ve"></i>  
+                      <span xid="span15" __cid="cb6V7ve" class="cb6V7ve">删除订单</span>
+                    </a> 
+                  </div> 
+                </div>
+              </div>
+            </ul> 
+          </div>
+        </div>  
+        <div class="x-content-center x-pull-up cb6V7ve" xid="div6" __cid="cb6V7ve"> 
+          <span class="x-pull-up-label cb6V7ve" xid="span18" __cid="cb6V7ve">加载更多...</span>
+        </div> 
+      </div>
+    </div>  
+    <style __cid="cb6V7ve" class="cb6V7ve">.x-panel.pcV77ryy-iosstatusbar >.x-panel-top {height: 48px;}.x-panel.pcV77ryy-iosstatusbar >.x-panel-content { top: 48px;bottom: nullpx;}.x-panel.pcV77ryy-iosstatusbar >.x-panel-bottom {height: nullpx;}.iosstatusbar .x-panel.pcV77ryy-iosstatusbar >.x-panel-top,.iosstatusbar .x-panel .x-panel-content .x-has-iosstatusbar.x-panel.pcV77ryy-iosstatusbar >.x-panel-top {height: 68px;}.iosstatusbar .x-panel.pcV77ryy-iosstatusbar >.x-panel-content,.iosstatusbar .x-panel .x-panel-content .x-has-iosstatusbar.x-panel.pcV77ryy-iosstatusbar >.x-panel-content { top: 68px;}.iosstatusbar .x-panel .x-panel-content .x-panel.pcV77ryy-iosstatusbar >.x-panel-top {height: 48px;}.iosstatusbar .x-panel .x-panel-content .x-panel.pcV77ryy-iosstatusbar >.x-panel-content {top: 48px;}</style>
+  </div>  
+  <span component="$model/UI2/system/components/justep/messageDialog/messageDialog" xid="deletemessageDialog" data-bind="component:{name:'$model/UI2/system/components/justep/messageDialog/messageDialog'}" data-events="onNo:deletemessageDialogNo" data-config="{&#34;message&#34;:&#34;确认删除订单？&#34;,&#34;type&#34;:&#34;YesNo&#34;}" __cid="cb6V7ve" class="cb6V7ve">
+    <div class="x-modal-overlay cb6V7ve" __cid="cb6V7ve"></div>
+    <div class="x-modal cb6V7ve" __cid="cb6V7ve">
+      <div class="x-modal-inner cb6V7ve" __cid="cb6V7ve">
+        <div class="x-modal-title cb6V7ve" __cid="cb6V7ve"></div>
+        <div class="x-modal-text cb6V7ve" __cid="cb6V7ve">确认删除订单？</div>
+        <input class="x-modal-prompt-input cb6V7ve" type="text" __cid="cb6V7ve">
+      </div>
+      <div class="x-modal-buttons cb6V7ve" __cid="cb6V7ve">
+        <a class="x-modal-button x-modal-button-bold OK cb6V7ve" value="ok" __cid="cb6V7ve">确定</a>
+        <a class="x-modal-button x-modal-button-bold Yes cb6V7ve" value="yes" __cid="cb6V7ve">是</a>
+        <a class="x-modal-button x-modal-button-bold No cb6V7ve" value="no" __cid="cb6V7ve">否</a>
+        <a class="x-modal-button x-modal-button-bold Cancel cb6V7ve" value="cancel" __cid="cb6V7ve">取消</a>
+      </div>
+    </div>
+  </span>  
+  <div component="$model/UI2/system/components/justep/popOver/popOver" class="x-popOver cb6V7ve" xid="popOver1" data-bind="component:{name:'$model/UI2/system/components/justep/popOver/popOver'}" data-config="{&#34;direction&#34;:&#34;auto&#34;,&#34;position&#34;:&#34;bottom&#34;}" __cid="cb6V7ve"> 
+    <div class="x-popOver-overlay cb6V7ve" xid="div2" __cid="cb6V7ve"></div>  
+    <div class="x-popOver-content cb6V7ve" xid="div3" style="background-color:white;width:100%;height:70%;" __cid="cb6V7ve"> 
+      <div component="$model/UI2/system/components/justep/row/row" class="x-row cb6V7ve" xid="row14" style="border-bottom-style:solid;border-bottom-width:1px;border-bottom-color:#f6f6f6;" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="cb6V7ve"> 
+        <div class="x-col cb6V7ve" xid="col23" __cid="cb6V7ve"></div>  
+        <div class="x-col text-center cb6V7ve" xid="col24" __cid="cb6V7ve"> 
+          <span xid="span20" style="font-size:medium;" __cid="cb6V7ve" class="cb6V7ve">确认付款</span>
+        </div>  
+        <div class="x-col text-right cb6V7ve" xid="col25" __cid="cb6V7ve"> 
+          <i xid="i9" class="linear linear-cross text-muted cb6V7ve" __cid="cb6V7ve" data-bind="event:{click:$model._callModelFn.bind($model, 'i9Click')}"></i>
+        </div> 
+      </div>  
+      <div component="$model/UI2/system/components/justep/row/row" class="x-row cb6V7ve" xid="row15" style="margin-top:20px;" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="cb6V7ve"> 
+        <div class="x-col cb6V7ve" xid="col26" __cid="cb6V7ve"></div>  
+        <div class="x-col text-center cb6V7ve" xid="col27" __cid="cb6V7ve"> 
+          <span xid="span23" style="color:#fe2e23;font-size:x-large;" __cid="cb6V7ve" class="cb6V7ve">￥0.00</span>
+        </div>  
+        <div class="x-col cb6V7ve" xid="col28" __cid="cb6V7ve"></div>
+      </div>  
+      <div component="$model/UI2/system/components/justep/row/row" class="x-row cb6V7ve" xid="row16" style="margin-top:20px;border-bottom-style:solid;border-bottom-width:1px;border-bottom-color:#f6f6f6;" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="cb6V7ve"> 
+        <div class="x-col x-col-25 cb6V7ve" xid="col29" __cid="cb6V7ve"> 
+          <span xid="span16" __cid="cb6V7ve" class="cb6V7ve">余额抵扣</span>
+        </div>  
+        <div class="x-col text-center cb6V7ve" xid="col30" __cid="cb6V7ve"> 
+          <span xid="span25" __cid="cb6V7ve" class="cb6V7ve">可用余额：￥0.00</span>
+        </div>  
+        <div class="x-col x-col-25 text-right cb6V7ve" xid="col31" __cid="cb6V7ve"> 
+          <span component="$model/UI2/system/components/justep/button/toggle" class="x-toggle cb6V7ve" xid="toggle1" style="display: inline-block;padding:0px;" ON="　" OFF="　" data-config="{&#34;checked&#34;:false,&#34;disabled&#34;:false,&#34;label&#34;:{&#34;off&#34;:&#34;　&#34;,&#34;on&#34;:&#34;　&#34;}}" data-bind="component:{name:'$model/UI2/system/components/justep/button/toggle'}" data-events="onChange:toggle1Change" __cid="cb6V7ve">
+            <input type="checkbox" __cid="cb6V7ve" class="cb6V7ve">
+            <label data-on="　" data-off="　" __cid="cb6V7ve" class="cb6V7ve">
+              <span __cid="cb6V7ve" class="cb6V7ve"></span>
+            </label>
+          </span>
+        </div> 
+      </div>  
+      <div component="$model/UI2/system/components/justep/row/row" class="x-row cb6V7ve" xid="row17" style="position:absolute;bottom:20px;" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="cb6V7ve"> 
+        <div class="x-col cb6V7ve" xid="col32" __cid="cb6V7ve"> 
+          <a component="$model/UI2/system/components/justep/button/button" class="btn btn-default btn-block wxcolor cb6V7ve" xid="payBtn" data-bind="component:{name:'$model/UI2/system/components/justep/button/button'}" data-config="{&#34;label&#34;:&#34;立即支付&#34;}" __cid="cb6V7ve"> 
+            <i xid="i10" __cid="cb6V7ve" class="cb6V7ve"></i>  
+            <span xid="span26" __cid="cb6V7ve" class="cb6V7ve">立即支付</span>
+          </a> 
+        </div> 
+      </div> 
+    </div> 
+  </div>  
+  <span component="$model/UI2/system/components/justep/messageDialog/messageDialog" xid="receiptmessageDialog" data-bind="component:{name:'$model/UI2/system/components/justep/messageDialog/messageDialog'}" data-events="onNo:receiptmessageDialogNo;onYes:receiptmessageDialogYes" data-config="{&#34;message&#34;:&#34;确认已收到此订单商品&#34;,&#34;type&#34;:&#34;YesNo&#34;}" __cid="cb6V7ve" class="cb6V7ve">
+    <div class="x-modal-overlay cb6V7ve" __cid="cb6V7ve"></div>
+    <div class="x-modal cb6V7ve" __cid="cb6V7ve">
+      <div class="x-modal-inner cb6V7ve" __cid="cb6V7ve">
+        <div class="x-modal-title cb6V7ve" __cid="cb6V7ve"></div>
+        <div class="x-modal-text cb6V7ve" __cid="cb6V7ve">确认已收到此订单商品</div>
+        <input class="x-modal-prompt-input cb6V7ve" type="text" __cid="cb6V7ve">
+      </div>
+      <div class="x-modal-buttons cb6V7ve" __cid="cb6V7ve">
+        <a class="x-modal-button x-modal-button-bold OK cb6V7ve" value="ok" __cid="cb6V7ve">确定</a>
+        <a class="x-modal-button x-modal-button-bold Yes cb6V7ve" value="yes" __cid="cb6V7ve">是</a>
+        <a class="x-modal-button x-modal-button-bold No cb6V7ve" value="no" __cid="cb6V7ve">否</a>
+        <a class="x-modal-button x-modal-button-bold Cancel cb6V7ve" value="cancel" __cid="cb6V7ve">取消</a>
+      </div>
+    </div>
+  </span>
+</div>

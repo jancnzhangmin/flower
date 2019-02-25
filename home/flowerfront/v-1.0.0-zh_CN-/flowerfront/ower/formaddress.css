@@ -1,0 +1,31 @@
+.input-class {
+	border: 0px;
+}
+
+.input-class:focus {
+	box-shadow: 0 0 0px rgba(102, 175, 233, 0);
+}
+
+.row-class {
+	border-bottom:solid 1px #f6f6f6;
+	padding-top:5px;
+	padding-bottom:0px;
+}
+
+.x-toggle input:checked + label {
+    background-color:#ff4665;
+    line-height: -1em;
+}
+
+.x-popOver-content{
+	bottom:0px !important;
+	border-radius:10px 10px 0 0;
+}
+
+.spancolor{
+	color:#ff4256;
+}
+
+.notext{
+	color:#999999;
+}

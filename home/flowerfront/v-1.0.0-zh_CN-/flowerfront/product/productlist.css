@@ -1,0 +1,14 @@
+.ev{
+	padding:10px;
+	padding-right:5px;
+}
+.od{
+	padding:10px;
+	padding-left:5px;
+}
+
+.btnclass{
+		background: linear-gradient(to bottom, #ff4256, #fe5993);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}

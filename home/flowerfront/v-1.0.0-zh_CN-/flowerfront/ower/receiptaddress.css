@@ -1,0 +1,9 @@
+.firstname{
+	width:35px;
+	height:35px;
+	border-radius:50%;
+	background:#aaaaaa;
+	color:white;
+	display: table-cell;
+	vertical-align: middle;
+}

@@ -1,0 +1,192 @@
+<!DOCTYPE HTML>
+<div component="$model/UI2/system/components/justep/window/window" design="device:m;" xid="window" class="window cbUfAVz" data-bind="component:{name:'$model/UI2/system/components/justep/window/window'}" __cid="cbUfAVz" components="$model/UI2/system/components/justep/model/model,$model/UI2/system/components/justep/loadingBar/loadingBar,$model/UI2/system/components/justep/button/button,$model/UI2/system/components/justep/row/row,$model/UI2/system/components/justep/list/list,$model/UI2/system/components/justep/smartContainer/smartContainer,$model/UI2/system/components/justep/titleBar/titleBar,$model/UI2/system/components/justep/panel/child,$model/UI2/system/components/justep/data/data,$model/UI2/system/components/justep/window/window,$model/UI2/system/components/justep/panel/panel,">
+  <style>.imageradius.cbUfAVz{border-radius: 5px; overflow: hidden} .lastborder.cbUfAVz{border-bottom-style: solid; border-bottom-width: 1px; border-bottom-color: rgb(246, 246, 246)} .lastborder.cbUfAVz div.cbUfAVz:last{border-bottom-style: solid; border-bottom-width: 1px; border-bottom-color: rgb(246, 246, 246)} .addbtn.cbUfAVz{background: transparent; border-radius: 50%; border: 1px solid rgb(255, 66, 86); color: rgb(255, 66, 86); padding: 2px; padding-left: 5px; padding-right: 5px} .surebtn.cbUfAVz{border-radius: 18px; border: 0px; background: linear-gradient(to right, rgb(255, 108, 160), rgb(255, 66, 86))}</style>  
+  <div component="$model/UI2/system/components/justep/model/model" xid="model" style="display:none" data-bind="component:{name:'$model/UI2/system/components/justep/model/model'}" data-events="onActive:modelActive;onLoad:modelLoad;onParamsReceive:modelParamsReceive" __cid="cbUfAVz" class="cbUfAVz"></div>
+  <div component="$model/UI2/system/components/justep/panel/panel" class="x-panel x-full pcbQf2I3-iosstatusbar cbUfAVz" xid="panel1" data-bind="component:{name:'$model/UI2/system/components/justep/panel/panel'}" __cid="cbUfAVz"> 
+    <div class="x-panel-top cbUfAVz" xid="top1" component="$model/UI2/system/components/justep/panel/child" data-bind="component:{name:'$model/UI2/system/components/justep/panel/child'}" __cid="cbUfAVz"> 
+      <div component="$model/UI2/system/components/justep/titleBar/titleBar" class="x-titlebar cbUfAVz" style="background-color:white;" data-bind="component:{name:'$model/UI2/system/components/justep/titleBar/titleBar'}" data-config="{&#34;title&#34;:&#34;购物车&#34;}" __cid="cbUfAVz"> 
+        <div class="x-titlebar-left cbUfAVz" __cid="cbUfAVz"> 
+          <a component="$model/UI2/system/components/justep/button/button" class="btn btn-link btn-only-icon cbUfAVz" xid="backBtn" data-bind="component:{name:'$model/UI2/system/components/justep/button/button'}" data-events="onClick:{operation:'window.close'}" data-config="{&#34;icon&#34;:&#34;icon-chevron-left&#34;,&#34;label&#34;:&#34;&#34;}" __cid="cbUfAVz"> 
+            <i class="icon-chevron-left cbUfAVz" xid="backi" __cid="cbUfAVz"></i>  
+            <span __cid="cbUfAVz" class="cbUfAVz"></span> 
+          </a> 
+        </div>  
+        <div class="x-titlebar-title cbUfAVz" style="color:#333333;font-weight:normal;" __cid="cbUfAVz">购物车</div>  
+        <div class="x-titlebar-right  cbUfAVz" __cid="cbUfAVz">
+          <div class="empty cbUfAVz" __cid="cbUfAVz"></div>
+        </div> 
+      </div> 
+    </div>  
+    <div class="x-panel-content x-cards cbUfAVz" xid="content1" component="$model/UI2/system/components/justep/panel/child" data-bind="component:{name:'$model/UI2/system/components/justep/panel/child'}" __cid="cbUfAVz">
+      <div component="$model/UI2/system/components/justep/smartContainer/smartContainer" class="x-smartcontainer cbUfAVz" xid="smartContainer1" style="background-color:white;overflow-x: unset;padding-bottom:0px;" data-bind="component:{name:'$model/UI2/system/components/justep/smartContainer/smartContainer'}" __cid="cbUfAVz"> 
+        <div component="$model/UI2/system/components/justep/list/list" class="x-list cbUfAVz" xid="list1" data-bind="component:{name:'$model/UI2/system/components/justep/list/list'}" data-config="{&#34;data&#34;:&#34;buycarData&#34;,&#34;filter&#34;:&#34;$row.val(\&#34;number\&#34;) &gt; 0  &amp;&amp;  $row.val(\&#34;producttype\&#34;) == 0&#34;}" __cid="cbUfAVz"> 
+          <ul class="x-list-template hide cbUfAVz" xid="listTemplateUl1" style="overflow:hidden;" __cid="cbUfAVz" data-bind="foreach:{data:$model.foreach_list1($element),afterRender:$model.foreach_afterRender_list1.bind($model,$element)}"> 
+            <div xid="div1" class="swiper-container cbUfAVz" __cid="cbUfAVz">
+              <div xid="div5" class="swiper-wrapper cbUfAVz" __cid="cbUfAVz">
+                <div xid="div6" class="swiper-slide cbUfAVz" __cid="cbUfAVz">
+                  <div component="$model/UI2/system/components/justep/row/row" class="x-row movrow cbUfAVz" xid="row1" style="padding-bottom:0px;padding-top:5px;z-index:10;" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'},event:{click:$model._callModelFn.bind($model, 'row1Click'),touchstart:$model._callModelFn.bind($model, 'row1Touchstart')}" __cid="cbUfAVz"> 
+                    <div class="x-col x-col-25 cbUfAVz" xid="col1" __cid="cbUfAVz">
+                      <img src=" " alt="" xid="image1" style="width:100%;" class="imageradius cbUfAVz" __cid="cbUfAVz" data-bind="attr:{src:val(&#34;cover&#34;)}">
+                    </div>  
+                    <div class="x-col lastborder cbUfAVz" xid="col2" style="padding:0px;" __cid="cbUfAVz">
+                      <div component="$model/UI2/system/components/justep/row/row" class="x-row cbUfAVz" xid="row2" style="padding:0px;" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="cbUfAVz"> 
+                        <div class="x-col cbUfAVz" xid="col6" __cid="cbUfAVz">
+                          <span xid="span1" __cid="cbUfAVz" class="cbUfAVz" data-bind="text:val(&#34;name&#34;)"></span>  
+                          <span xid="span2" __cid="cbUfAVz" class="cbUfAVz" data-bind="text:val(&#34;subtitle&#34;)"></span>
+                        </div>
+                      </div>  
+                      <div component="$model/UI2/system/components/justep/row/row" class="x-row cbUfAVz" xid="row3" style="padding:0px;" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="cbUfAVz"> 
+                        <div class="x-col cbUfAVz" xid="col3" style="padding-top:0px;padding-bottom:0px;" __cid="cbUfAVz">
+                          <div component="$model/UI2/system/components/justep/list/list" class="x-list cbUfAVz" xid="list2" data-bind="component:{name:'$model/UI2/system/components/justep/list/list'}" data-config="{&#34;data&#34;:&#34;activeData&#34;,&#34;filter&#34;:&#34; $row.val(\&#34;buycar_id\&#34;) == val(\&#34;id\&#34;)&#34;}" __cid="cbUfAVz"> 
+                            <ul class="x-list-template hide cbUfAVz" xid="listTemplateUl2" __cid="cbUfAVz" data-bind="foreach:{data:$model.foreach_list2($element),afterRender:$model.foreach_afterRender_list2.bind($model,$element)}"> 
+                              <span xid="span3" style="font-size:x-small;background-color:#ffeae9;color:#fe2e23;font-weight:lighter;padding:1px;border-radius:3px;" __cid="cbUfAVz" class="cbUfAVz" data-bind="text:val(&#34;active&#34;)"></span>
+                            </ul> 
+                          </div>
+                        </div> 
+                      </div>  
+                      <div component="$model/UI2/system/components/justep/row/row" class="x-row cbUfAVz" xid="row4" style="padding:0px;" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="cbUfAVz"> 
+                        <div xid="col4" style="padding:5px;" __cid="cbUfAVz" class="cbUfAVz"> 
+                          <div component="$model/UI2/system/components/justep/list/list" class="x-list cbUfAVz" xid="list3" data-bind="component:{name:'$model/UI2/system/components/justep/list/list'}" data-config="{&#34;data&#34;:&#34;optionalData&#34;,&#34;filter&#34;:&#34; $row.val(\&#34;buycar_id\&#34;) == val(\&#34;id\&#34;)&#34;}" __cid="cbUfAVz"> 
+                            <ul class="x-list-template hide cbUfAVz" xid="listTemplateUl3" __cid="cbUfAVz" data-bind="foreach:{data:$model.foreach_list3($element),afterRender:$model.foreach_afterRender_list3.bind($model,$element)}"> 
+                              <span xid="span4" style="font-size:small;" class="text-muted cbUfAVz" __cid="cbUfAVz" data-bind="text:val(&#34;selectcondition_name&#34;)"></span>
+                            </ul> 
+                          </div>
+                        </div>  
+                        <div class="x-col cbUfAVz" xid="col15" __cid="cbUfAVz">
+                          <i xid="i1" class="linear linear-chevrondown text-muted cbUfAVz" style="font-size:x-small;" __cid="cbUfAVz" data-bind="visible:val(&#34;hasoptional&#34;) &gt; 0"></i>
+                        </div>
+                      </div>  
+                      <div component="$model/UI2/system/components/justep/row/row" class="x-row cbUfAVz" xid="row5" style="padding:0px;" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="cbUfAVz"> 
+                        <div class="x-col cbUfAVz" xid="col5" __cid="cbUfAVz">
+                          <span xid="span5" style="color:#fe2e23;font-size:large;" __cid="cbUfAVz" class="cbUfAVz" data-bind="text:'￥' + val(&#34;price&#34;)"></span>  
+                          <span xid="span10" class="text-muted cbUfAVz" style="text-decoration:line-through;margin-left:5px;" __cid="cbUfAVz" data-bind="text:'￥' + (parseFloat(val(&#34;price&#34;)) + parseFloat(val(&#34;discount&#34;))),visible:val(&#34;discount&#34;) &gt; 0"></span>
+                        </div>  
+                        <div class="x-col text-right cbUfAVz" xid="col7" __cid="cbUfAVz">
+                          <a component="$model/UI2/system/components/justep/button/button" class="btn btn-default btn-sm btn-only-icon addbtn cbUfAVz" xid="subBtn" data-bind="component:{name:'$model/UI2/system/components/justep/button/button'}" data-events="onClick:subBtnClick" data-config="{&#34;icon&#34;:&#34;icon-android-remove&#34;,&#34;label&#34;:&#34;button&#34;}" __cid="cbUfAVz"> 
+                            <i xid="i4" class="icon-android-remove cbUfAVz" __cid="cbUfAVz"></i>  
+                            <span xid="span41" __cid="cbUfAVz" class="cbUfAVz"></span>
+                          </a>  
+                          <label xid="numberlabel" style="font-weight:normal;width:30px;" class="text-center cbUfAVz" __cid="cbUfAVz" data-bind="text:val(&#34;number&#34;)">1</label>  
+                          <a component="$model/UI2/system/components/justep/button/button" class="btn btn-default btn-sm btn-only-icon addbtn cbUfAVz" xid="addBtn" data-bind="component:{name:'$model/UI2/system/components/justep/button/button'}" data-events="onClick:addBtnClick" data-config="{&#34;icon&#34;:&#34;icon-android-add&#34;,&#34;label&#34;:&#34;button&#34;}" __cid="cbUfAVz"> 
+                            <i xid="i13" class="icon-android-add cbUfAVz" __cid="cbUfAVz"></i>  
+                            <span xid="span42" __cid="cbUfAVz" class="cbUfAVz"></span>
+                          </a>
+                        </div> 
+                      </div>
+                    </div> 
+                  </div>
+                </div>  
+                <div xid="div7" class="swiper-slide menu cbUfAVz" style="width:160px;" __cid="cbUfAVz">
+                  <div xid="div2" style="width:160px;z-index:0;position:relative;display: flex;height:100%;" class="mov pull-right cbUfAVz" __cid="cbUfAVz">
+                    <div xid="collcetiondiv" style="background-color:#ff9c50;height:100%;width:50%;display: flex;justify-content:center;align-items:Center;overflow:hidden;" class="text-center cbUfAVz" __cid="cbUfAVz" data-bind="event:{click:$model._callModelFn.bind($model, 'collcetiondivClick')}">
+                      <br __cid="cbUfAVz" class="cbUfAVz">  
+                      <span xid="span22" style="white-space:nowrap;width:100%;color:#FFFFFF;" __cid="cbUfAVz" class="cbUfAVz">移入收藏夹</span>
+                    </div>  
+                    <div xid="deletediv" style="background-color:#ff4256;height:100%;width:50%;display: flex;justify-content:center;align-items:Center;overflow:hidden;" class="text-center cbUfAVz" __cid="cbUfAVz" data-bind="event:{click:$model._callModelFn.bind($model, 'deletedivClick')}">
+                      <span xid="span21" style="white-space:nowrap;width:100%;color:#FFFFFF;" __cid="cbUfAVz" class="cbUfAVz">删除</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ul> 
+        </div> 
+      </div>  
+      <div component="$model/UI2/system/components/justep/smartContainer/smartContainer" class="x-smartcontainer cbUfAVz" xid="smartContainer2" style="background-color:white;overflow-x: unset;padding-bottom:0px;border-radius:5px;" data-bind="component:{name:'$model/UI2/system/components/justep/smartContainer/smartContainer'}" __cid="cbUfAVz"> 
+        <div component="$model/UI2/system/components/justep/row/row" class="x-row cbUfAVz" xid="row11" style="color:#ff4665;" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="cbUfAVz"> 
+          <div class="x-col x-col-fixed cbUfAVz" xid="col17" style="width:30px;" __cid="cbUfAVz">
+            <i xid="i6" class="my my-shouyi cbUfAVz" __cid="cbUfAVz"></i>
+          </div>  
+          <div class="x-col cbUfAVz" xid="col18" __cid="cbUfAVz">
+            <span xid="span15" __cid="cbUfAVz" class="cbUfAVz">节省了35.32元</span>
+          </div> 
+        </div>
+        <div component="$model/UI2/system/components/justep/row/row" class="x-row cbUfAVz" xid="row12" style="color:#ff4665;" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="cbUfAVz"> 
+          <div class="x-col x-col-fixed cbUfAVz" xid="col21" style="width:30px;" __cid="cbUfAVz"> 
+            <i xid="i7" class="my my-tixian1 cbUfAVz" __cid="cbUfAVz"></i>
+          </div>  
+          <div class="x-col cbUfAVz" xid="col20" __cid="cbUfAVz"> 
+            <span xid="span16" __cid="cbUfAVz" class="cbUfAVz">获得35.32元返现</span>
+          </div> 
+        </div>
+        <div component="$model/UI2/system/components/justep/list/list" class="x-list cbUfAVz" xid="list4" style="border-top-style:solid;border-top-width:1px;border-top-color:#f6f6f6;" data-bind="component:{name:'$model/UI2/system/components/justep/list/list'}" data-config="{&#34;data&#34;:&#34;buycarData&#34;,&#34;filter&#34;:&#34;$row.val(\&#34;number\&#34;) &gt; 0  &amp;&amp;  $row.val(\&#34;producttype\&#34;) == 1&#34;}" __cid="cbUfAVz"> 
+          <ul class="x-list-template hide cbUfAVz" xid="listTemplateUl6" __cid="cbUfAVz" data-bind="foreach:{data:$model.foreach_list4($element),afterRender:$model.foreach_afterRender_list4.bind($model,$element)}"> 
+            <div component="$model/UI2/system/components/justep/row/row" class="x-row cbUfAVz" xid="row6" style="padding-bottom:0px;padding-top:5px;" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="cbUfAVz"> 
+              <div class="x-col x-col-25 cbUfAVz" xid="col16" __cid="cbUfAVz"> 
+                <img src=" " alt="" xid="image2" style="width:100%;" class="imageradius cbUfAVz" __cid="cbUfAVz" data-bind="attr:{src:val(&#34;cover&#34;)}">
+              </div>  
+              <div class="x-col lastborder cbUfAVz" xid="col13" style="padding:0px;" __cid="cbUfAVz"> 
+                <div component="$model/UI2/system/components/justep/row/row" class="x-row cbUfAVz" xid="row8" style="padding:0px;" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="cbUfAVz"> 
+                  <div class="x-col cbUfAVz" xid="col9" __cid="cbUfAVz"> 
+                    <span xid="span13" __cid="cbUfAVz" class="cbUfAVz" data-bind="text:val(&#34;name&#34;)"></span>  
+                    <span xid="span8" __cid="cbUfAVz" class="cbUfAVz" data-bind="text:val(&#34;subtitle&#34;)"></span>
+                  </div> 
+                </div>  
+                <div component="$model/UI2/system/components/justep/row/row" class="x-row cbUfAVz" xid="row7" style="padding:0px;" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="cbUfAVz"> 
+                  <div class="x-col cbUfAVz" xid="col14" style="padding-top:0px;padding-bottom:0px;" __cid="cbUfAVz"> 
+                    <div component="$model/UI2/system/components/justep/list/list" class="x-list cbUfAVz" xid="list6" data-bind="component:{name:'$model/UI2/system/components/justep/list/list'}" data-config="{&#34;data&#34;:&#34;activeData&#34;,&#34;filter&#34;:&#34; $row.val(\&#34;buycar_id\&#34;) == val(\&#34;id\&#34;)&#34;}" __cid="cbUfAVz"> 
+                      <ul class="x-list-template hide cbUfAVz" xid="listTemplateUl5" __cid="cbUfAVz" data-bind="foreach:{data:$model.foreach_list6($element),afterRender:$model.foreach_afterRender_list6.bind($model,$element)}"> 
+                        <span xid="span9" style="font-size:x-small;background-color:#ffeae9;color:#fe2e23;font-weight:lighter;padding:1px;border-radius:3px;" __cid="cbUfAVz" class="cbUfAVz" data-bind="text:val(&#34;active&#34;)"></span>
+                      </ul> 
+                    </div> 
+                  </div> 
+                </div>  
+                <div component="$model/UI2/system/components/justep/row/row" class="x-row cbUfAVz" xid="row10" style="padding:0px;" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="cbUfAVz"> 
+                  <div xid="col11" style="padding:5px;" __cid="cbUfAVz" class="cbUfAVz"> 
+                    <div component="$model/UI2/system/components/justep/list/list" class="x-list cbUfAVz" xid="list5" data-bind="component:{name:'$model/UI2/system/components/justep/list/list'}" data-config="{&#34;data&#34;:&#34;optionalData&#34;,&#34;filter&#34;:&#34; $row.val(\&#34;buycar_id\&#34;) == val(\&#34;id\&#34;)&#34;}" __cid="cbUfAVz"> 
+                      <ul class="x-list-template hide cbUfAVz" xid="listTemplateUl4" __cid="cbUfAVz" data-bind="foreach:{data:$model.foreach_list5($element),afterRender:$model.foreach_afterRender_list5.bind($model,$element)}"> 
+                        <span xid="span11" style="font-size:small;" class="text-muted cbUfAVz" __cid="cbUfAVz" data-bind="text:val(&#34;selectcondition_name&#34;)"></span>
+                      </ul> 
+                    </div> 
+                  </div>  
+                  <div class="x-col cbUfAVz" xid="col8" __cid="cbUfAVz"> 
+                    <i xid="i3" class="linear linear-chevrondown text-muted cbUfAVz" style="font-size:x-small;" __cid="cbUfAVz" data-bind="visible:val(&#34;hasoptional&#34;) &gt; 0"></i>
+                  </div> 
+                </div>  
+                <div component="$model/UI2/system/components/justep/row/row" class="x-row cbUfAVz" xid="row9" style="padding:0px;" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="cbUfAVz"> 
+                  <div class="x-col cbUfAVz" xid="col12" __cid="cbUfAVz"> 
+                    <span xid="span12" style="font-size:large;" class="text-muted cbUfAVz" __cid="cbUfAVz">￥0</span>  
+                    <span xid="span14" class="text-muted cbUfAVz" style="text-decoration:line-through;margin-left:5px;" __cid="cbUfAVz" data-bind="text:'￥' + (parseFloat(val(&#34;price&#34;)) + parseFloat(val(&#34;discount&#34;))),visible:false"></span>
+                  </div>  
+                  <div class="x-col text-right cbUfAVz" xid="col10" __cid="cbUfAVz"> 
+                    <a component="$model/UI2/system/components/justep/button/button" class="btn btn-default btn-sm btn-only-icon addbtn cbUfAVz" xid="button2" data-bind="component:{name:'$model/UI2/system/components/justep/button/button'},visible:false" data-events="onClick:subBtnClick" data-config="{&#34;icon&#34;:&#34;icon-android-remove&#34;,&#34;label&#34;:&#34;button&#34;}" __cid="cbUfAVz"> 
+                      <i xid="i5" class="icon-android-remove cbUfAVz" __cid="cbUfAVz"></i>  
+                      <span xid="span6" __cid="cbUfAVz" class="cbUfAVz"></span>
+                    </a>  
+                    <label xid="label1" style="font-weight:normal;width:30px;" class="text-center cbUfAVz" __cid="cbUfAVz" data-bind="text:'×' + val(&#34;number&#34;)">1</label>  
+                    <a component="$model/UI2/system/components/justep/button/button" class="btn btn-default btn-sm btn-only-icon addbtn cbUfAVz" xid="button1" data-bind="component:{name:'$model/UI2/system/components/justep/button/button'},visible:false" data-events="onClick:addBtnClick" data-config="{&#34;icon&#34;:&#34;icon-android-add&#34;,&#34;label&#34;:&#34;button&#34;}" __cid="cbUfAVz"> 
+                      <i xid="i2" class="icon-android-add cbUfAVz" __cid="cbUfAVz"></i>  
+                      <span xid="span7" __cid="cbUfAVz" class="cbUfAVz"></span>
+                    </a> 
+                  </div> 
+                </div> 
+              </div> 
+            </div> 
+          </ul> 
+        </div> 
+      </div>
+    </div>  
+    <div class="x-panel-bottom cbUfAVz" xid="bottom1" style="border-top-style:solid;border-top-color:#f6f6f6;border-top-width:1px;" component="$model/UI2/system/components/justep/panel/child" data-bind="component:{name:'$model/UI2/system/components/justep/panel/child'}" __cid="cbUfAVz">
+      <div component="$model/UI2/system/components/justep/row/row" class="x-row cbUfAVz" xid="row13" data-bind="component:{name:'$model/UI2/system/components/justep/row/row'}" __cid="cbUfAVz"> 
+        <div class="x-col x-col-20 text-center cbUfAVz" xid="col22" style="padding-top:0px;" __cid="cbUfAVz">
+          <a component="$model/UI2/system/components/justep/button/button" class="btn btn-link cbUfAVz" xid="button4" style="color:#555555;" data-bind="component:{name:'$model/UI2/system/components/justep/button/button'}" data-config="{&#34;icon&#34;:&#34;glyphicon glyphicon-trash&#34;,&#34;label&#34;:&#34;清空&#34;}" __cid="cbUfAVz"> 
+            <i xid="i9" class="glyphicon glyphicon-trash cbUfAVz" __cid="cbUfAVz"></i>  
+            <span xid="span20" __cid="cbUfAVz" class="cbUfAVz">清空</span>
+          </a> 
+        </div>  
+        <div class="x-col text-right cbUfAVz" xid="col23" style="padding-top:9px;" __cid="cbUfAVz">
+          <label xid="label2" style="height:30px;border-right-style:solid;border-right-width:1px;border-right-color:#f6f6f6;margin-top:-5px;" class="pull-left cbUfAVz" __cid="cbUfAVz"></label>
+          <span xid="span18" __cid="cbUfAVz" class="cbUfAVz">合计：</span>  
+          <span xid="span19" style="color:#fe2e23;" __cid="cbUfAVz" class="cbUfAVz"></span>
+        </div>  
+        <div class="x-col cbUfAVz" xid="col24" style="padding-top:0px;" __cid="cbUfAVz">
+          <a component="$model/UI2/system/components/justep/button/button" class="btn btn-default btn-block surebtn cbUfAVz" xid="settleBtn" data-bind="component:{name:'$model/UI2/system/components/justep/button/button'}" data-events="onClick:settleBtnClick" data-config="{&#34;label&#34;:&#34;结算&#34;}" __cid="cbUfAVz"> 
+            <i xid="i8" __cid="cbUfAVz" class="cbUfAVz"></i>  
+            <span xid="span17" __cid="cbUfAVz" class="cbUfAVz">结算</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <style __cid="cbUfAVz" class="cbUfAVz">.x-panel.pcbQf2I3-iosstatusbar >.x-panel-top {height: 48px;}.x-panel.pcbQf2I3-iosstatusbar >.x-panel-content { top: 48px;bottom: nullpx;}.x-panel.pcbQf2I3-iosstatusbar >.x-panel-bottom {height: nullpx;}.iosstatusbar .x-panel.pcbQf2I3-iosstatusbar >.x-panel-top,.iosstatusbar .x-panel .x-panel-content .x-has-iosstatusbar.x-panel.pcbQf2I3-iosstatusbar >.x-panel-top {height: 68px;}.iosstatusbar .x-panel.pcbQf2I3-iosstatusbar >.x-panel-content,.iosstatusbar .x-panel .x-panel-content .x-has-iosstatusbar.x-panel.pcbQf2I3-iosstatusbar >.x-panel-content { top: 68px;}.iosstatusbar .x-panel .x-panel-content .x-panel.pcbQf2I3-iosstatusbar >.x-panel-top {height: 48px;}.iosstatusbar .x-panel .x-panel-content .x-panel.pcbQf2I3-iosstatusbar >.x-panel-content {top: 48px;}</style>
+  </div> 
+</div>
