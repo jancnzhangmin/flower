@@ -1,0 +1,105 @@
+<%= render 'layerbegin' %>
+<div class="page-content">
+
+
+  <div class="row">
+    <div class="col-xs-12">
+
+      <div class="alert alert-block alert-success" style="display:none;">
+        <button type="button" class="close" data-dismiss="alert">
+          <i class="icon-remove"></i>
+        </button>
+
+        <p>
+          <strong>
+            <i class="icon-ok"></i>
+          </strong>
+          保存成功
+        </p>
+
+      </div>
+
+      <%= form_with(url:postaddtoagent_user_path(@user),local:true,:html => {:class=>'form-horizontal m-t',:multipart => true}) do |f| %>
+        <h3 class="header smaller lighter blue">
+          <%= @user.nickname %>——成为代理
+          <small></small>
+        </h3>
+        <div class="form-group">
+          <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 账号<%if @user.headurl %><%= image_tag @user.headurl, width:28, height:28,style:"margin-top:-5px;" %><% end %> </label>
+          <div class="col-sm-10">
+            <%= text_field_tag 'nickname', @user.login,class:"col-xs-10 col-sm-8",readonly:'true' %>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 代理等级 </label>
+          <div class="col-sm-10">
+            <%= select_tag "agentlevel", options_from_collection_for_select(Agentlevel.all.order('corder'), "id", "name"),class:'col-xs-10 col-sm-8', prompt: "请选择等级" %>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 上级代理 </label>
+          <div class="col-sm-10">
+            <%= text_field_tag :'up_id', @user.parent ? @user.parent.login + ' ' + @user.parent.nickname : '',class:"col-xs-10 col-sm-8",list:'source' %>
+            <datalist id="source">
+            </datalist>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 货款 </label>
+          <div class="col-sm-10">
+            <%= text_field_tag :'agentpayment', @user.agentpayment.to_f,class:"col-xs-10 col-sm-8" %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 备注 </label>
+          <div class="col-sm-10">
+            <%= text_area_tag :'summary', '',class:"col-xs-10 col-sm-8" %>
+          </div>
+        </div>
+
+        <div class="clearfix form-actions">
+          <div class="col-md-offset-2 col-md-10">
+            <button type="submit" name="commit" value="保存" class="btn btn-info" data-disable-with="保存" id="submit">
+              <i class="icon-ok bigger-110"></i>
+              保存
+            </button>
+          </div>
+        </div>
+      <% end %>
+
+
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function(){
+
+
+      var get_up_user_list = function () {
+          $.ajax({
+              async: false,    //表示请求是否异步处理
+              type: "get",    //请求类型
+              url: "/users/get_up_user_list",//请求的 URL地址
+              dataType: "json",//返回的数据类型
+              data: {
+                  selfid: <%= @user.id %>
+              },
+              success: function (data) {
+$('#source').empty();
+$.each(data.userlist,function(i,item){
+    var op = '<option value='+ item.login + "&nbsp;" + item.nickname + '>';
+    $('#source').append(op);
+                  });
+              },
+              error: function (data) {
+              }
+          });
+      };
+      get_up_user_list();
+
+  });
+</script>
+
+<%= render 'layerend' %>

@@ -1,0 +1,2 @@
+class Currentexamination < ApplicationRecord
+end

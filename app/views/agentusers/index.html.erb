@@ -1,0 +1,92 @@
+<%= render 'layerbegin' %>
+
+<div class="page-content">
+  <div class="page-header">
+    <h1>
+      代理
+    </h1>
+  </div><!-- /.page-header -->
+
+  <div class="row">
+    <div class="col-xs-12">
+      <!-- PAGE CONTENT BEGINS -->
+
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="table-responsive">
+            <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+              <thead>
+              <tr>
+                <th class="text-center">openid</th>
+                <th class="text-center">昵称</th>
+                <th class="text-center">手机号</th>
+                <th class="text-center">代理级别</th>
+                <th class="text-center">货款</th>
+                <th class="text-center">已完成任务</th>
+                <th class="text-center">任务考核</th>
+                <th class="text-center" width="170px">操作</th>
+              </tr>
+              </thead>
+              <tbody>
+              <% @agentusers.each do |agentuser| %>
+                <tr>
+                  <td>
+                    <%= agentuser.openid %>
+                  </td>
+                  <td>
+                    <%= agentuser.nickname %>
+                  </td>
+                  <td>
+                    <%= agentuser.phone %>
+                  </td>
+                  <td>
+                    <%= agentuser.agentlevel.name %>
+                  </td>
+                  <td class="text-right">
+                    <%=  number_to_currency(agentuser.agentpayment,unit: "￥") %>
+                  </td>
+                  <td class="text-right">
+                    <% quarter = get_quarter(Time.now) %>
+                    <% examinations = agentuser.examinations.where('keyword = ?',quarter.split(',')[0]) %>
+                    <% if examinations.size > 0 %>
+                      <%= number_to_currency(examinations.first.examinationdetails.sum('amount'),unit: "￥") %>
+                    <% else %>
+                      <% agentuser.examinations.create(name:quarter.split(',')[1], begintime:quarter.split(',')[2], endtime:quarter.split(',')[3], keyword:quarter.split(',')[0]) %>
+                      <%=  number_to_currency(0,unit: "￥") %>
+                    <% end %>
+                  </td>
+                  <td>
+                    <% agent = agentuser.agent %>
+                    <% if !agent %>
+                    <% agentuser.create_agent(agentpayment:agentuser.agentpayment, phone:agentuser.phone, showphone:0, autoupgrade:0, examination:0) %>
+                      <% end %>
+                    <% if agentuser.agent.examination.to_i == 1 %>
+                      考核
+                    <% else %>
+                      不考核
+                    <% end %>
+                  </td>
+                  <td>
+                    <div class="visible-md visible-lg hidden-sm hidden-xs btn-group" data-turbolinks="false">
+                      <a class="btn btn-xs btn-primary" href=<%= agentuser_agentcertificates_path(agentuser) %>>
+                        <i class="fa fa-file-o bigger-120"></i>
+                        证书(<%= agentuser.agent.agentcertificates.size %>)
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+<%= render 'layerend' %>

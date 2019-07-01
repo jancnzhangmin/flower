@@ -60,6 +60,38 @@ class ProductsController < ApplicationController
     product.save
   end
 
+  def agentprice
+    @product = Product.find(params[:id])
+    agentlevels = Agentlevel.all.order('corder')
+    agentlevels.each do |agentlevel|
+      agentprice = Agentprice.where('agentlevel_id = ? and product_id = ?',agentlevel.id,@product.id)
+      if agentprice.size == 0
+        Agentprice.create(product_id:@product.id,agentlevel_id:agentlevel.id,price:0)
+      end
+    end
+    @agentprices = Agentprice.where('agentlevel_id in (?) and product_id = ?',agentlevels.ids,@product.id)
+    @agentpricearr = Array.new
+    agentlevels.each do |agentlevel|
+      agentprice = Agentprice.where('agentlevel_id = ? and product_id = ?',agentlevel.id,@product.id).first
+      option = {
+          agentprice_id:agentprice.id,
+          name:agentlevel.name,
+          price:agentprice.price
+      }
+      @agentpricearr.push option
+    end
+  end
+
+  def saveagentprice
+    params[:agentprice].each do |op|
+      agentprice = Agentprice.find(op[:agentprice_id])
+      agentprice.price = op[:price]
+      agentprice.save
+    end
+    #product = Product.find(params[:product_id])
+    redirect_to products_path
+  end
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_product
@@ -67,7 +99,7 @@ class ProductsController < ApplicationController
   end
 
   def product_params
-    params.require(:product).permit(:manufacturer_id, :name, :cost, :price, :content, :grounding, :unit, :spec, :subtitle, :weight, :brand, :pack, :season)
+    params.require(:product).permit(:manufacturer_id, :name, :cost, :price, :content, :grounding, :unit, :spec, :subtitle, :weight, :brand, :pack, :season, :intask)
   end
 
   def pinyin(str)

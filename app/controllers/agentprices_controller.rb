@@ -1,0 +1,2 @@
+class AgentpricesController < ApplicationController
+end

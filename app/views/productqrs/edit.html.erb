@@ -35,7 +35,7 @@
         </div>
 
         <div class="col-md-12" style="padding: 20px;">
-          <canvas id="canvas" width="360px" height="640px">
+          <canvas id="canvas" width="720px" height="1280px">
 
           </canvas>
         </div>
@@ -58,6 +58,8 @@
 <script>
     $(document).ready(function(){
         var canvas = new fabric.Canvas('canvas');
+        $('#canvas')[0].width=720;
+        $('#canvas')[0].height=1280;
 
         if('<%= @productqr.qrjson %>'){
 
@@ -80,36 +82,38 @@
         }else {
 
             fabric.Image.fromURL('<%= Config.last.headdemo.url %>', function (headdemo) {
-                var head = headdemo.scale(0.4).set({
-                    left: 5,
-                    top: 5,
+                var head = headdemo.scale(0.8).set({
+                    left: 10,
+                    top: 10,
+                    crossOrigin:'anonymous',
                     clipTo: function(ctx){ctx.arc(0, 0, 65, 0, Math.PI * 2, true)}
                 });
                 var circle = new fabric.Circle({
-                    radius: 31,
+                    radius: 62,
                     strokeWidth: 1,
                     stroke: '#fff',
                     fill: 'rgba(0,0,0,0)'
                 });
 
                 var group = new fabric.Group([head, circle], {
-                    left: 20,
-                    top: 20
+                    left: 40,
+                    top: 40
                 });
                 canvas.add(group);
             });
 
             fabric.Image.fromURL('<%= Config.last.qrdemo.url %>', function (qrdemo) {
-                qrdemo.scale(0.4).set({
-                    left: 220,
-                    top: 505
+                qrdemo.scale(0.8).set({
+                    left: 440,
+                    top: 1010,
+                    crossOrigin:'anonymous'
                 });
                 canvas.add(qrdemo);
             });
 
             var nickname = new fabric.Textbox('花当家', {
-                left: 90,
-                top: 30,
+                left: 180,
+                top: 60,
                 fill: '#fff'
             });
             nickname.setShadow({
@@ -117,12 +121,12 @@
                 offsetX: 2,
                 offsetY: 1
             });
-            nickname.scale(0.4);
+            nickname.scale(0.8);
             canvas.add(nickname);
 
             var vid = new fabric.Textbox('10001', {
-                left: 90,
-                top: 60,
+                left: 180,
+                top: 120,
                 fill: '#fff'
             });
             vid.setShadow({
@@ -130,14 +134,20 @@
                 offsetX: 2,
                 offsetY: 1
             });
-            vid.scale(0.4);
+            vid.scale(0.8);
             canvas.add(vid);
 
             fabric.Image.fromURL('<%= @productqr.productqrbase.url  %>', function (img) {
-                img.set({left: 0, top: 0}).scale(0.5);
+                img.set({
+                    left: 0,
+                    top: 0,
+                    crossOrigin:'anonymous'
+                }).scale(1);
                 canvas.backgroundImage = img;
             });
         }
+
+
 
 
         $('#submit').click(function () {

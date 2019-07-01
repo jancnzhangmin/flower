@@ -14,46 +14,67 @@
       <div class="row">
         <div class="col-xs-12">
           <div class="table-responsive">
-            <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+            <table id="sample-table-1" class="table table-striped table-bordered table-hover" >
               <thead>
               <tr>
                 <th class="text-center"></th>
                 <th class="text-center">vipid</th>
                 <th class="text-center">昵称</th>
                 <th class="text-center">账号</th>
-                <th class="text-center" width="150px">操作</th>
+                <th class="text-center">货款</th>
+                <th class="text-center">保证金</th>
+                <th class="text-center">代理</th>
+                <th class="text-center" width="200px">操作</th>
               </tr>
               </thead>
               <tbody>
               <% @users.each do |user| %>
-                  <tr>
-                    <td>
-                      <%= user.headurl %>
-                    </td>
-                    <td>
-                      <%= user.vipid %>
-                    </td>
-                    <td>
-                      <%= user.nickname %>
-                    </td>
-                    <td>
-                      <%= user.login %>
-                    </td>
+                <tr>
+                  <td style="vertical-align: middle;">
+                    <img width="40px" src=<%= user.headurl %>>
 
-                    <td>
-                      <div class="visible-md visible-lg hidden-sm hidden-xs btn-group" data-turbolinks="false">
-                        <a class="btn btn-xs btn-primary" href=<%= edit_manufacturer_path(user) %>>
-                          <i class="fa fa-edit bigger-120"></i>
-                          编辑
-                        </a>
-                        <a data-confirm="确认删除?" data-method="delete" class="btn btn-xs btn-danger" href=<%= manufacturer_path(user) %>>
-                          <i class="fa fa-trash bigger-120"></i>
-                          删除
-                        </a>
-                      </div>
-                    </td>
+                  </td>
+                  <td style="vertical-align: middle;">
+                    <%= user.vipid %>
+                  </td>
+                  <td style="vertical-align: middle;">
+                    <%= user.nickname %>
+                  </td>
+                  <td style="vertical-align: middle;">
+                    <%= user.login %>
+                  </td>
+                  <td style="vertical-align: middle;">
+                    <%= user.agentpayment.to_f  %>
+                  </td>
+                  <td style="vertical-align: middle;">
+                    <%= user.deposit.to_f  %>
+                  </td>
+                  <td style="vertical-align: middle;">
+                    <%= user.agentlevel_id.to_i != 0 ? user.agentlevel.name : ''  %>
+                  </td>
 
-                  </tr>
+                  <td style="vertical-align: middle;">
+                    <div class="visible-md visible-lg hidden-sm hidden-xs btn-group" data-turbolinks="false">
+                      <a class="btn btn-xs btn-primary" href=<%= user_path(user) %>>
+                        <i class="fa fa-edit bigger-120"></i>
+                        明细
+                      </a>
+                      <a class="btn btn-xs btn-primary" href=<%= addtoagent_user_path(user) %> <% if user.agentlevel %> disabled="true" <% end %> >
+                        <i class="fa fa-edit bigger-120"></i>
+                        成为代理
+                      </a>
+                      <!--                        <a class="btn btn-xs btn-primary" href=<%#= user_agentpaymentrecorders_path(user) %>>-->
+                      <!--                          <i class="fa fa-edit bigger-120"></i>-->
+                      <!--                          货款-->
+                      <!--                        </a>-->
+                      <!--                        <a class="btn btn-xs btn-primary" href=<%#= deposit_user_path(user) %>>-->
+                      <!--                          <i class="fa fa-edit bigger-120"></i>-->
+                      <!--                          保证金-->
+                      <!--                        </a>-->
+                    </div>
+                  </td>
+
+                </tr>
               <% end %>
               </tbody>
             </table>

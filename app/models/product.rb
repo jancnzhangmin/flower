@@ -11,4 +11,5 @@ class Product < ApplicationRecord
   has_many :firstbuyactivedetails
   has_and_belongs_to_many :explains
   has_many :productqrs
+  has_many :agentprices
 end

@@ -1,0 +1,113 @@
+<script>
+    $(document).ready(function () {
+        $('#validation-form').validate({
+            errorElement: 'div',
+            errorClass: 'help-block',
+            focusInvalid: false,
+            rules: {
+                'agentlevel[name]': {
+                    required: true
+                },
+                'agentlevel[amount]': {
+                    required: true
+                },
+                'agentlevel[task]': {
+                    required: true
+                }
+            },
+
+            messages: {
+                'agentlevel[name]': {
+                    required: "&nbsp;&nbsp;级别名称不能为空"
+                },
+                'agentlevel[amount]': {
+                    required: "&nbsp;&nbsp;代理金额不能为空"
+                },
+                'agentlevel[task]': {
+                    required: "&nbsp;&nbsp;任务额不能为空"
+                }
+            },
+
+            invalidHandler: function (event, validator) { //display error alert on form submit
+                $('.alert-danger', $('.login-form')).show();
+            },
+
+            highlight: function (e) {
+                $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
+            },
+
+            success: function (e) {
+                $(e).closest('.form-group').removeClass('has-error').addClass('has-info');
+                $(e).remove();
+            }
+
+
+
+
+        });
+    });
+</script>
+
+<div class="alert alert-block alert-success" style="display:none;">
+  <button type="button" class="close" data-dismiss="alert">
+    <i class="icon-remove"></i>
+  </button>
+
+  <p>
+    <strong>
+      <i class="icon-ok"></i>
+    </strong>
+    保存成功
+  </p>
+
+</div>
+
+<%= form_with(model:agentlevel,local:true,id:'validation-form',:html => {:class=>'form-horizontal m-t',:multipart => true}) do |f| %>
+  <h3 class="header smaller lighter blue">
+    代理级别
+    <small></small>
+  </h3>
+  <div class="form-group">
+    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 级别名称 </label>
+    <div class="col-sm-10">
+      <%= f.text_field :name,class:"col-xs-10 col-sm-8" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">  </label>
+    <div class="col-sm-10">
+
+
+      <div style="margin-top: -8px;padding-left: 0px;" class="checkbox">
+        <label>
+
+          <%= f.check_box :grant, class:'ace'%>
+          <span class="lbl"> 参与代理核算</span>
+        </label>
+      </div>
+
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 代理金额 </label>
+    <div class="col-sm-10">
+      <%= f.text_field :amount,class:"col-xs-10 col-sm-8" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 任务额 </label>
+    <div class="col-sm-10">
+      <%= f.text_field :task,class:"col-xs-10 col-sm-8" %>
+    </div>
+  </div>
+
+  <div class="clearfix form-actions">
+    <div class="col-md-offset-2 col-md-10">
+      <button type="submit" name="commit" value="保存" class="btn btn-info" data-disable-with="保存" id="submit">
+        <i class="icon-ok bigger-110"></i>
+        保存
+      </button>
+
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,48 @@
+<%= render 'layerbegin' %>
+<div class="page-content">
+
+
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="alert alert-block alert-success" style="display:none;">
+        <button type="button" class="close" data-dismiss="alert">
+          <i class="icon-remove"></i>
+        </button>
+
+        <p>
+          <strong>
+            <i class="icon-ok"></i>
+          </strong>
+          保存成功
+        </p>
+
+      </div>
+
+      <%= form_with(url:update_deposit_user_path(@user),local:true,:html => {:class=>'form-horizontal m-t',:multipart => true}) do |f| %>
+        <h3 class="header smaller lighter blue">
+          <%= @user.nickname %>(<%= @user.login %>) 保证金
+          <small></small>
+        </h3>
+        <div class="form-group">
+          <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 保证金 </label>
+          <div class="col-sm-10">
+            <%= text_field_tag 'deposit',@user.deposit.to_f,class:"col-xs-10 col-sm-8" %>
+          </div>
+        </div>
+
+
+
+        <div class="clearfix form-actions">
+          <div class="col-md-offset-2 col-md-10">
+            <button type="submit" name="commit" value="保存" class="btn btn-info" data-disable-with="保存" id="submit">
+              <i class="icon-ok bigger-110"></i>
+              保存
+            </button>
+
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<%= render 'layerend' %>

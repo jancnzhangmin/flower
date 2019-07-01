@@ -1,0 +1,99 @@
+<%= render 'layerbegin' %>
+
+<script>
+
+
+    $(document).ready(function () {
+        jQuery(function($) {
+            var colorbox_params = {
+                reposition:true,
+                scalePhotos:true,
+                scrolling:false,
+                previous:'<i class="icon-arrow-left"></i>',
+                next:'<i class="icon-arrow-right"></i>',
+                close:'&times;',
+                current:'{current} of {total}',
+                maxWidth:'100%',
+                maxHeight:'100%',
+                onOpen:function(){
+                    document.body.style.overflow = 'hidden';
+                },
+                onClosed:function(){
+                    document.body.style.overflow = 'auto';
+                },
+                onComplete:function(){
+                    $.colorbox.resize();
+                }
+            };
+
+            $('.ace-thumbnails [data-rel="colorbox"]').colorbox(colorbox_params);
+            //$("#cboxLoadingGraphic").append("<i class='icon-spinner orange'></i>");//let's add a custom loading icon
+
+
+        });
+    });
+
+</script>
+
+<div class="page-content">
+  <div class="page-header">
+    <h1>
+      <%= @agentuser.nickname %>
+    </h1>
+  </div><!-- /.page-header -->
+
+  <div class="row">
+    <div class="col-xs-12">
+      <!-- PAGE CONTENT BEGINS -->
+
+      <div class="row-fluid">
+        <ul class="ace-thumbnails">
+
+          <% @agentcertificates.each do |agentcertificate| %>
+            <li>
+              <a href=<%= agentcertificate.agentcertificate.url %> data-rel="colorbox">
+                <img width="155" height="155" alt="150x150" src=<%= agentcertificate.agentcertificate.url %> />
+                <div class="text">
+                  <div class="inner"></div>
+                </div>
+              </a>
+
+              <div class="tools tools-bottom">
+                <a data-confirm="确认删除?" data-method="delete" href=<%= agentuser_agentcertificate_path(@agentuser,agentcertificate) %> title="删除" class="pull-right">
+                  <i class="icon-remove red"></i>
+                </a>
+              </div>
+            </li>
+
+
+          <% end %>
+
+
+        </ul>
+
+
+      </div>
+
+      <div class="hr hr-8 dotted col-xs-12"></div>
+      <div class="row">
+        <%= form_with(url:agentuser_agentcertificates_path(@agentuser), :html => {:class=>'form-horizontal m-t',:multipart => true}) do |f| %>
+          <div class="form-group">
+            <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 授权证书 </label>
+            <div class="col-sm-10">
+              <%= f.file_field :agentcertificate,class:"col-xs-10 col-sm-8" %>
+              <button type="submit" name="commit" value="保存" class="btn btn-info" data-disable-with="保存" id="submit">
+                <i class="icon-ok bigger-110"></i>
+                保存
+              </button>
+            </div>
+          </div>
+        <% end %>
+
+      </div><!-- PAGE CONTENT ENDS -->
+    </div><!-- /.col -->
+  </div><!-- /.row -->
+</div>
+
+
+
+<%= render 'layerend' %>

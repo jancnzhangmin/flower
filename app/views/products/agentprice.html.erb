@@ -1,0 +1,52 @@
+<%= render 'layerbegin' %>
+<div class="page-content">
+
+
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="alert alert-block alert-success" style="display:none;">
+        <button type="button" class="close" data-dismiss="alert">
+          <i class="icon-remove"></i>
+        </button>
+
+        <p>
+          <strong>
+            <i class="icon-ok"></i>
+          </strong>
+          保存成功
+        </p>
+
+      </div>
+
+      <%= form_with(url:saveagentprice_products_path,local:true,id:'validation-form',:html => {:class=>'form-horizontal m-t',:multipart => true}) do |f| %>
+        <h3 class="header smaller lighter blue">
+          <%= @product.name %> 代理价格
+          <small></small>
+        </h3>
+        <%= hidden_field_tag 'product_id',@product.id %>
+        <% @agentpricearr.each do |agentprice| %>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> <%= agentprice[:name] %> </label>
+            <div class="col-sm-10">
+              <%= hidden_field_tag 'agentprice[][agentprice_id]',agentprice[:agentprice_id]  %>
+              <%= text_field_tag 'agentprice[][price]',agentprice[:price],class:"col-xs-10 col-sm-8"  %>
+            </div>
+          </div>
+
+          <% end %>
+
+        <div class="clearfix form-actions">
+          <div class="col-md-offset-2 col-md-10">
+            <button type="submit" name="commit" value="保存" class="btn btn-info" data-disable-with="保存" id="submit">
+              <i class="icon-ok bigger-110"></i>
+              保存
+            </button>
+
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<%= render 'layerend' %>

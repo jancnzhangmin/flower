@@ -1,0 +1,85 @@
+<%= render 'layerbegin' %>
+
+<div class="page-content">
+  <div class="page-header">
+    <h1>
+      <%= @user.nickname %>(<%= @user.login %>)
+    </h1>
+  </div><!-- /.page-header -->
+
+
+
+
+  <div class="row">
+    <div class="col-xs-12">
+      <!-- PAGE CONTENT BEGINS -->
+
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="table-responsive">
+            <table id="sample-table-1" class="table table-striped table-bordered table-hover" >
+              <thead>
+              <tr>
+                <th class="text-center">冲值时间</th>
+                <th class="text-center">冲值金额</th>
+                <th class="text-center">备注</th>
+                <th class="text-center" width="150px">操作</th>
+              </tr>
+              </thead>
+              <tbody>
+              <% @agentpaymentrecorders.each do |agentpaymentrecorder| %>
+                <tr>
+                  <td style="vertical-align: middle;">
+                    <img width="40px" src=<%= user.headurl %>>
+
+                  </td>
+                  <td style="vertical-align: middle;">
+                    <%= agentpaymentrecorder.paymenttime %>
+                  </td>
+                  <td style="vertical-align: middle;">
+                    <%= agentpaymentrecorder.agentpayment %>
+                  </td>
+                  <td style="vertical-align: middle;">
+                    <%= agentpaymentrecorder.summary %>
+                  </td>
+
+                  <td style="vertical-align: middle;">
+                    <div class="visible-md visible-lg hidden-sm hidden-xs btn-group" data-turbolinks="false">
+                      <a class="btn btn-xs btn-primary" href=<%= edit_manufacturer_path(user) %>>
+                        <i class="fa fa-edit bigger-120"></i>
+                        编辑
+                      </a>
+                      <a class="btn btn-xs btn-primary" href=<%= agentpayment_user_path(user) %>>
+                        <i class="fa fa-edit bigger-120"></i>
+                        货款
+                      </a>
+                    </div>
+                  </td>
+
+                </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="clearfix form-actions">
+        <div class="col-md-6" style="padding-top: 10px;">
+          <span class="red h4">剩余货款：</span>
+          <span class="red h4"><%= @user.agentpayment.to_f %></span>
+        </div>
+        <div class="col-md-16 text-right" data-turbolinks="false">
+          <a class="btn btn-info" href=<%= new_manufacturer_path %>>
+            <i class="fa fa-plus bigger-110"></i>
+            新增
+          </a>
+        </div>
+      </div>
+
+
+
+
+
+
+<%= render 'layerend' %>

@@ -43,7 +43,7 @@ $('.addtop').change(function () {
                 <th class="text-center">活动售价</th>
                 <th class="text-center">活动利润</th>
                 <th class="text-center">推荐</th>
-                <th class="text-center" width="400px">操作</th>
+                <th class="text-center" width="420px">操作</th>
               </tr>
               </thead>
               <tbody>
@@ -110,18 +110,37 @@ $('.addtop').change(function () {
                           <i class="fa fa-edit bigger-120"></i>
                           编辑
                         </a>
-                        <a class="btn btn-xs btn-warning" href=<%= product_productimgs_path(product) %>>
-                          <i class="fa fa-file-image-o bigger-120"></i>
-                          产品图片(<%= product.productimgs.count %>)
+                        <a class="btn btn-xs btn-warning" href=<%= agentprice_product_path(product) %>>
+                          <i class="fa fa-cubes bigger-120"></i>
+                          代理价格(<%= Agentprice.where('product_id = ?',product.id).select{|n| n.price>0}.count %>)
                         </a>
+
                         <a class="btn btn-xs btn-success" href=<%= product_optionals_path(product) %>>
                           <i class="fa fa-share-alt bigger-120"></i>
                           可选条件（<%= product.optionals.count %>）
                         </a>
-                        <a class="btn btn-xs btn-pink" href=<%= product_productqrs_path(product) %>>
-                          <i class="fa fa-picture-o bigger-120"></i>
-                          海报（<%= product.productqrs.count %>）
-                        </a>
+
+                        <div class="btn-toolbar">
+                          <div class="btn-group">
+                            <button data-toggle="dropdown" class="btn btn-pink btn-xs dropdown-toggle">
+                              <i class="fa fa-image"></i>
+                              图片[<%= product.productimgs.count %> <%= product.productqrs.count %>]
+                              <span class="icon-caret-down icon-on-right"></span>
+                            </button>
+
+                            <ul class="dropdown-menu dropdown-pink pull-right">
+                              <li>
+                                <a href=<%= product_productimgs_path(product) %>>产品图片(<%= product.productimgs.count %>)</a>
+                              </li>
+
+                              <li>
+                                <a href=<%= product_productqrs_path(product) %>>海报（<%= product.productqrs.count %>）</a>
+                              </li>
+
+                            </ul>
+                          </div><!-- /btn-group -->
+
+
                         <a data-confirm="确认删除?" data-method="delete" class="btn btn-xs btn-danger" href=<%= product_path(product) %>>
                           <i class="fa fa-trash bigger-120"></i>
                           删除

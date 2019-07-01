@@ -5,12 +5,9 @@ class CreatebuycarJob < ApplicationJob
     Buycar.transaction do
       user = User.find_by_openid(openid)
       buycars = user.buycars
-
-      buycars.each do |buycar|
-        buycar.destroy
-      end
+buycars.destroy_all
       JSON.parse(productarr).each do |p|
-        buycar = user.buycars.create(product_id:p['id'], user_id:user.id, number:p['number'], price:p['price'], cost:p['cost'], discount:p['discount'], cover:p['cover'], firstprofit:p['firstprofit'], secondprofit:p['secondprofit'], owerprofit:p['owerprofit'], producttype:p['producttype'])
+        buycar = user.buycars.create(product_id:p['id'], user_id:user.id, number:p['number'], price:p['price'], cost:p['cost'], discount:p['discount'], cover:p['cover'], firstprofit:p['firstprofit'], secondprofit:p['secondprofit'], owerprofit:p['owerprofit'], producttype:p['producttype'], agentuser_id:p['agentuserid'], destock:p['destock'], agentprice:p['agentprice'])
         p['optional'].each do |o|
           buycar.buycaroptionals.create(selectcondition_id:o['selectcondition_id'], selectcondition_name:o['selectcondition_name'])
         end

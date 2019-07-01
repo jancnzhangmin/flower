@@ -37,6 +37,6 @@ class ConditionsController < ApplicationController
   end
 
   def optional_params
-    params.require(:condition).permit(:name, :weighting)
+    params.require(:condition).permit(:name, :weighting, :conditionimg)
   end
 end

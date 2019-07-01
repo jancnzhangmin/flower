@@ -27,6 +27,9 @@
                   <tr>
                     <td>
                       <%= condition.name %>
+                      <% if condition.conditionimg_file_name %>
+                      <%= image_tag condition.conditionimg.url,width:'20',height:'20' %>
+                      <% end %>
                     </td>
                     <td>
                       <%= condition.weighting %>

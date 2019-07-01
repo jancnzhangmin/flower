@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_11_085841) do
+ActiveRecord::Schema.define(version: 2019_06_27_074614) do
 
   create_table "activecolors", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -38,6 +38,54 @@ ActiveRecord::Schema.define(version: 2019_02_11_085841) do
     t.string "servicename"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "agentcertificates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "agentcertificate_file_name"
+    t.string "agentcertificate_content_type"
+    t.bigint "agentcertificate_file_size"
+    t.datetime "agentcertificate_updated_at"
+    t.bigint "agent_id"
+  end
+
+  create_table "agentlevels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.integer "corder"
+    t.integer "grant"
+    t.float "amount"
+    t.float "task"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "agentpaymentrecorders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.float "agentpayment"
+    t.string "summary"
+    t.datetime "paymenttime"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "agentprices", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "agentlevel_id"
+    t.bigint "product_id"
+    t.float "price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "agents", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.float "agentpayment"
+    t.string "phone"
+    t.integer "showphone"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "autoupgrade"
+    t.integer "examination"
   end
 
   create_table "bankdefs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -78,6 +126,9 @@ ActiveRecord::Schema.define(version: 2019_02_11_085841) do
     t.float "secondprofit"
     t.float "owerprofit"
     t.integer "producttype"
+    t.bigint "agentuser_id"
+    t.integer "destock"
+    t.float "agentprice"
   end
 
   create_table "buyfullactivedetails", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -159,6 +210,10 @@ ActiveRecord::Schema.define(version: 2019_02_11_085841) do
     t.float "weighting"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "conditionimg_file_name"
+    t.string "conditionimg_content_type"
+    t.bigint "conditionimg_file_size"
+    t.datetime "conditionimg_updated_at"
   end
 
   create_table "configs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -182,6 +237,14 @@ ActiveRecord::Schema.define(version: 2019_02_11_085841) do
     t.datetime "headdemo_updated_at"
   end
 
+  create_table "currentexaminations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "examination_id"
+    t.integer "currentexamination"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "delivercodes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.string "comcode"
@@ -197,6 +260,27 @@ ActiveRecord::Schema.define(version: 2019_02_11_085841) do
     t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "examinationdetails", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "examination_id"
+    t.float "amount"
+    t.string "productname"
+    t.float "productnumber"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "examinations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.datetime "begintime"
+    t.datetime "endtime"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.string "keyword"
+    t.string "agentlevel"
   end
 
   create_table "explains", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -285,6 +369,10 @@ ActiveRecord::Schema.define(version: 2019_02_11_085841) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "optionalimg_file_name"
+    t.string "optionalimg_content_type"
+    t.bigint "optionalimg_file_size"
+    t.datetime "optionalimg_updated_at"
   end
 
   create_table "orderactivetypes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -354,6 +442,8 @@ ActiveRecord::Schema.define(version: 2019_02_11_085841) do
     t.float "owerprofit"
     t.float "discount"
     t.integer "deliverstatus"
+    t.integer "destock"
+    t.bigint "agentuser_id"
   end
 
   create_table "owerstayincomes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -406,6 +496,7 @@ ActiveRecord::Schema.define(version: 2019_02_11_085841) do
     t.string "brand"
     t.string "pack"
     t.string "season"
+    t.integer "intask"
   end
 
   create_table "profits", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -504,6 +595,14 @@ ActiveRecord::Schema.define(version: 2019_02_11_085841) do
     t.bigint "userbackgroundimg_file_size"
     t.datetime "userbackgroundimg_updated_at"
     t.bigint "up_id"
+    t.float "agentpayment"
+    t.float "deposit"
+    t.bigint "agentlevel_id"
+    t.string "name"
+    t.string "phone"
+    t.string "password_digest"
+    t.string "vcode"
+    t.datetime "vcodetime"
   end
 
   create_table "withdrawrecords", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

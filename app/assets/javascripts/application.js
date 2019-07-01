@@ -12,7 +12,7 @@
 //
 //= require rails-ujs
 //= require activestorage
-// require turbolinks
+//= require turbolinks
 //= require jquery-2.0.3.min
 //= require jquery.mobile.custom.min
 //= require bootstrap.min

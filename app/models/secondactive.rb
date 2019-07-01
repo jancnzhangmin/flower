@@ -1,3 +1,3 @@
 class Secondactive < ApplicationRecord
-  has_many :secondactivedetails
+  has_many :secondactivedetails, dependent: :destroy
 end

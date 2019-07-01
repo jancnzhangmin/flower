@@ -24,6 +24,9 @@ class ApplicationController < ActionController::Base
     attr :season,true
     attr :collection,true
     attr :optional,true
+    attr :agentprice,true
+    attr :agentuserid,true
+    attr :destock,true
   end
 
   class Activetypeclass
@@ -37,6 +40,7 @@ class ApplicationController < ActionController::Base
     attr :product_id,true
     attr :number,true
     attr :optional,true
+    attr :agentprice,true
   end
 
   def checkactive(activeproduct,openid) #productarr[product_id,number]
@@ -77,10 +81,10 @@ class ApplicationController < ActionController::Base
       productcla.season = product.season
       productarr.push productcla
     end
-    productarr = checksecond(productarr)
-    productarr = checkfirstbuy(productarr)
-    productarr = buyfullactive(productarr)
-    productarr = limitactive(productarr)
+    #productarr = checksecond(productarr)
+    #productarr = checkfirstbuy(productarr)
+    #productarr = buyfullactive(productarr)
+    #productarr = limitactive(productarr)
     productarr = checkcollection(productarr,openid)
   end
 
@@ -319,6 +323,60 @@ class ApplicationController < ActionController::Base
       end
     end
     productarr
+  end
+
+  def get_quarter(time) #获取季度信息
+    nowtime = time.to_time
+    year = nowtime.year
+    month = nowtime.month
+    quarter = '0'
+    begintime = time
+    endtime = time
+    quarter1 = [1,2,3]
+    quarter2 = [4,5,6]
+    quarter3 = [7,8,9]
+    if quarter1.include?(month)
+      quarter = '01'
+      begintime = (year.to_s + '-01-01 00:00:00').to_time
+      endtime = (year.to_s + '-03-31 23:59:59').to_time
+    elsif quarter2.include?(month)
+      quarter = '02'
+      begintime = (year.to_s + '-04-01 00:00:00').to_time
+      endtime = (year.to_s + '-06-30 23:59:59').to_time
+    elsif quarter3.include?(month)
+      quarter = '03'
+      begintime = (year.to_s + '-07-01 00:00:00').to_time
+      endtime = (year.to_s + '-09-30 23:59:59').to_time
+    else
+      quarter = '04'
+      begintime = (year.to_s + '-10-01 00:00:00').to_time
+      endtime = (year.to_s + '-21-31 23:59:59').to_time
+    end
+    name = ''
+    if quarter == '01'
+      name = '一季度'
+    elsif quarter == '02'
+      name = '二季度'
+    elsif quarter == '03'
+      name = '三季度'
+    else
+      name = '四季度'
+    end
+    res = year.to_s + quarter + ',' + name + ',' + begintime.to_s + ',' + endtime.to_s
+  end
+
+  def get_agentprice(productarr,userid) #获取代理价格
+    user = User.find(userid)
+    productarr.each do |p|
+      p.agentprice = p.price
+      if user
+        agentlevel = user.agentlevel
+        if agentlevel
+          agentprice = Product.find(p.id).agentprices.where('agentlevel_id = ?',agentlevel.id).first.price
+          p.agentprice = agentprice
+        end
+      end
+    end
   end
 
 
