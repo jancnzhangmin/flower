@@ -178,8 +178,66 @@ class ApiController < ApplicationController
     end
 
     ########写入购物车表
+
     CreatebuycarJob.perform_later(productarr.to_json,params[:openid])
     render json: '{"buycars":' + productarr.to_json + '}'
+  end
+
+  def get_buycar #获取购物车内容
+    user = User.find_by_openid(params[:openid])
+    buycars = user.buycars
+    productarr = []
+    agentuserid = 0
+    destock = 0
+    buycars.each do |buycar|
+      buycaroptionals = buycar.buycaroptionals
+      buycaroptionalarr = []
+      buycaroptionals.each do |buycaroptional|
+        op = {
+            selectcondition_id:buycaroptional.selectcondition_id,
+            selectcondition_name:buycaroptional.selectcondition_name
+        }
+        buycaroptionalarr.push op
+      end
+      buycarop = {
+          id:buycar.id,
+          product_id:buycar.product_id,
+          number:buycar.number,
+          buycaroptional:buycaroptionalarr,
+          producttype:buycar.producttype,
+          agentuserid:buycar.agentuser_id,
+          destock:buycar.destock
+      }
+      productarr.push buycarop
+      agentuserid = buycar.agentuser_id
+      destock = buycar.destock
+    end
+    productarr = calactive(productarr.to_json,params[:openid])
+
+
+    productarr.each do |p|
+      agent = User.find_by(id:agentuserid)
+      p.agentprice = p.price
+      agentlevel = user.agentlevel
+      if agentlevel
+        p.agentprice = agentlevel.agentprices.where('product_id = ?',p.id).first.price
+      end
+      if agent
+        agentlevel = agent.agentlevel
+        if agentlevel
+          p.agentprice = agentlevel.agentprices.where('product_id = ?',p.id).first.price
+        end
+      end
+      p.optional.each do |o|
+        p.agentprice += Condition.find(o[:selectcondition_id]).weighting
+      end
+      p.price = p.agentprice
+      p.destock = destock
+      p.agentuserid = agentuserid
+    end
+
+
+    render json: params[:callback]+'({"buycars":' + productarr.to_json + '})',content_type: "application/javascript"
   end
 
   def get_amapkey #获取amapkey和默认收货地址统计
@@ -393,6 +451,7 @@ class ApiController < ApplicationController
       )
       discount = 0
       owerprofit = 0
+      buycars = user.buycars
       productarr.each do |p|
         if p.producttype == 0
           discount += p.discount * p.number
@@ -405,12 +464,15 @@ class ApiController < ApplicationController
         p.activetype.each do |act|
           orderdetail.orderactivetypes.create(active:act.active, showlable:act.showlable, summary:act.summary, keywords:act.keywords)
         end
+
       end
       order.discount = discount
       order.owerprofit = owerprofit
       order.save
     end
-    DeletebuycarJob.perform_later(user.id)
+    #DeletebuycarJob.perform_later(user.id)
+    buycars = user.buycars
+    buycars.destroy_all
     render json: '{"price":"' + pricesum.to_s + '","balance":"' + balance.to_s + '","agentname": "' + agentname.to_s + '","paytype":"' + paytype.to_s + '"}'
   end
 
@@ -728,7 +790,20 @@ class ApiController < ApplicationController
       detailcount += orderdetail.number
       orderdetailarr.push orderdetail_params
     end
-
+    agentuser = User.find_by(id:order.agentuser_id)
+    agentname = ''
+    paytype = 0 # 0微信支付 1货款支付 2代理货款支付 3代理货款不足
+    if user.agentpayment > order.payprice
+      paytype = 1
+    end
+    if agentuser
+      if agentuser.agentpayment > order.payprice
+        paytype = 2
+      else
+        paytype = 3
+      end
+      agentname = agentuser.nickname.to_s + '(' + agentuser.name.to_s + ')'
+    end
     params = {
         id:order.id,
         user_id:order.user_id,
@@ -757,7 +832,9 @@ class ApiController < ApplicationController
         discount:order.discount,
         owerprofit:order.owerprofit,
         detailcount:detailcount,
-        orderdetail:orderdetailarr
+        orderdetail:orderdetailarr,
+        paytype:paytype,
+        agentname:agentname
     }
     render json: callback + '({"order":' + params.to_json + ',"balance":' + balance.to_s + '})',content_type: "application/javascript"
   end
@@ -1090,7 +1167,23 @@ class ApiController < ApplicationController
     phone = user.agent.phone.to_s
     showphone = user.agent.showphone.to_i
     autoupgrade = user.agent.autoupgrade.to_i
-    render json: params[:callback]+'({"agentlevel":"' + agentlevel.to_s + '","deposit":"' + deposit.to_s + '","phone":"' + phone.to_s + '","showphone":"' + showphone.to_s + '","agentpayment":"' + agentpayment.to_s + '","autoupgrade":"' + autoupgrade.to_s + '"})',content_type: "application/javascript"
+    ###########实名###########
+    realnamestatus = 0
+    examinestatus = 0
+    adjust = 0
+    adjustsummary = ''
+    if user.realname
+      realnamestatus = 1
+      if user.realname.adjust == -1
+        realnamestatus = 0
+      end
+      examinestatus = user.realname.examinestatus
+      adjust = user.realname.adjust
+      adjustsummary = user.realname.adjustsummary
+    end
+
+    ###########实名end#######
+    render json: params[:callback]+'({"agentlevel":"' + agentlevel.to_s + '","deposit":"' + deposit.to_s + '","phone":"' + phone.to_s + '","showphone":"' + showphone.to_s + '","agentpayment":"' + agentpayment.to_s + '","autoupgrade":"' + autoupgrade.to_s + '","realnamestatus":"' + realnamestatus.to_s + '","examinestatus":"' + examinestatus.to_s + '","adjust":"' + adjust.to_s + '","adjustsummary":"' + adjustsummary.to_s + '"})',content_type: "application/javascript"
   end
 
   def set_autoupgrade #设置自动升级
@@ -1185,7 +1278,7 @@ class ApiController < ApplicationController
         lastexamination:lastexamination,
         quarter_assessment:user.agent.examination,
         examination_quota:user.agentlevel.task,
-        lastagentlevel:lastagentlevel,
+        lastagentlevel:lastagentlevel.to_s,
         name:user.name.to_s,
         nickname:user.nickname.to_s
     }
@@ -1197,6 +1290,58 @@ class ApiController < ApplicationController
 
     render json: params[:callback]+'({"agent":' + agent.to_json + ',"monthlist":'+ monthlist.to_json + '})',content_type: "application/javascript"
 
+  end
+
+  def get_mytask_echars_title #获取我的任务图表
+    title_list = []
+    user = User.find_by_openid(params[:openid])
+    [6,3,0].each do |q|
+      quarters = get_quarter(Time.now - q.month)
+      examination = user.examinations.where('keyword = ?',quarters.split(',')[0])
+      if examination.size == 0
+        user.examinations.create(name:quarters.split(',')[1], begintime:quarters.split(',')[2], endtime:quarters.split(',')[3], keyword:quarters.split(',')[0], agentlevel:user.agentlevel.name, task:user.agentlevel.task)
+      end
+      option = {
+          name:quarters.split(',')[0][0..3] + quarters.split(',')[1],
+          keyword:quarters.split(',')[0]
+      }
+      title_list.push option
+    end
+    render json: params[:callback]+'({"title_list":' + title_list.to_json + '})',content_type: "application/javascript"
+  end
+
+  def get_mytask_echars_detail #获取我的任务
+    user = User.find_by_openid(params[:openid])
+    fyear = params[:keyword][0..3]
+    fmonth = params[:keyword].last.to_i
+    day_list = (1..31).to_a
+    month_list = []
+    service_list = []
+    taskquota = user.examinations.where('keyword = ?',params[:keyword]).first.task
+    month_task_count = []
+    examination = user.examinations.find_by_keyword(params[:keyword])
+    (1..3).to_a.each do |i|
+      cmonth = ((fmonth - 1) * 3 + i).to_s
+      month_list.push cmonth.to_i.to_s + '月'
+      s_list = []
+      (1..31).to_a.each do |d|
+        cday = fyear + '-' + cmonth + '-' + d.to_s
+        temday = fyear + '-' + cmonth + '-1'
+        temday = temday.to_time.end_of_month.day
+        if d <= temday
+          cday = cday.to_time
+          amount = examination.examinationdetails.where('created_at between ? and ?',cday.beginning_of_day,cday.end_of_day).sum('amount')
+          s_list.push amount
+        end
+      end
+      service_list.push s_list
+      task_month = fyear + '-' + cmonth + '-01'
+      task_month = task_month.to_time
+      month_task = examination.examinationdetails.where('created_at between ? and ?',task_month.beginning_of_month,task_month.end_of_month).sum('amount')
+      month_task_count.push month_task
+    end
+    sur_task = taskquota - month_task_count.sum
+    render json: params[:callback]+'({"day_list":' + day_list.to_json + ',"month_list":' + month_list.to_json + ',"service_list":' + service_list.to_json + ',"taskquota":"' + taskquota.to_s + '","month_task_count":' + month_task_count.to_json + ',"sur_task":"' + sur_task.to_s + '"})',content_type: "application/javascript"
   end
 
   def change_agent_examination #改变代理本季度考核状态
@@ -1219,13 +1364,16 @@ class ApiController < ApplicationController
     (startmonth.day..endmonth.day).map{|n| axis_data.push n.to_s.rjust(2,'0')}
     series_data = []
     user = User.find(params[:userid])
+    examination = user.examinations.where('keyword = ?',params[:month][0,4] + (params[:month][4,2].to_i / 3 + 1).to_s.rjust(2,'0'))
+    if examination.size > 0
+      examination = examination.first
+    end
     axis_data.each do |f|
-      examination = user.examinations.where('keyword = ?',params[:month])
       amount = 0
-      if examination.size > 0
-        currentday = (params[:month][0,4] + '-' + params[:month][4,2] + '-' + f).to_time
-        amount = examination.first.examinationdetails.where('created_at between ? and ?',currentday.beginning_of_day,currentday.end_of_day).sum('amount')
-      end
+
+      currentday = (params[:month][0,4] + '-' + params[:month][4,2] + '-' + f).to_time
+      amount = examination.examinationdetails.where('created_at between ? and ?',currentday.beginning_of_day,currentday.end_of_day).sum('amount')
+
       series_data.push amount.round(2)
     end
     render json: params[:callback]+'({"axis_data":' + axis_data.to_json + ',"series_data":'+ series_data.to_json + '})',content_type: "application/javascript"
@@ -1300,7 +1448,228 @@ class ApiController < ApplicationController
     render json: params[:callback]+'({"status":"' + status.to_s + '"})',content_type: "application/javascript"
   end
 
+  def get_join_agent_list #获取成为代理列表
+    agentlevels = Agentlevel.where('frontend = 1').order('corder desc')
+    render json: params[:callback]+'({"agentlevels":' + agentlevels.to_json + '})',content_type: "application/javascript"
+  end
+
+  def set_idcard #上传身份证
+    user = User.find_by_openid(params[:openid])
+    realname = user.realname
+    if !realname
+      realname = user.create_realname(examinestatus:1, adjust:-1)
+    end
+    if params[:idfront]
+      realname.idfront = params[:idfront]
+    end
+    if params[:idback]
+      realname.idback = params[:idback]
+    end
+    if params[:complete]
+      realname.adjust = 0
+    end
+    if params[:name]
+      user.name = params[:name]
+      user.save
+    end
+    realname.save
+    idfrontsize = realname.idfront_file_size.to_i
+    idbacksize = realname.idback_file_size.to_i
+    render json: '{"idfront":"' + realname.idfront.url + '","idfrontsize":' + idfrontsize.to_s + ',"idback":"' + realname.idback.url + '","idbacksize":' + idbacksize.to_s + '}'
+  end
+
+  def get_idcard #获取身份证
+    user = User.find_by_openid(params[:openid])
+    realname = user.realname
+    if !realname
+      realname = user.create_realname(examinestatus:1, adjust:-1)
+    end
+    idfront = realname.idfront.url
+    idback = realname.idback.url
+    idfrontsize = realname.idfront_file_size.to_i
+    idbacksize = realname.idback_file_size.to_i
+    render json: params[:callback]+'({"idfront":"' + idfront.to_s + '","idfrontsize":' + idfrontsize.to_s + ',"idback":"' + idback.to_s + '","idbacksize":' + idbacksize.to_s + ',"name":"' + user.name.to_s + '","phone":"' + user.phone.to_s + '","adjustsummary":"' + realname.adjustsummary + '","adjust":"' + realname.adjust.to_s + '"})',content_type: "application/javascript"
+  end
+
+  def create_agentpayment_order #货款方式支付订单
+    status = 1
+    user = User.find_by_openid(params[:openid])
+    mergepayorders = user.mergepayorders.where('paystatus = ?',0)
+    mergepayorders.destroy_all
+    ordernumber = Time.now.strftime('%Y%m%d') + user.id.to_s + Time.now.strftime('%H%M%S')
+
+    mergepayorder = user.mergepayorders.create(ordernumber:ordernumber, orderids:params[:mergeorderids].join(','), paystatus:1, paytime:Time.now)
+    orderids = mergepayorder.orderids.split(',')
+    orderids.each do |orderid|
+      order = Order.find(orderid)
+      order.paystatus = 1
+      order.paytime = Time.now
+      order.save
+      cablewxmessage('order',0)
+    end
+    AfterpayJob.perform_later(mergepayorder.id)
+    render json: params[:callback]+'({"status":"' + status.to_s + '"})',content_type: "application/javascript"
+  end
+
+  def get_income #获取用户收益
+    user = User.find_by_openid(params[:openid])
+    income = user.income
+    enaccounts = user.enaccounts.order('id desc').paginate(:page => params[:page], :per_page => 20)
+    enaccountarr = []
+    enaccounts.each do |enaccount|
+      params = {
+          id:enaccount.id,
+          amount:enaccount.amount,
+          summary:enaccount.summary,
+          created_at:enaccount.created_at.strftime('%Y-%m-%d %H:%M:%S')
+      }
+      enaccountarr.push params
+    end
+    render json: params[:callback]+'({"enaccounts":' + enaccountarr.to_json + ',"income":"' + income.to_f.to_s + '"})',content_type: "application/javascript"
+  end
+
+  def get_customer_list #获取代理客户列表
+    user = User.find_by_openid(params[:openid])
+    customer_id_list = []
+    customerids = get_customer_ids(user,customer_id_list)
+    customers = User.where('id in(?)',customerids).order('created_at desc').paginate(:page => params[:page], :per_page => 20)
+    customerarr = []
+    customers.each do |customer|
+      follow = 0
+      if customer.nickname || customer.headurl
+        follow = 1
+      end
+      name = customer.openid
+      if follow == 1
+        name = customer.nickname.to_s + '(' + customer.name.to_s + ')'
+      end
+      params = {
+          id:customer.id,
+          name:name,
+          headurl:customer.headurl,
+          sale:customer.orders.where('paystatus = ?',1).sum('paysum'),
+          ordercount:customer.orders.size,
+          follow:follow,
+          created_at:customer.created_at.strftime('%Y-%m-%d %H:%M:%S')
+      }
+      customerarr.push(params)
+    end
+    render json: params[:callback]+'({"customers":' + customerarr.to_json + '})',content_type: "application/javascript"
+  end
+
+  def get_sales_count #获取销售统计
+    user = User.find_by_openid(params[:openid])
+    keyword = params[:keyword]
+    begintime = Time.now
+    endtime = Time.now
+    if keyword == 'week'
+      begintime = (Time.now - 6.days).beginning_of_day
+    elsif keyword == 'month'
+      begintime = (Time.now - 1.month).beginning_of_day
+    elsif  keyword == 'threemonth'
+      begintime = (Time.now - 3.month).beginning_of_day
+    else
+      begintime = (Time.now - 1.years).beginning_of_day
+    end
+    customerids = get_down_all_user_ids(user,[])
+    customerids.push user.id
+    usercount = User.where('id in (?) and created_at between ? and ?',customerids,begintime,endtime).size
+    salessum = Order.where('(user_id in (?) or agentuser_id in (?)) and paystatus = ? and paytime between ? and ?',customerids,customerids,1,begintime,endtime).sum('paysum')
+    ordercount = Order.where('(user_id in (?) or agentuser_id in (?)) and paystatus = ? and paytime between ? and ?',customerids,customerids,1,begintime,endtime).size
+    incomesum = user.enaccounts.where('created_at between ? and ?',begintime,endtime).sum('amount')
+    render json: params[:callback]+'({"usercount":"' + usercount.to_s + '","salesum":"' + salessum.to_s + '","ordercount":"' + ordercount.to_s + '","incomesum":"' + incomesum.to_s + '"})',content_type: "application/javascript"
+  end
+
+  def get_sales_echars #获取销售柱状图
+    user = User.find_by_openid(params[:openid])
+    keyword = params[:keyword]
+    begintime = Time.now
+    endtime = Time.now
+    if keyword == 'week'
+      begintime = (Time.now - 6.days).beginning_of_day
+    elsif keyword == 'month'
+      begintime = (Time.now - 1.month).beginning_of_day
+    elsif  keyword == 'threemonth'
+      begintime = (Time.now - 3.month).beginning_of_day
+    else
+      begintime = (Time.now - 1.years).beginning_of_day
+    end
+    axis_data = []
+    series_data = []
+    daycount = (Date.parse(endtime.to_s) - Date.parse(begintime.to_s)).to_i + 1
+    customerids = get_down_all_user_ids(user,[])
+    customerids.push user.id
+    daycount.times do |i|
+      currenttime = begintime + (i).days
+      cbegin = currenttime.beginning_of_day
+      cend = currenttime.end_of_day
+      salessum = Order.where('(user_id in (?) or agentuser_id in (?)) and paystatus = ? and paytime between ? and ?',customerids,customerids,1,cbegin,cend).sum('paysum')
+      axis_data.push currenttime.strftime('%Y-%m-%d')
+      series_data.push salessum
+    end
+    render json: params[:callback]+'({"axis_data":' + axis_data.to_json + ',"series_data":' + series_data.to_json + '})',content_type: "application/javascript"
+  end
+
+  def get_sales_map #获取销售消费能力地图
+    user = User.find_by_openid(params[:openid])
+    keyword = params[:keyword]
+    begintime = Time.now
+    endtime = Time.now.end_of_day
+    if keyword == 'week'
+      begintime = (Time.now - 6.days).beginning_of_day
+    elsif keyword == 'month'
+      begintime = (Time.now - 1.month).beginning_of_day
+    elsif  keyword == 'threemonth'
+      begintime = (Time.now - 3.month).beginning_of_day
+    else
+      begintime = (Time.now - 1.years).beginning_of_day
+    end
+    citycoordinate = Citycoordinate.all
+    data = []
+    customerids = get_down_all_user_ids(user,[])
+    customerids.push user.id
+    citycoordinate.each do |coor|
+      val = Order.where('(user_id in (?) or agentuser_id in (?)) and paystatus = ? and paytime between ? and ? and city = ?',customerids,customerids,1,begintime,endtime,coor.city).sum('paysum')
+      valarr = []
+      valarr.push coor.lng
+      valarr.push coor.lat
+      valarr.push val
+      cityparam = {
+          name:coor.city,
+          value:valarr
+      }
+      data.push cityparam
+    end
+
+    datasort = data.sort{|a,b| b[:value][2] <=> a[:value][2]}
+
+    datasort = datasort[0..9].select{|n| n[:value][2] > 0}
+    scale = 10 / datasort.map{|n| n[:value][2]}.max
+
+    render json: params[:callback]+'({"data":' + data.to_json + ',"datasort":' + datasort.to_json + ',"scale":"' + scale.to_s + '"})',content_type: "application/javascript"
+  end
+
+  def get_withdraw_amount #获取可提现金额
+    user = User.find_by_openid(params[:openid])
+    withdraw = user.withdraw.to_f
+    render json: params[:callback]+'({"withdraw":"' + withdraw.to_s + '"})',content_type: "application/javascript"
+  end
+
+  def get_wxmessage #获取微信发送信息
+    wxmessage = Wxmessage.all.order('id desc').paginate(:page => 1, :per_page => 20)
+    render json: params[:callback]+'({"wxmessages":' + wxmessage.to_json + '})',content_type: "application/javascript"
+  end
+
   private
+
+  def get_down_all_user_ids(user,user_id_list) #获取下级所有用户id
+    childrens = user.childrens
+    childrens.each do |child|
+      user_id_list.push child.id
+      get_down_all_user_ids(child,user_id_list)
+    end
+    return user_id_list
+  end
 
   def get_customer_ids(user,customer_id_list) #获取代理客户id
     childrens = user.childrens
@@ -1526,8 +1895,16 @@ class ApiController < ApplicationController
         end
         oparr.push op_params
       end
-      p.optional = oparr
-      p.price += weighting
+      JSON.parse(paramsdata).each do |param|
+
+        p.optional = oparr
+        p.price += weighting
+        paramap = param['buycaroptional'].map{|n| n['selectcondition_id']}.sort
+        omap = p.optional.map{|n| n[:selectcondition_id]}.sort
+        if param['isselect'] == 1 && param['product_id'] == p.id && paramap == omap
+          p.isselect = 1
+        end
+      end
     end
   end
 

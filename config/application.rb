@@ -18,6 +18,7 @@ module Flower
         resource '*', :headers => :any, :methods => [:get, :post, :options]
       end
     end
+    config.action_cable.disable_request_forgery_protection = true
     config.active_job.queue_adapter = :sidekiq
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers

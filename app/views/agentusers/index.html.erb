@@ -19,11 +19,13 @@
               <tr>
                 <th class="text-center">openid</th>
                 <th class="text-center">昵称</th>
+                <th class="text-center">姓名</th>
                 <th class="text-center">手机号</th>
                 <th class="text-center">代理级别</th>
                 <th class="text-center">货款</th>
                 <th class="text-center">已完成任务</th>
                 <th class="text-center">任务考核</th>
+                <th class="text-center">实名</th>
                 <th class="text-center" width="170px">操作</th>
               </tr>
               </thead>
@@ -35,6 +37,9 @@
                   </td>
                   <td>
                     <%= agentuser.nickname %>
+                  </td>
+                  <td>
+                    <%= agentuser.name %>
                   </td>
                   <td>
                     <%= agentuser.phone %>
@@ -58,8 +63,8 @@
                   <td>
                     <% agent = agentuser.agent %>
                     <% if !agent %>
-                    <% agentuser.create_agent(agentpayment:agentuser.agentpayment, phone:agentuser.phone, showphone:0, autoupgrade:0, examination:0) %>
-                      <% end %>
+                      <% agentuser.create_agent(agentpayment:agentuser.agentpayment, phone:agentuser.phone, showphone:0, autoupgrade:0, examination:0) %>
+                    <% end %>
                     <% if agentuser.agent.examination.to_i == 1 %>
                       考核
                     <% else %>
@@ -67,10 +72,28 @@
                     <% end %>
                   </td>
                   <td>
+                    <% realname = agentuser.realname %>
+                    <% if !realname %>
+                      <span class="red">未实名</span>
+                    <% elsif realname.adjust == -1 %>
+                      <span class="red">未实名</span>
+                    <% elsif realname.adjust == 1 %>
+                      <span class="orange">待调整</span>
+                    <% elsif realname.examinestatus == 1%>
+                      <span class="orange">待审核</span>
+                    <% else %>
+                      <span class="green">已实名</span>
+                    <% end %>
+                  </td>
+                  <td>
                     <div class="visible-md visible-lg hidden-sm hidden-xs btn-group" data-turbolinks="false">
                       <a class="btn btn-xs btn-primary" href=<%= agentuser_agentcertificates_path(agentuser) %>>
                         <i class="fa fa-file-o bigger-120"></i>
                         证书(<%= agentuser.agent.agentcertificates.size %>)
+                      </a>
+                      <a class="btn btn-xs btn-success" href=<%= new_agentuser_agentpaymentrecorder_path(agentuser) %>>
+                        <i class="fa fa-cny bigger-120"></i>
+                        冲货款
                       </a>
                     </div>
                   </td>

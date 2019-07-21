@@ -1,0 +1,141 @@
+<script>
+    $(document).ready(function () {
+        jQuery(function($) {
+            var colorbox_params = {
+                reposition:true,
+                scalePhotos:true,
+                scrolling:false,
+                previous:'<i class="icon-arrow-left"></i>',
+                next:'<i class="icon-arrow-right"></i>',
+                close:'&times;',
+                current:'{current} of {total}',
+                maxWidth:'100%',
+                maxHeight:'100%',
+                onOpen:function(){
+                    document.body.style.overflow = 'hidden';
+                },
+                onClosed:function(){
+                    document.body.style.overflow = 'auto';
+                },
+                onComplete:function(){
+                    $.colorbox.resize();
+                }
+            };
+
+            $('.ace-thumbnails [data-rel="colorbox"]').colorbox(colorbox_params);
+            //$("#cboxLoadingGraphic").append("<i class='icon-spinner orange'></i>");//let's add a custom loading icon
+
+
+        });
+    });
+</script>
+
+<div class="alert alert-block alert-success" style="display:none;">
+  <button type="button" class="close" data-dismiss="alert">
+    <i class="icon-remove"></i>
+  </button>
+
+  <p>
+    <strong>
+      <i class="icon-ok"></i>
+    </strong>
+    保存成功
+  </p>
+
+</div>
+
+<%= form_with(model:realname,local:true,id:'validation-form',:html => {:class=>'form-horizontal m-t',:multipart => true}) do |f| %>
+  <h3 class="header smaller lighter blue">
+    实名认证审核
+    <small></small>
+  </h3>
+  <div class="form-group">
+    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 姓名 </label>
+    <div class="col-sm-10" style="padding-top: 5px;">
+      <span><%= @realname.user.name %></span>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 电话 </label>
+    <div class="col-sm-10" style="padding-top: 5px;">
+      <span><%= @realname.user.phone %></span>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 审核状态 </label>
+    <div class="col-sm-10">
+      <div class="radio col-sm-2" style="padding-top: 0px;">
+        <label>
+          <%= radio_button_tag 'status','0',@realname.examinestatus == 1 && @realname.adjust == 0, class:"ace"%>
+          <span class="lbl"> 待审核</span>
+        </label>
+      </div>
+      <div class="radio col-sm-2" style="padding-top: 0px;">
+        <label>
+          <%= radio_button_tag 'status','1',@realname.examinestatus == 0 && @realname.adjust == 0, class:"ace"%>
+          <span class="lbl"> 通过</span>
+        </label>
+      </div>
+      <div class="radio col-sm-2" style="padding-top: 0px;">
+        <label>
+          <%= radio_button_tag 'status','2',@realname.adjust == 1, class:"ace"%>
+          <span class="lbl"> 需要调整</span>
+        </label>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 调整要求 </label>
+    <div class="col-sm-10">
+      <%= f.text_area :adjustsummary,class:"col-xs-10 col-sm-8" %>
+    </div>
+  </div>
+
+  <hr>
+  <div class="form-group">
+    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">  </label>
+    <div class="row-fluid">
+      <ul class="ace-thumbnails">
+        <li>
+          <a href=<%= @realname.idfront.url %> data-rel="colorbox">
+          <img width="240" height="160" alt="150x150" src=<%= @realname.idfront.url %> />
+          <div class="text">
+            <div class="inner"></div>
+          </div>
+          <div class="tags">
+            <span class="label-holder">
+						   <span class="label label-info arrowed">身份证正面</span>
+						</span>
+          </div>
+          </a>
+        </li>
+        <li>
+          <a href=<%= @realname.idback.url %> data-rel="colorbox">
+            <img width="240" height="160" alt="150x150" src=<%= @realname.idback.url %> />
+            <div class="text">
+              <div class="inner"></div>
+            </div>
+            <div class="tags">
+            <span class="label-holder">
+						   <span class="label label-info arrowed">身份证背面</span>
+						</span>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="clearfix form-actions">
+    <div class="col-md-offset-2 col-md-10">
+      <button type="submit" name="commit" value="保存" class="btn btn-info" data-disable-with="保存" id="submit">
+        <i class="icon-ok bigger-110"></i>
+        保存
+      </button>
+
+    </div>
+  </div>
+<% end %>

@@ -16,6 +16,8 @@ class User < ApplicationRecord
   has_many :agentpaymentrecorders
   has_one :agent, dependent: :destroy
   has_many :examinations
+  has_one :realname, dependent: :destroy
+  has_many :mergepayorders
 
   has_secure_password :validations => false
 

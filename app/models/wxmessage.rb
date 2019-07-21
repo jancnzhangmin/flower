@@ -1,0 +1,2 @@
+class Wxmessage < ApplicationRecord
+end

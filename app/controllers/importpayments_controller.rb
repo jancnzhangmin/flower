@@ -1,0 +1,2 @@
+class ImportpaymentsController < ApplicationController
+end

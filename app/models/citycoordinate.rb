@@ -1,0 +1,2 @@
+class Citycoordinate < ApplicationRecord
+end

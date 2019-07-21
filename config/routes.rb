@@ -141,6 +141,20 @@ Rails.application.routes.draw do
       get 'set_user_password'
       get 'change_directagentlevel'
       get 'check_agent_status'
+      get 'get_mytask_echars_title'
+      get 'get_mytask_echars_detail'
+      get 'get_join_agent_list'
+      get 'get_buycar'
+      post 'set_idcard'
+      get 'get_idcard'
+      get 'create_agentpayment_order'
+      get 'get_income'
+      get 'get_customer_list'
+      get 'get_sales_count'
+      get 'get_sales_echars'
+      get 'get_sales_map'
+      get 'get_withdraw_amount'
+      get 'get_wxmessage'
     end
   end
   resources :getopenids do
@@ -196,5 +210,8 @@ Rails.application.routes.draw do
   end
   resources :agentusers do
     resources :agentcertificates
+    resources :agentpaymentrecorders
   end
+  resources :realnames
+  mount ActionCable.server => '/cable'
 end

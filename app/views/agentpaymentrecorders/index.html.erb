@@ -3,7 +3,7 @@
 <div class="page-content">
   <div class="page-header">
     <h1>
-      <%= @user.nickname %>(<%= @user.login %>)
+      <%= @user.nickname %>(<%= @user.phone %>)
     </h1>
   </div><!-- /.page-header -->
 
@@ -30,10 +30,10 @@
               <% @agentpaymentrecorders.each do |agentpaymentrecorder| %>
                 <tr>
                   <td style="vertical-align: middle;">
-                    <%= agentpaymentrecorder.paymenttime.strftime('%Y-%m-%d') %>
+                    <%= agentpaymentrecorder.paymenttime.strftime('%Y-%m-%d %H:%M:%S') %>
                   </td>
-                  <td style="vertical-align: middle;">
-                    <%= agentpaymentrecorder.agentpayment %>
+                  <td align="right">
+                    <%=  number_to_currency(agentpaymentrecorder.agentpayment,unit: "￥") %>
                   </td>
                   <td style="vertical-align: middle;">
                     <%= agentpaymentrecorder.summary %>

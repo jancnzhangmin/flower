@@ -38,4 +38,5 @@
 //= require kindeditor
 //= require shine
 //= require fabric.min
+//= require cable
 

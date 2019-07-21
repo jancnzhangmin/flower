@@ -83,6 +83,6 @@ class AgentlevelsController < ApplicationController
   end
 
   def agentlevel_params
-    params.require(:agentlevel).permit(:name, :corder, :grant, :amount, :task)
+    params.require(:agentlevel).permit(:name, :corder, :grant, :amount, :task, :deposit, :frontend)
   end
 end

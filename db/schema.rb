@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_27_074614) do
+ActiveRecord::Schema.define(version: 2019_07_19_224426) do
 
   create_table "activecolors", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -58,6 +58,8 @@ ActiveRecord::Schema.define(version: 2019_06_27_074614) do
     t.float "task"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "deposit"
+    t.integer "frontend"
   end
 
   create_table "agentpaymentrecorders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -129,6 +131,7 @@ ActiveRecord::Schema.define(version: 2019_06_27_074614) do
     t.bigint "agentuser_id"
     t.integer "destock"
     t.float "agentprice"
+    t.integer "isselect"
   end
 
   create_table "buyfullactivedetails", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -155,6 +158,15 @@ ActiveRecord::Schema.define(version: 2019_06_27_074614) do
     t.datetime "updated_at", null: false
     t.integer "showlable"
     t.string "summary"
+  end
+
+  create_table "citycoordinates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "province"
+    t.string "city"
+    t.decimal "lng", precision: 15, scale: 12
+    t.decimal "lat", precision: 15, scale: 12
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "clas", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -270,6 +282,7 @@ ActiveRecord::Schema.define(version: 2019_06_27_074614) do
     t.float "productnumber"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "examintype"
   end
 
   create_table "examinations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -281,6 +294,7 @@ ActiveRecord::Schema.define(version: 2019_06_27_074614) do
     t.bigint "user_id"
     t.string "keyword"
     t.string "agentlevel"
+    t.float "task"
   end
 
   create_table "explains", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -360,6 +374,16 @@ ActiveRecord::Schema.define(version: 2019_06_27_074614) do
     t.string "contactphone"
     t.string "address"
     t.string "summary"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "mergepayorders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "ordernumber"
+    t.string "orderids"
+    t.integer "paystatus"
+    t.datetime "paytime"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -508,6 +532,23 @@ ActiveRecord::Schema.define(version: 2019_06_27_074614) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "realnames", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.integer "examinestatus"
+    t.integer "adjust"
+    t.string "adjustsummary"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "idfront_file_name"
+    t.string "idfront_content_type"
+    t.bigint "idfront_file_size"
+    t.datetime "idfront_updated_at"
+    t.string "idback_file_name"
+    t.string "idback_content_type"
+    t.bigint "idback_file_size"
+    t.datetime "idback_updated_at"
+  end
+
   create_table "receiptaddrs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id"
     t.string "contact"
@@ -613,6 +654,13 @@ ActiveRecord::Schema.define(version: 2019_06_27_074614) do
     t.string "account"
     t.string "name"
     t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "wxmessages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.string "message"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

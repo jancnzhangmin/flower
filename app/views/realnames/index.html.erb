@@ -1,0 +1,112 @@
+<%= render 'layerbegin' %>
+
+<div class="page-content">
+  <div class="page-header">
+    <h1>
+      实名
+    </h1>
+  </div><!-- /.page-header -->
+
+  <div class="row">
+    <div class="col-xs-12">
+      <!-- PAGE CONTENT BEGINS -->
+
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="table-responsive">
+            <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+              <thead>
+              <tr>
+                <th class="text-center">openid</th>
+                <th class="text-center">昵称</th>
+                <th class="text-center">姓名</th>
+                <th class="text-center">手机号</th>
+                <th class="text-center">代理级别</th>
+                <th class="text-center">货款</th>
+                <th class="text-center">已完成任务</th>
+                <th class="text-center">任务考核</th>
+                <th class="text-center">实名</th>
+                <th class="text-center" width="170px">操作</th>
+              </tr>
+              </thead>
+              <tbody>
+              <% @realnames.each do |realname| %>
+                <tr>
+                  <td>
+                    <%= realname.user.openid %>
+                  </td>
+                  <td>
+                    <%= realname.user.nickname %>
+                  </td>
+                  <td>
+                    <%= realname.user.name %>
+                  </td>
+                  <td>
+                    <%= realname.user.phone %>
+                  </td>
+                  <td>
+                    <%= realname.user.agentlevel.name %>
+                  </td>
+                  <td class="text-right">
+                    <%=  number_to_currency(realname.user.agentpayment,unit: "￥") %>
+                  </td>
+                  <td class="text-right">
+                    <% quarter = get_quarter(Time.now) %>
+                    <% examinations = realname.user.examinations.where('keyword = ?',quarter.split(',')[0]) %>
+                    <% if examinations.size > 0 %>
+                      <%= number_to_currency(examinations.first.examinationdetails.sum('amount'),unit: "￥") %>
+                    <% else %>
+                      <% realname.user.examinations.create(name:quarter.split(',')[1], begintime:quarter.split(',')[2], endtime:quarter.split(',')[3], keyword:quarter.split(',')[0]) %>
+                      <%=  number_to_currency(0,unit: "￥") %>
+                    <% end %>
+                  </td>
+                  <td>
+                    <% agent = realname.user.agent %>
+                    <% if agent.examination.to_i == 1 %>
+                      考核
+                    <% else %>
+                      不考核
+                    <% end %>
+                  </td>
+                  <td>
+
+                    <% if !realname %>
+                      <span class="red">未实名</span>
+                    <% elsif realname.adjust == -1 %>
+                      <span class="red">未实名</span>
+                    <% elsif realname.adjust == 1 %>
+                      <span class="orange">待调整</span>
+                    <% elsif realname.examinestatus == 1%>
+                      <span class="orange">待审核</span>
+                    <% else %>
+                      <span class="green">已实名</span>
+                    <% end %>
+                  </td>
+                  <td>
+                    <div class="visible-md visible-lg hidden-sm hidden-xs btn-group" data-turbolinks="false">
+                        <a class="btn btn-xs btn-primary" href=<%= edit_realname_path(realname) %>>
+                          <i class="fa fa-edit bigger-120"></i>
+                          处理
+                        </a>
+                      <a data-confirm="确认删除?" data-method="delete" class="btn btn-xs btn-danger" href=<%= realnames_path(realname) %>>
+                        <i class="fa fa-trash bigger-120"></i>
+                        删除
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+<%= render 'layerend' %>

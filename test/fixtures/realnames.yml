@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 
+  examinestatus: 1
+  adjust: 1
+  adjustsummary: MyString
+
+two:
+  user_id: 
+  examinestatus: 1
+  adjust: 1
+  adjustsummary: MyString

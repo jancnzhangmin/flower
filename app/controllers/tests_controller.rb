@@ -7,6 +7,10 @@ class TestsController < ApplicationController
   def index
 
     @tests = Test.all
+
+
+    ActionCable.server.broadcast 'wxmessage_channel',message:'这是websocket的对接测试'
+    #ActionCable.server.broadcast '',message:'asdfasdfsadf'
   end
 
   # GET /tests/1

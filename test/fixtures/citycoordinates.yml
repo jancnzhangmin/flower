@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  province: MyString
+  city: MyString
+  lng: 9.99
+  lat: 9.99
+
+two:
+  province: MyString
+  city: MyString
+  lng: 9.99
+  lat: 9.99

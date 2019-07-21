@@ -18,9 +18,11 @@
               <thead>
               <tr>
                 <th class="text-center">级别名称</th>
-                <th class="text-center">参与代理核算</th>
+
                 <th class="text-center">代理金额</th>
                 <th class="text-center">任务额</th>
+                <th class="text-center">保证金</th>
+                <th class="text-center">前端显示</th>
                 <th class="text-center" width="170px">操作</th>
               </tr>
               </thead>
@@ -30,18 +32,21 @@
                     <td>
                       <%= agentlevel.name %>
                     </td>
-                    <td>
-                      <% if agentlevel.grant == 1 %>
+
+                    <td class="text-right">
+                      <%= number_to_currency agentlevel.amount, unit: "￥" %>
+                    </td>
+                    <td class="text-right">
+                      <%= number_to_currency agentlevel.task, unit: "￥" %>
+                    </td>
+                    <td class="text-right">
+                      <%= number_to_currency agentlevel.deposit, unit: "￥" %>
+                    </td>
+                    <td class="text-center">
+                      <% if agentlevel.frontend == 1 %>
                         <i class="icon-ok green"></i>
                       <% end %>
                     </td>
-                    <td>
-                      <%= agentlevel.amount %>
-                    </td>
-                    <td>
-                      <%= agentlevel.task %>
-                    </td>
-
                     <td>
                       <table>
                         <tr>
