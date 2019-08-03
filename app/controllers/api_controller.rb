@@ -18,7 +18,7 @@ class ApiController < ApplicationController
   end
 
   def get_recommend_product #获取推荐产品列表
-    products = Product.where('grounding = ? and addtop = ?',1,1).order('updated_at desc')
+    products = Product.where('grounding = ? and addtop = ?',1,1).order('corder')
     productarr = Array.new
     products.each do |product|
       productcla = Activeproductclass.new
@@ -63,8 +63,10 @@ class ApiController < ApplicationController
       productcla.number = 1
       productarr.push productcla
     end
-    productarr = checkactive(productarr,params[:openid])
-    render json: params[:callback]+'({"products": ' + productarr.to_json + '})',content_type: "application/javascript"
+    #productarr = checkactive(productarr,params[:openid])
+    parr = checkactive(productarr,params[:openid])
+
+    render json: params[:callback]+'({"products": ' + parr.to_json + '})',content_type: "application/javascript"
   end
 
   def get_product_detail #获取产品明细
@@ -156,7 +158,6 @@ class ApiController < ApplicationController
     user = User.find_by_openid(params[:openid])
     agent = User.find_by(id:params[:agentuserid])
     productarr = calactive(params[:data],params[:openid])
-
     productarr.each do |p|
       p.agentprice = p.price
       agentlevel = user.agentlevel
@@ -381,8 +382,15 @@ class ApiController < ApplicationController
     oweragent = User.find_by_openid(params[:openid])
     paytype = 0 # 0微信支付 1货款支付 2代理货款支付 3代理货款不足
     oweragentlevel = oweragent.agentlevel
+    productids = []
+    adcode = ''
     productarr.each do |p|
       if p.producttype == 0
+        param = {
+            id:p.id,
+            number:p.number
+        }
+        productids.push param
         if agent
           agentlevel = agent.agentlevel
           agentprice = Agentprice.where('agentlevel_id = ? and product_id = ?',agentlevel.id,p.id).first.price
@@ -395,6 +403,7 @@ class ApiController < ApplicationController
         else
           price += p.price
         end
+
         p.optional.each do |o|
           condition = Condition.find(o[:selectcondition_id])
           if condition.id == o[:selectcondition_id]
@@ -412,73 +421,78 @@ class ApiController < ApplicationController
 
     if agent
       agentname = agent.nickname.to_s + '(' + agent.name.to_s + ')'
-      if agent.agentpayment.to_f > price
+      if agent.agentpayment.to_f > pricesum
         paytype = 2
       else
         paytype = 3
       end
-    elsif user.agentpayment.to_f > price
+    elsif user.agentpayment.to_f > pricesum
       paytype = 1
     end
 
-    Order.transaction do
-      user = User.find_by_openid(params[:openid])
-      order = Order.find_by_frontuuid(params[:frontuuid])
-      if order
-        order.destroy
-      end
-      receiptaddr = Receiptaddr.find(params[:address_id])
-      order = user.orders.create(ordernumber:Time.now.strftime('%Y%m%d') + user.id.to_s + Time.now.strftime('%H%M%S'),
-                                 frontuuid:params[:frontuuid],
-                                 payprice:price,
-                                 paysum:price,
-                                 province:receiptaddr.province,
-                                 city:receiptaddr.city,
-                                 district:receiptaddr.district,
-                                 street:receiptaddr.street,
-                                 adcode:receiptaddr.adcode,
-                                 address:receiptaddr.address,
-                                 contact:receiptaddr.contact,
-                                 contactphone:receiptaddr.contactphone,
-                                 receiptstatus:0,
-                                 commentstatus:0,
-                                 paystatus:0,
-                                 status:1,
-                                 deliverstatus:0,
-                                 summary:params[:summary],
-                                 destock:destock,
-                                 agentuser_id:agentuserid
-      )
-      discount = 0
-      owerprofit = 0
-      buycars = user.buycars
-      productarr.each do |p|
-        if p.producttype == 0
-          discount += p.discount * p.number
-          owerprofit += p.owerprofit * p.number
-        end
-        orderdetail = order.orderdetails.create(product_id:p.id, number:p.number, price:p.price, sum:p.number.to_f * p.price.to_f, producttype:p.producttype)
-        p.optional.each do |o|
-          orderdetail.orderoptionals.create(selectcondition_id:o[:selectcondition_id], selectcondition_name:o[:selectcondition_name])
-        end
-        p.activetype.each do |act|
-          orderdetail.orderactivetypes.create(active:act.active, showlable:act.showlable, summary:act.summary, keywords:act.keywords)
-        end
 
-      end
-      order.discount = discount
-      order.owerprofit = owerprofit
-      order.save
+    user = User.find_by_openid(params[:openid])
+    order = Order.find_by_frontuuid(params[:frontuuid])
+    if order
+      order.destroy
     end
+    receiptaddr = Receiptaddr.find(params[:address_id])
+    adcode = receiptaddr.adcode
+    postage = check_postage(productids,adcode)
+    order = user.orders.create(ordernumber:Time.now.strftime('%Y%m%d') + user.id.to_s + Time.now.strftime('%H%M%S'),
+                               frontuuid:params[:frontuuid],
+                               payprice:pricesum,
+                               paysum:pricesum + postage,
+                               province:receiptaddr.province,
+                               city:receiptaddr.city,
+                               district:receiptaddr.district,
+                               street:receiptaddr.street,
+                               adcode:receiptaddr.adcode,
+                               address:receiptaddr.address,
+                               contact:receiptaddr.contact,
+                               contactphone:receiptaddr.contactphone,
+                               receiptstatus:0,
+                               commentstatus:0,
+                               paystatus:0,
+                               status:1,
+                               deliverstatus:0,
+                               summary:params[:summary],
+                               destock:destock,
+                               agentuser_id:agentuserid,
+                               postage:postage
+    )
+
+    discount = 0
+    owerprofit = 0
+
+    productarr.each do |p|
+      if p.producttype == 0
+        discount += p.discount * p.number
+        owerprofit += p.owerprofit * p.number
+      end
+      orderdetail = order.orderdetails.create(product_id:p.id, number:p.number, price:p.price, sum:p.number.to_f * p.price.to_f, producttype:p.producttype)
+      p.optional.each do |o|
+        orderdetail.orderoptionals.create(selectcondition_id:o[:selectcondition_id], selectcondition_name:o[:selectcondition_name])
+      end
+      p.activetype.each do |act|
+        orderdetail.orderactivetypes.create(active:act.active, showlable:act.showlable, summary:act.summary, keywords:act.keywords)
+      end
+
+    end
+    order.discount = discount
+    order.owerprofit = owerprofit
+    order.save
+    pricesum += postage
     #DeletebuycarJob.perform_later(user.id)
     buycars = user.buycars
     buycars.destroy_all
-    render json: '{"price":"' + pricesum.to_s + '","balance":"' + balance.to_s + '","agentname": "' + agentname.to_s + '","paytype":"' + paytype.to_s + '"}'
+
+    render json: '{"price":"' + pricesum.to_s + '","balance":"' + balance.to_s + '","agentname": "' + agentname.to_s + '","paytype":"' + paytype.to_s + '","orderid":"' + order.id.to_s + '"}'
   end
 
   def get_unpay_list #获取未支付订单列表
     user = User.find_by_openid(params[:openid])
-    orders = user.orders.where('paystatus = 0 and user_id = ?',user.id).paginate(:page => params[:page], :per_page => 10).order('id desc')
+    orders = user.orders.where('paystatus = 0 and user_id = ?',user.id).order('id asc').paginate(:page => params[:page], :per_page => 10)
     orders.each do |order|
       productarr = []
       orderdetails = order.orderdetails
@@ -502,9 +516,20 @@ class ApiController < ApplicationController
         productarr.push order_params
       end
       productarr = calactive(productarr.to_json,params[:openid])
-      re_write_order(order.id,productarr)
+      productids = []
+      productarr.each do |p|
+        if p.producttype == 0
+          param = {
+              id:p.id,
+              number:p.number
+          }
+          productids.push param
+        end
+      end
+      postage = check_postage(productids,order.adcode)
+      re_write_order(order.id,productarr,postage)
     end
-    orders = user.orders.where('paystatus = 0').paginate(:page => params[:page], :per_page => 10).order('id desc')
+    orders = user.orders.where('paystatus = 0').order('id desc').paginate(:page => params[:page], :per_page => 10)
 
     productarr = []
     orders.each do |order|
@@ -608,7 +633,8 @@ class ApiController < ApplicationController
           orderdetail:orderdetailarr,
           destock:order.destock,
           agentuserid:order.agentuser_id,
-          agentname:agentname
+          agentname:agentname,
+          postage:order.postage
       }
       productarr.push params
     end
@@ -730,7 +756,18 @@ class ApiController < ApplicationController
       productarr.push order_params
     end
     productarr = calactive(productarr.to_json,params[:openid])
-    re_write_order(order.id,productarr)
+    productids = []
+    productarr.each do |p|
+      if p.producttype == 0
+        param = {
+            id:p.id,
+            number:p.number
+        }
+        productids.push param
+      end
+    end
+    postage = check_postage(productids,order.adcode)
+    re_write_order(order.id,productarr,postage)
 
     orderdetails = order.orderdetails
     orderdetailarr = []
@@ -839,6 +876,73 @@ class ApiController < ApplicationController
     render json: callback + '({"order":' + params.to_json + ',"balance":' + balance.to_s + '})',content_type: "application/javascript"
   end
 
+  def get_merge_unpayorders #获取合并支付订单集
+    paytype = 0 # 0微信支付 1货款支付 2代理货款支付 3代理货款不足
+    paystatus = []
+    paycountsum = 0
+    userarr = []
+    mergeorderids = params[:mergeorderids]
+    mergeorderids.each do |mergeorder|
+      order = Order.find(mergeorder)
+      user = order.user
+      if order.agentuser_id != 0
+        user = User.find(order.agentuser_id)
+      end
+      param = {
+          userid:user.id,
+          agentpayment:user.agentpayment.to_f
+      }
+      userarr.push param
+    end
+    userarr.uniq!
+    mergeorderids.each do |mergeorder|
+      order = Order.find(mergeorder)
+      agentname = ''
+      paysummary = ''
+      if order.agentuser_id != 0
+        agent = User.find_by(id:order.agentuser_id)
+        if agent
+          agentname = agent.nickname + '(' + agent.name.to_s + ')'
+          if userarr.select{|n| n[:userid] == agent.id}.first[:agentpayment] >= order.paysum
+            userarr.map{|n| n[:userid] == agent.id ? n[:agentpayment] -= order.paysum : ''}
+            paytype = 2
+          else
+            paytype = 3
+          end
+        end
+      else
+        user = order.user
+        if userarr.select{|n| n[:userid] == user.id}.first[:agentpayment] >= order.paysum
+          userarr.map{|n| n[:userid] == user.id ? n[:agentpayment] -= order.paysum : ''}
+          paytype = 1
+        else
+          paytype = 0
+        end
+      end
+      if paytype == 0
+        paysummary = '微信支付￥'+ (sprintf '%.2f', order.paysum - userarr.select{|n| n[:userid] == user.id}.first[:agentpayment])
+        if userarr.select{|n| n[:userid] == user.id}.first[:agentpayment] > 0
+          paysummary += ' 货款支付￥' + (sprintf '%.2f', user.agentpayment)
+        end
+        userarr.map{|n| n[:userid] == user.id ? n[:agentpayment] = 0 : ''}
+      elsif paytype == 1
+        paysummary = '货款支付￥' + (sprintf '%.2f', order.paysum)
+      elsif paytype == 2
+        paysummary = agentname + '货款支付￥' + (sprintf '%.2f', order.paysum)
+      else
+        paysummary = agentname + '货款不足'
+      end
+      param = {
+          id:order.id,
+          paytype:paytype,
+          paysummary:paysummary,
+          paysum:order.paysum
+      }
+      paystatus.push param
+    end
+    render json: params[:callback] + '({"paystatus":' +paystatus.to_json + '})',content_type: "application/javascript"
+  end
+
   def get_undeliver_list #获取待发货订单列表
     user = User.find_by_openid(params[:openid])
     orders = user.orders.where('paystatus = 1 and deliverstatus = 0').paginate(:page => params[:page], :per_page => 10).order('id desc')
@@ -863,7 +967,7 @@ class ApiController < ApplicationController
   def get_undeliver_count #获取待发货订单数量
     user = User.find_by_openid(params[:openid])
     orderscount = user.orders.where('paystatus = 1 and deliverstatus = 0').count
-    render json: params[:callback] + '({"ordercount":' +orderscount.to_s + '})',content_type: "application/javascript"
+    render json: params[:callback] + '({"ordercount":"' +orderscount.to_s + '"})',content_type: "application/javascript"
   end
 
   def get_unreceipt_count #获取待收货订单数量
@@ -1010,6 +1114,7 @@ class ApiController < ApplicationController
     if result['subscribe']
       status = 1
     end
+    puts status
     render json: params[:callback]+'({"status": ' + status.to_s + '})',content_type: "application/javascript"
   end
 
@@ -1028,7 +1133,7 @@ class ApiController < ApplicationController
     end
     $client ||= WeixinAuthorize::Client.new(Config.first.appid, Config.first.appsecret)
     user_info = $client.user(params[:openid])
-    user = User.find_by_openid('123456')
+    user = User.find_by_openid(params[:openid])
     #productqrarr = productqrarr.to_a
     render json: params[:callback]+'({"productqrs":' + productqrarr.to_json + ',"userinfo":' + user_info.to_json + ',"user":' + user.to_json + '})',content_type: "application/javascript"
   end
@@ -1410,6 +1515,7 @@ class ApiController < ApplicationController
     user.vcode = vcode
     user.vcodetime = Time.now
     user.save
+    #sendvcode(user.phone,user.vcode)
     render json: params[:callback]+'({"status":"' + status.to_s + '"})',content_type: "application/javascript"
   end
 
@@ -1505,7 +1611,7 @@ class ApiController < ApplicationController
       order.paystatus = 1
       order.paytime = Time.now
       order.save
-      cablewxmessage('order',0)
+      cablewxmessage('order',order.id,0)
     end
     AfterpayJob.perform_later(mergepayorder.id)
     render json: params[:callback]+'({"status":"' + status.to_s + '"})',content_type: "application/javascript"
@@ -1660,6 +1766,93 @@ class ApiController < ApplicationController
     render json: params[:callback]+'({"wxmessages":' + wxmessage.to_json + '})',content_type: "application/javascript"
   end
 
+  def wx_pay #微信支付
+    mergeorders = params[:mergeorderids]
+    user = User.find_by_openid(params[:openid])
+    mergepayorders = user.mergepayorders.where('paystatus = 0')
+    mergepayorders.destroy_all
+    useragentpayment = 0
+    mergeorders.each do |mergeorder|
+      order = Order.find(mergeorder)
+      if order.agentuser_id == 0
+        useragentpayment = order.user.agentpayment.to_f
+      end
+    end
+    mergeorders.each do |mergeorder|
+      order = Order.find(mergeorder)
+      useragentpayment -= order.paysum
+    end
+    useragentpayment = -useragentpayment
+    ordernumber = Time.now.strftime('%Y%m%d') + user.id.to_s + Time.now.strftime('%H%M%S')
+
+    payment_params = {
+        body: "测试",
+        out_trade_no: ordernumber,
+        total_fee: (useragentpayment * 100).to_i,
+        spbill_create_ip:  '127.0.0.1',
+        notify_url: 'http://flower.ysdsoft.com/api/wxpay_notify',
+        trade_type: 'JSAPI', # could be "JSAPI", "NATIVE" or "APP",
+        openid: params[:openid]  # required when trade_type is `JSAPI`
+    }
+    result = WxPay::Service.invoke_unifiedorder(payment_params)
+    $client ||= WeixinAuthorize::Client.new(Config.first.appid, Config.first.appsecret)
+    sign_package = $client.get_jssign_package(request.url.split('#')[0])
+    if result.nil?
+      #render html: "no"
+    else
+      #render html: "#{@result.to_s},#{params.to_s}" if @result['return_code']=='FAIL'
+      pay_ticket_param = {
+          timeStamp: sign_package["timestamp"],
+          nonceStr: sign_package["nonceStr"],
+          package: "prepay_id=#{result['prepay_id']}",  #这里一定注意，不仅仅是prepay_id，还需要拼接上“prepay_id=”
+          signType: "MD5",
+          appId: WxPay.appid,
+          key: WxPay.key
+      }
+      pay_ticket_param = {
+          paySign: WxPay::Sign.generate(pay_ticket_param)  #然后我们手动进行paySign计算
+      }.merge(pay_ticket_param)
+    end
+
+
+    user.mergepayorders.create(ordernumber:ordernumber,orderids:mergeorders.join(','), paystatus:0, wxpaysum:useragentpayment,sign:result['sign'])
+    render json: params[:callback]+'({"pay_ticket_param":' + pay_ticket_param.to_json + ',"sign_packge":'+sign_package.to_json+'})',content_type: "application/javascript"
+  end
+
+  def wxpay_notify #微信支付回调
+    result = Hash.from_xml(request.body.read)["xml"]
+    #Testlog.create(log:result.to_s)
+    if result['return_code']=='SUCCESS'
+      mergeorder = Mergepayorder.find_by_ordernumber(result['out_trade_no'])
+      if mergeorder.paystatus == 0
+        mergeorder.paystatus = 1
+        mergeorder.paytime = Time.now
+        mergeorder.save
+        orderids = mergeorder.orderids.split(',')
+        orderids.each do |orderid|
+          order = Order.find(orderid)
+          order.paystatus = 1
+          order.paytime = Time.now
+          order.save
+        end
+        AfterpayJob.perform_later(mergeorder.id)
+      end
+    end
+    render :xml => {return_code: "SUCCESS"}.to_xml(root: 'xml', dasherize: false)
+  end
+
+  def get_postage #检查并返回运费
+    postage = check_postage(params[:productarr],params[:adcode])
+    render json: params[:callback]+'({"postage":"' + postage.to_s + '"})',content_type: "application/javascript"
+  end
+
+  def get_user_info #获取个人信息
+    user = User.find_by_openid(params[:openid])
+    render json: params[:callback]+'({"user":' + user.to_json + '})',content_type: "application/javascript"
+  end
+
+
+
   private
 
   def get_down_all_user_ids(user,user_id_list) #获取下级所有用户id
@@ -1719,7 +1912,14 @@ class ApiController < ApplicationController
         product = Product.find(orderdetail.product_id)
         cover = nil
         productimg = product.productimgs.where('isdefault = 1')
-        if productimg.count > 0
+        cover = nil
+        orderoptionals.each do |optional|
+          condition = Condition.find(optional.selectcondition_id)
+          if condition.conditionimg_file_name
+            cover = condition.conditionimg.url
+          end
+        end
+        if productimg.count > 0 && !cover
           cover = productimg.first.productimg.url
         end
         orderdetail_params = {
@@ -1780,7 +1980,7 @@ class ApiController < ApplicationController
     productarr
   end
 
-  def re_write_order(orderid,productarr) #重新计算未支付订单
+  def re_write_order(orderid,productarr,postage) #重新计算未支付订单
     Order.transaction do
       order = Order.find(orderid)
       orderdetails = order.orderdetails
@@ -1803,9 +2003,9 @@ class ApiController < ApplicationController
             agentlevel = oweragent.agentlevel
             if agentlevel
               price = Agentprice.where('product_id = ? and agentlevel_id = ?',p.id,agentlevel.id).first.price
+            else
+              price = Product.find(p.id).price
             end
-          else
-            price = Product.find(p.id).price
           end
           p.optional.each do |o|
             weighting = Condition.find(o[:selectcondition_id]).weighting
@@ -1824,9 +2024,10 @@ class ApiController < ApplicationController
           orderdetail.orderactivetypes.create(active:act.active, showlable:act.showlable, summary:act.summary, keywords:act.keywords)
         end
       end
-      order.paysum = paysum
+      order.paysum = paysum + postage
       order.discount = discount
       order.owerprofit = owerprofit
+      order.postage = postage
       order.save
     end
   end
@@ -1878,7 +2079,6 @@ class ApiController < ApplicationController
       activeproductcla.optional = m[2]
       activeproductarr.push activeproductcla
     end
-
     productarr = checkactive(activeproductarr,paramsopenid)
     productarr.each do |p|
       oparr = Array.new
@@ -1898,14 +2098,53 @@ class ApiController < ApplicationController
       JSON.parse(paramsdata).each do |param|
 
         p.optional = oparr
-        p.price += weighting
+
         paramap = param['buycaroptional'].map{|n| n['selectcondition_id']}.sort
         omap = p.optional.map{|n| n[:selectcondition_id]}.sort
         if param['isselect'] == 1 && param['product_id'] == p.id && paramap == omap
           p.isselect = 1
+          p.price += weighting
         end
       end
     end
+  end
+
+  def check_postage(productarr,adcode) #检查运费
+    postage = 0
+    trialnumber = 0
+    local_adcode = adcode[0..1].ljust(6,'0')
+    postagerules = Postagerule.where('status = 1')
+    postagerules.each do |postagerule|
+      postareas = postagerule.postareas.where('adcode = ?',local_adcode)
+      if postareas.size > 0
+        postage = postagerule.startpostage
+        if postagerule.ordernumber != 0
+          trialnumber = 0
+          if productarr
+            if productarr.class == Array
+              productarr.each do |p|
+                product = Product.find(p[:id])
+                if product.trial != 1
+                  trialnumber += p[:number].to_i
+                end
+              end
+            else
+              productarr.each do |p|
+                product = Product.find(p[1][:id])
+                if product.trial != 1
+                  trialnumber += p[1][:number].to_i
+                end
+              end
+            end
+          end
+          if trialnumber >= postagerule.ordernumber
+            postage = postagerule.endpostage
+          end
+        end
+        break
+      end
+    end
+    postage
   end
 
 end

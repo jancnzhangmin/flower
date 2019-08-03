@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_19_224426) do
+ActiveRecord::Schema.define(version: 2019_07_30_190653) do
 
   create_table "activecolors", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -132,6 +132,7 @@ ActiveRecord::Schema.define(version: 2019_07_19_224426) do
     t.integer "destock"
     t.float "agentprice"
     t.integer "isselect"
+    t.integer "trial"
   end
 
   create_table "buyfullactivedetails", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -247,6 +248,7 @@ ActiveRecord::Schema.define(version: 2019_07_19_224426) do
     t.string "headdemo_content_type"
     t.bigint "headdemo_file_size"
     t.datetime "headdemo_updated_at"
+    t.integer "displaysale"
   end
 
   create_table "currentexaminations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -386,6 +388,8 @@ ActiveRecord::Schema.define(version: 2019_07_19_224426) do
     t.datetime "paytime"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "wxpaysum"
+    t.string "sign"
   end
 
   create_table "optionals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -468,6 +472,7 @@ ActiveRecord::Schema.define(version: 2019_07_19_224426) do
     t.integer "deliverstatus"
     t.integer "destock"
     t.bigint "agentuser_id"
+    t.float "postage"
   end
 
   create_table "owerstayincomes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -475,6 +480,24 @@ ActiveRecord::Schema.define(version: 2019_07_19_224426) do
     t.string "ordernumber"
     t.integer "incomestatus"
     t.float "price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "postagerules", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.float "startpostage"
+    t.float "ordernumber"
+    t.float "endpostage"
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "postareas", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "postagerule_id"
+    t.string "adcode"
+    t.string "province"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -521,6 +544,10 @@ ActiveRecord::Schema.define(version: 2019_07_19_224426) do
     t.string "pack"
     t.string "season"
     t.integer "intask"
+    t.string "shelflife"
+    t.float "salecount"
+    t.integer "trial"
+    t.integer "corder"
   end
 
   create_table "profits", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

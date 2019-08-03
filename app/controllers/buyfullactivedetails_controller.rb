@@ -1,4 +1,5 @@
 class BuyfullactivedetailsController < ApplicationController
+  before_action :check_auth
   def index
     @buyfullactive = Buyfullactive.find(params[:buyfullactive_id])
     @activedetails = @buyfullactive.buyfullactivedetails

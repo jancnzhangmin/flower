@@ -1,4 +1,5 @@
 class ExplainsController < ApplicationController
+  before_action :check_auth
   before_action :set_explain, only: [:show, :edit, :update, :destroy]
 
   def index

@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :check_auth
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -9,6 +10,7 @@ class UsersController < ApplicationController
     @upagentuser = get_up_agent(@user)
     user_id_list = []
     @customer = get_customer(@user,user_id_list)
+    @customer.delete(@user.id)
     agent_id_list = []
     @agent = get_agent(@user,agent_id_list)
     directagent_id_list = []

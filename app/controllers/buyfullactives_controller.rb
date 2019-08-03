@@ -1,4 +1,5 @@
 class BuyfullactivesController < ApplicationController
+  before_action :check_auth
   before_action :set_buyfullactive, only: [:show, :edit, :update, :destroy]
 
   def index

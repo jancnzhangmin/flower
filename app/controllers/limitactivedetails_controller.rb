@@ -1,5 +1,5 @@
 class LimitactivedetailsController < ApplicationController
-
+  before_action :check_auth
   def index
     @limitactive = Limitactive.find(params[:limitactive_id])
     @activedetails = @limitactive.limitactivedetails

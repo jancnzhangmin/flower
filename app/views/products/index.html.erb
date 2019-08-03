@@ -39,11 +39,8 @@ $('.addtop').change(function () {
                 <th class="text-center">状态</th>
                 <th class="text-center">分类</th>
                 <th class="text-center">活动</th>
-                <th class="text-center">活动成本</th>
-                <th class="text-center">活动售价</th>
-                <th class="text-center">活动利润</th>
                 <th class="text-center">推荐</th>
-                <th class="text-center" width="420px">操作</th>
+                <th class="text-center" width="490px">操作</th>
               </tr>
               </thead>
               <tbody>
@@ -87,15 +84,7 @@ $('.addtop').change(function () {
                         <span class="label label-sm label-pink arrowed arrowed-right"><%= activetype %></span>
                       <% end %>
                     </td>
-                    <td>
-                      <%= sprintf("%.2f",active.cost) %>
-                    </td>
-                    <td>
-                      <%= sprintf("%.2f",active.price) %>
-                    </td>
-                    <td>
-                      <%= sprintf("%.2f",active.price - active.cost) %>
-                    </td>
+
                     <td>
                       <div class="checkbox" style="margin-top: 0px;margin-bottom: 0px;">
                         <label>
@@ -105,7 +94,17 @@ $('.addtop').change(function () {
                       </div>
                     </td>
                     <td>
+
                       <div class="visible-md visible-lg hidden-sm hidden-xs btn-group" data-turbolinks="false">
+
+                        <a class="btn btn-xs btn-link" href=<%= up_product_path(product) %>>
+                          <i class="fa fa-sort-up bigger-120" style="margin-top: 5px;"></i>
+
+                        </a>
+                        <a class="btn btn-xs btn-link" style="margin-top: -5px;" href=<%= down_product_path(product) %>>
+                          <i class="fa fa-sort-desc bigger-120"></i>
+
+                        </a>
                         <a class="btn btn-xs btn-primary" href=<%= edit_product_path(product) %>>
                           <i class="fa fa-edit bigger-120"></i>
                           编辑
@@ -146,6 +145,7 @@ $('.addtop').change(function () {
                           删除
                         </a>
                       </div>
+                      </div>
                     </td>
 
                   </tr>
@@ -165,7 +165,9 @@ $('.addtop').change(function () {
         </div>
       </div>
 
-
+      <div data-turbolinks="false" class="text-center">
+        <%= will_paginate @products, renderer: BootstrapPagination::Rails %>
+      </div>
 
 
 

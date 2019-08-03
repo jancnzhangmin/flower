@@ -130,7 +130,11 @@
                 <div class="profile-info-name"> 账号 </div>
 
                 <div class="profile-info-value">
-                  <span class="editable"><%= @user.login %></span>
+                  <span class="editable"><%= @user.login.to_s %>
+                  <% if @user.login.to_s.size == 0 %>
+                    &nbsp;
+                    <% end %>
+                  </span>
                 </div>
               </div>
 

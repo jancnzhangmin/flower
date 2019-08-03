@@ -1,4 +1,5 @@
 class AgentlevelsController < ApplicationController
+  before_action :check_auth
   before_action :set_agentlevel, only: [:show, :edit, :update, :destroy]
 
   def index

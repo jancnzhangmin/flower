@@ -1,4 +1,5 @@
 class ExplainproductsController < ApplicationController
+  before_action :check_auth
   before_action :set_explain, only: [:index, :singleadd, :singleremove, :addexplain, :removeexplain]
   def index
     @activedetails = @explain.products

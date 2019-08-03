@@ -1,4 +1,5 @@
 class ClasController < ApplicationController
+  before_action :check_auth
   before_action :set_cla, only: [:show, :edit, :update, :destroy, :up, :down]
 
   def index

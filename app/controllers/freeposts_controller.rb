@@ -1,4 +1,5 @@
 class FreepostsController < ApplicationController
+  before_action :check_auth
   before_action :set_freepost, only: [:edit, :update]
   def index
     @freepost = Freepost.last

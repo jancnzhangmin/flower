@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  startpostage: 1.5
+  ordernumber: 1.5
+  endpostage: 1.5
+  status: 1
+
+two:
+  name: MyString
+  startpostage: 1.5
+  ordernumber: 1.5
+  endpostage: 1.5
+  status: 1

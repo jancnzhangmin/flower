@@ -10,7 +10,7 @@ config = Config.last
 if config
   puts '配置信息已存在，忽略'
 else 
-  Config.create(appid:'wx0000000000000000',appsecret:'00000000000000000000000000000000',autocomment:'15',minbankamount:'100')
+  Config.create(appid:'wx0000000000000000',appsecret:'00000000000000000000000000000000',autocomment:'15',minbankamount:'100', displaysale:0)
   puts '配置信息初始化成功'
 end
 
@@ -112,5 +112,19 @@ else
   cla.order = cla.id
   cla.save
   puts '茶具推荐分类初始化成功'
+end
+
+products = Product.all
+products.each do |product|
+  if product.corder.to_i == 0
+    product.corder = product.id
+    product.save
+  end
+end
+
+admin = Admin.find_by_login('admin')
+if !admin
+  Admin.create(login:'admin', name:'管理员', password:'admin', password_confirmation:'admin', status:1, servicename:'管理员')
+  puts '管理员初始化成功'
 end
 

@@ -1,4 +1,5 @@
 class LimitactivesController < ApplicationController
+  before_action :check_auth
   before_action :set_limitactive, only: [:show, :edit, :update, :destroy]
 
   def index

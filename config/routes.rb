@@ -23,6 +23,8 @@ Rails.application.routes.draw do
     resources :productqrs
     member do
       get 'agentprice'
+      get 'up'
+      get 'down'
     end
   end
   resources :secondactives do
@@ -155,6 +157,11 @@ Rails.application.routes.draw do
       get 'get_sales_map'
       get 'get_withdraw_amount'
       get 'get_wxmessage'
+      get 'get_merge_unpayorders'
+      get 'wx_pay'
+      post 'wxpay_notify'
+      get 'get_postage'
+      get 'get_user_info'
     end
   end
   resources :getopenids do
@@ -213,5 +220,22 @@ Rails.application.routes.draw do
     resources :agentpaymentrecorders
   end
   resources :realnames
+  resources :postagerules do
+    resources :postareas do
+      collection do
+        get 'updatearea'
+      end
+    end
+  end
+  resources :logins do
+    collection do
+      get 'logout'
+    end
+  end
+  resources :usersubscribes do
+    collection do
+      get 'getopenid'
+    end
+  end
   mount ActionCable.server => '/cable'
-end
+  end

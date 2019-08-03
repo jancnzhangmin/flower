@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-
+  require 'net/http'
   class Productclass
     attr :id,true
     attr :name,true
@@ -28,6 +28,11 @@ class ApplicationController < ActionController::Base
     attr :agentuserid,true
     attr :destock,true
     attr :isselect,true
+    attr :shelflife,true
+    attr :salecount,true
+    attr :displaysale,true
+    attr :trial,true
+    attr :postage,true
   end
 
   class Activetypeclass
@@ -63,8 +68,13 @@ class ApplicationController < ActionController::Base
       productcla.content = product.content.html_safe
       productcla.unit = product.unit
       productcla.spec = product.spec
+      productcla.shelflife = product.shelflife
       productcla.optional = p.optional
       productcla.isselect = 0
+      productcla.displaysale = Config.first.displaysale
+      productcla.salecount = product.salecount.to_i
+      productcla.trial = product.trial.to_i
+      productcla.postage = 0
       cover = product.productimgs.where('isdefault = 1')
       if cover.count > 0
         productcla.cover = cover.first.productimg.url
@@ -93,6 +103,50 @@ class ApplicationController < ActionController::Base
   def send_template_msg(touser, template_id, url, topcolor, data) #发送模板消息
     $client ||= WeixinAuthorize::Client.new(Config.first.appid, Config.first.appsecret)
     $client.send_temlate_msg(touser,template_id,url,topcolor,data)
+  end
+
+  def sendvcode(phone,vcode)
+    #phone=params[:phone]
+    #vcode=randnumber
+    require 'cgi'
+    require 'digest/sha1'
+    require 'base64'
+    product = "Dysmsapi"
+    domain = "dysmsapi.aliyuncs.com"
+    accessKeyId = "LTAIAvikFGuaSwZc"
+    accessKeySecret = "KgTGqXAGMS4NtSvlIkGrR03QW4bCQQ"
+    codeparams={
+        SignatureMethod:'HMAC-SHA1',
+        SignatureNonce:SecureRandom.uuid,
+        AccessKeyId:accessKeyId,
+        SignatureVersion:'1.0',
+        Timestamp:Time.now.gmtime.strftime('%Y-%m-%dT%H:%M:%SZ'),
+        Format:'XML',
+
+        Action:'SendSms',
+        Version:'2017-05-25',
+        RegionId:'cn-hangzhou',
+        PhoneNumbers:phone,
+        SignName:'花当家',
+        TemplateParam:"{\"code\":\""+vcode+"\"}" ,
+        TemplateCode:'SMS_171540182'
+    }
+
+    codeparams = "#{codeparams.sort.map { |k, v| CGI.escape("#{k}")+'='+CGI.escape("#{v}") }.join('&')}"
+    stringToSign = 'GET&'
+    stringToSign += CGI.escape('/')+'&'
+    stringToSign += CGI.escape(codeparams)
+    hmac = hmac_sha1(stringToSign,accessKeySecret+'&')
+    signature = CGI.escape(hmac)
+    url = 'http://dysmsapi.aliyuncs.com/?Signature='+hmac+'&'+codeparams
+    ret_data = Net::HTTP.get(URI.parse(url))
+    #render json: params[:callback]+'({"status":"1"})',content_type: "application/javascript"
+  end
+
+  def check_auth
+    if !session[:login]
+      redirect_to logins_path
+    end
   end
 
   private
@@ -149,23 +203,23 @@ class ApplicationController < ActionController::Base
           end
         end
         #if numbercount >= firstbuyactivedetail.number
-          productarr.each do |p|
-            if p.id == firstbuyactivedetail.product_id
-              p.owerprofit = firstbuyactive.owerratio
-              activecla = Activetypeclass.new
-              activecla.active = firstbuyactive.name
-              activecla.showlable = firstbuyactive.showlable
-              replace_number = firstbuyactivedetail.number.to_i.to_s
-              replace_unit = p.unit
-              replace_discount = (p.price * p.owerprofit / 100 * firstbuyactivedetail.number).to_s
-              activecla.summary = firstbuyactive.summary
-              activecla.summary.sub!("{number}",replace_number)
-              activecla.summary.sub!("{unit}",replace_unit)
-              activecla.summary.sub!("{discount}",replace_discount)
-              activecla.keywords = 'firstbuy'
-              p.activetype.push activecla
-            end
+        productarr.each do |p|
+          if p.id == firstbuyactivedetail.product_id
+            p.owerprofit = firstbuyactive.owerratio
+            activecla = Activetypeclass.new
+            activecla.active = firstbuyactive.name
+            activecla.showlable = firstbuyactive.showlable
+            replace_number = firstbuyactivedetail.number.to_i.to_s
+            replace_unit = p.unit
+            replace_discount = (p.price * p.owerprofit / 100 * firstbuyactivedetail.number).to_s
+            activecla.summary = firstbuyactive.summary
+            activecla.summary.sub!("{number}",replace_number)
+            activecla.summary.sub!("{unit}",replace_unit)
+            activecla.summary.sub!("{discount}",replace_discount)
+            activecla.keywords = 'firstbuy'
+            p.activetype.push activecla
           end
+        end
         #end
       end
     end
@@ -381,16 +435,33 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def cablewxmessage(keyword,userid) #user 新增用户 order 用户购买 agent成为代理 userid只在keyword为agent时有效
+  def cablewxmessage(keyword,orderid,userid) #user 新增用户 order 用户购买 agent成为代理 userid只在keyword为agent时有效
     name = ''
     message = ''
     if keyword == 'order'
-      order = Order.last
-      orderdetail = order.orderdetails.first
-      product = orderdetail.product
-      if product
-        message = '购买' + product.name
+      order = Order.find(orderid)
+      orderdetails = order.orderdetails
+      localmsg = []
+      orderdetails.each do |orderdetail|
+        product = orderdetail.product
+        lname = ''
+        if product
+          lname += product.name
+        end
+        orderoptionals = orderdetail.orderoptionals
+        if orderoptionals.size > 0
+          lname +='('
+        end
+        orderoptionals.each do |op|
+          lname += op.selectcondition_name
+        end
+        if orderoptionals.size > 0
+          lname += ')'
+        end
+        lname += '×' + orderdetail.number.to_i.to_s
+        localmsg.push lname
       end
+      message = '购买' + localmsg.join(' ')
       user = order.user
       if order.agentuser_id != 0
         agent = User.find_by(id:order.agentuser_id)
@@ -424,6 +495,14 @@ class ApplicationController < ActionController::Base
     Wxmessage.create(name:name, message:message)
     wxmessage = Wxmessage.all.order('id desc').paginate(:page => 1, :per_page => 20)
     ActionCable.server.broadcast 'wxmessage_channel',message:wxmessage.to_json
+  end
+
+  def hmac_sha1(data, secret)
+    require 'base64'
+    require 'cgi'
+    require 'openssl'
+    hmac = CGI.escape(Base64.encode64("#{OpenSSL::HMAC.digest('sha1',secret, data)}").chomp)
+    return hmac
   end
 
 

@@ -1,5 +1,5 @@
 class DelivercodesController < ApplicationController
-
+  before_action :check_auth
   def index
     @delivercodes = Delivercode.all.paginate(:page => params[:page], :per_page => 15)
     if params[:search]

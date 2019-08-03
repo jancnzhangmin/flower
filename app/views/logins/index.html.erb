@@ -1,0 +1,99 @@
+<body class="login-layout light-login" style="background-color: transparent;background: url(images/pattern.jpg) #DFE0E2;">
+<div class=" main-container" >
+  <div class="main-content">
+    <div class="row">
+      <div class="col-sm-10 col-sm-offset-1">
+        <div class="login-container">
+          <div class="center">
+            <h1>
+
+              <span class="red">&nbsp;</span>
+              <span class="white" id="id-text2">&nbsp;</span>
+            </h1>
+            <h4 class="blue" id="id-company-text">&nbsp;</h4>
+          </div>
+
+          <div class="space-6"></div>
+
+          <div class="position-relative">
+            <div id="login-box" class="login-box visible widget-box no-border light-login" style="background-color: rgba(100,110,120,.4);padding: 1px 1px 0;box-shadow: 0 0 2px 1px rgba(0,0,0,.12);">
+              <div class="widget-body">
+                <div class="widget-main">
+                  <h4 class="header blue lighter bigger">
+                    <i class="ace-icon fa fa-coffee green"></i>
+                    用户登录
+                  </h4>
+
+                  <div class="space-6"></div>
+
+                  <%= form_with(url:logins_path,local:false,id:'validation-form',:html => {:class=>'form-horizontal m-t',:multipart => true}) do |f| %>
+                    <fieldset>
+                      <label class="block clearfix">
+														<span class="block input-icon input-icon-right">
+                              <%= f.text_field :login, class:'form-control', placeholder:'账号' %>
+															<i class="icon-user"></i>
+														</span>
+                      </label>
+
+                      <label class="block clearfix">
+														<span class="block input-icon input-icon-right">
+                              <%= f.password_field :password, class:'form-control', placeholder:'密码' %>
+															<i class="icon-lock"></i>
+														</span>
+                      </label>
+                      <label class="block clearfix">
+														<span class=" input-icon input-icon-right col-sm-8" style="padding: 0px;">
+                              <%= rucaptcha_input_tag(class: 'form-control', placeholder: '验证码') %>
+														</span>
+                        <span class="col-sm-4" style="padding: 0px;">
+                        <%= rucaptcha_image_tag(alt: '验证码，点击刷新',width:'100%',id:'rucapimg') %>
+                          </span>
+                      </label>
+
+                      <div class="space"></div>
+
+                      <div id="alertdiv" class="alert alert-danger text-center" style="display: none;">
+                        账号或密码错误
+                      </div>
+
+                      <div class="clearfix">
+
+
+                        <button type="submit" class="width-35 pull-right btn btn-sm btn-primary">
+                          <i class="icon-key"></i>
+                          登录
+                        </button>
+                      </div>
+
+                      <div class="space-4"></div>
+                    </fieldset>
+                  <% end %>
+
+
+
+
+                  <div class="space-6"></div>
+
+
+                </div><!-- /.widget-main -->
+
+
+
+
+
+
+              </div><!-- /.widget-body -->
+            </div><!-- /.login-box -->
+
+
+
+
+          </div><!-- /.position-relative -->
+
+
+        </div>
+      </div><!-- /.col -->
+    </div><!-- /.row -->
+  </div><!-- /.main-content -->
+</div><!-- /.main-container -->
+</body>

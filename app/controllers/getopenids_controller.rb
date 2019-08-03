@@ -1,4 +1,5 @@
 class GetopenidsController < ApplicationController
+
   def getopenid
     conn = Faraday.new(:url => 'https://api.weixin.qq.com') do |faraday|
       faraday.request :url_encoded # form-encode POST params
@@ -19,9 +20,20 @@ class GetopenidsController < ApplicationController
     #location = getip(params[:ip])
     accessjson = request.body.to_json
 
-
-#Log.create(log:request.body)
-    CreateuserJob.perform_later(JSON.parse(request.body)['openid'])
+    openid = JSON.parse(request.body)['openid']
+    user = User.find_by_openid(openid)
+    if !user && openid.to_s != ''
+      user = User.create(openid:openid,ordermsg:1)
+      user.vipid = 10000 + user.id
+      user.save
+    end
+    $client ||= WeixinAuthorize::Client.new(Config.first.appid, Config.first.appsecret)
+    user_info = $client.user(openid)
+    result = user_info.result
+    user.nickname = result['nickname']
+    user.headurl = result['headimgurl']
+    user.save
+    #CreateuserJob.perform_later(JSON.parse(request.body)['openid'])
     render json: params[:callback]+'({"access_token":' + accessjson + '})',content_type: "application/javascript"
   end
 end

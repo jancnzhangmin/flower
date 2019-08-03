@@ -1,4 +1,5 @@
 class ProductqrsController < ApplicationController
+  before_action :check_auth
   before_action :set_product, only: [:index, :new, :create, :edit, :update, :destroy]
   def index
     @productqrs = @product.productqrs

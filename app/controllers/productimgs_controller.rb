@@ -1,5 +1,5 @@
 class ProductimgsController < ApplicationController
-
+  before_action :check_auth
   def index
     @product = Product.find(params[:product_id])
   end

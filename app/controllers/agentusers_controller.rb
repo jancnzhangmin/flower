@@ -1,5 +1,5 @@
 class AgentusersController < ApplicationController
-
+  before_action :check_auth
   def index
     agentlevels = Agentlevel.all
     agentuserids = []

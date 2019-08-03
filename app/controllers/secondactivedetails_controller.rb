@@ -1,5 +1,5 @@
 class SecondactivedetailsController < ApplicationController
-
+  before_action :check_auth
   def index
     @secondactive = Secondactive.find(params[:secondactive_id])
     @activedetails = @secondactive.secondactivedetails

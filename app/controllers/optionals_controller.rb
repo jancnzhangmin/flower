@@ -1,4 +1,5 @@
 class OptionalsController < ApplicationController
+  before_action :check_auth
   before_action :set_product, only: [:index, :new, :create, :show, :edit, :update, :destroy]
   def index
     @optionals = @product.optionals

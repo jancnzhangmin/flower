@@ -1,0 +1,139 @@
+<%= render 'layerbegin' %>
+<script>
+    $(document).ready(function(){
+        $.ajax({
+            async : true,
+            url : 'https://restapi.amap.com/v3/config/district',
+            type : "GET",
+            dataType : 'jsonp',
+            jsonp : 'callback',
+            timeout : 5000,
+            data : {
+                keywords : '中国',
+                subdistrice:0,
+                key:'<%= Config.first.amapareakey %>'
+            },
+            success : function(jsonstr) {// 客户端jquery预先定义好的callback函数,成功获取跨域服务器上的json数据后,会动态执行这个callback函数
+                $.each(jsonstr.districts[0].districts,function(i,item){
+                    var flag = true;
+                    $.each($('#inlist').children(),function(ii,iitem){
+                        if(iitem.value == item.adcode){
+                            flag = false;
+                        }
+                    });
+                    if(flag) {
+                        $("#unlist").append("<option value='" + item.adcode + "'>" + item.name + "</option>");
+                    }
+                });
+            },
+            error : function(xhr) {
+                // justep.Util.hint("错误，请检查网络");
+            }
+        });
+
+        $('#unlist').dblclick(function () {
+            $("#inlist").append("<option value='" + $(this).val() + "'>" + $(this).find("option:selected").text() + "</option>");
+            $("#unlist option[value='" + $(this).val() + "']").remove();
+        });
+
+        $('#inlist').dblclick(function () {
+            $("#unlist").append("<option value='" + $(this).val() + "'>" + $(this).find("option:selected").text() + "</option>");
+            $("#inlist option[value='" + $(this).val() + "']").remove();
+        });
+
+        $('#to-in').click(function () {
+            if($('#unlist').val() != null){
+                $("#inlist").append("<option value='" + $('#unlist').val() + "'>" + $('#unlist').find("option:selected").text() + "</option>");
+                $("#unlist option[value='" + $('#unlist').val() + "']").remove();
+            }
+        });
+
+        $('#to-un').click(function () {
+            if($('#inlist').val() != null){
+                $("#unlist").append("<option value='" + $('#inlist').val() + "'>" + $('#inlist').find("option:selected").text() + "</option>");
+                $("#inlist option[value='" + $('#inlist').val() + "']").remove();
+            }
+        });
+
+        $('#savebtn').click(function(){
+            var adcodes = [];
+            $.each($('#inlist').children(),function (i,item) {
+                var param = {
+                    adcode:item.value,
+                    province:item.text
+                };
+                adcodes.push(param);
+            });
+            $.ajax({
+                async : true,
+                url : 'postareas/updatearea',
+                type : "GET",
+
+                timeout : 5000,
+                data : {
+                    adcodes:adcodes
+                },
+                success : function(jsonstr) {// 客户端jquery预先定义好的callback函数,成功获取跨域服务器上的json数据后,会动态执行这个callback函数
+                    window.location.href = 'http://' + window.location.host +'/postagerules';
+                },
+                error : function(xhr) {
+                    // justep.Util.hint("错误，请检查网络");
+                }
+            });
+        });
+
+    });
+</script>
+<div class="page-content">
+  <div class="page-header">
+    <h1>
+      <%= @postagerule.name %>——邮费区域
+    </h1>
+  </div><!-- /.page-header -->
+
+  <div class="row">
+    <div class="col-xs-12">
+      <!-- PAGE CONTENT BEGINS -->
+
+      <div class="row">
+        <div class="col-sm-5">
+          <label for="form-field-select-2">已选区域</label>
+
+          <select class="form-control" id="inlist" multiple="multiple" size="10">
+            <% @postareas.each do |postarea| %>
+              <option value='<%= postarea.adcode %>'><%= postarea.province %></option>
+            <% end %>
+          </select>
+
+        </div>
+        <div class="col-sm-1 text-center">
+          <div style="height: 143px;display: table;padding:10px;">
+            <div style="display: table-cell;vertical-align: bottom;">
+              <span id="to-in" class="label label-lg label-info arrowed-in-right arrowed"><<</span>
+            </div>
+          </div>
+          <div style="height: 143px;display: table;padding:10px;">
+            <div style="display: table-cell;vertical-align: top;">
+              <span id="to-un" class="label label-lg label-info arrowed-right arrowed-in arrowed">>></span>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-5">
+          <label for="form-field-select-2">未选区域</label>
+          <select class="form-control" id="unlist" multiple="multiple" size="10">
+          </select>
+        </div>
+      </div>
+
+      <div class="clearfix form-actions">
+        <div class="col-md-12 text-right" data-turbolinks="false">
+          <button id="savebtn" class="btn btn-primary" data-turbolinks="false">保存</button>
+        </div>
+      </div>
+
+
+
+
+
+
+<%= render 'layerend' %>

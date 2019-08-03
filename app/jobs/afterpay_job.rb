@@ -6,6 +6,14 @@ class AfterpayJob < ApplicationJob
     orderids = mergepayorder.orderids.split(',')
     orderids.each do |orderid|
       order = Order.find(orderid)
+      orderdetails = order.orderdetails
+      orderdetails.each do |orderdetail|
+        product = orderdetail.product
+        if product
+          product.salecount = product.salecount.to_f + orderdetail.number
+          product.save
+        end
+      end
       agent = User.find_by(id:order.agentuser_id)
       if agent
         p_task(agent,order,order.destock)

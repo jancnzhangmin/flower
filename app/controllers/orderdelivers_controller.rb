@@ -1,5 +1,5 @@
 class OrderdeliversController < ApplicationController
-
+  before_action :check_auth
   before_action :set_orderdeliver, only: [:index, :create, :show, :edit, :update, :destroy]
 
   def index

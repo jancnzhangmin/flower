@@ -1,4 +1,5 @@
 class RealnamesController < ApplicationController
+  before_action :check_auth
   before_action :set_realname, only: [:show, :edit, :update, :destroy]
 
   def index

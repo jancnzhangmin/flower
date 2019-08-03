@@ -1,4 +1,5 @@
 class ConditionsController < ApplicationController
+  before_action :check_auth
   before_action :set_optional, only: [:index, :new, :create, :show, :edit, :update, :destroy]
   def index
     @conditions = @optional.conditions

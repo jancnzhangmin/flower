@@ -1,4 +1,5 @@
 class FirstbuyactivesController < ApplicationController
+  before_action :check_auth
   before_action :set_firstbuyactive, only: [:show, :edit, :update, :destroy]
 
   def index

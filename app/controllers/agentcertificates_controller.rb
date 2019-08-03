@@ -1,5 +1,5 @@
 class AgentcertificatesController < ApplicationController
-
+  before_action :check_auth
   def index
     @agentuser = User.find(params[:agentuser_id])
     @agentcertificates = @agentuser.agent.agentcertificates

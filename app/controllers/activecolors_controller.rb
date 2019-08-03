@@ -1,4 +1,5 @@
 class ActivecolorsController < ApplicationController
+  before_action :check_auth
   before_action :set_activecolor, only: [:show, :edit, :update, :destroy]
 
   def index

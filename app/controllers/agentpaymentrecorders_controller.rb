@@ -1,5 +1,5 @@
 class AgentpaymentrecordersController < ApplicationController
-
+  before_action :check_auth
   def index
     @user = nil
     if params[:user_id]

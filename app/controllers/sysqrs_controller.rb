@@ -1,4 +1,5 @@
 class SysqrsController < ApplicationController
+  before_action :check_auth
   before_action :set_sysqr, only: [:edit, :update]
 
   def index

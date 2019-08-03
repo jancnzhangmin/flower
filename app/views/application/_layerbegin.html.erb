@@ -46,7 +46,7 @@
 
 								<span class="user-info">
 									<small>欢迎光临</small>
-管理员
+                  <%= session[:name] %>
 								</span>
 
             <i class="icon-caret-down"></i>
@@ -63,7 +63,7 @@
             <li class="divider"></li>
 
             <li>
-              <a href='#'>
+              <a href=<%= logout_logins_path %>>
                 <i class="icon-off"></i>
                 退出
               </a>
@@ -90,7 +90,7 @@
           try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
       </script>
 
-      <% url = request.url %>
+      <% url = request.params[:controller] %>
 
       <ul class="nav nav-list">
         <li class="active" data-turbolinks="false">
@@ -100,51 +100,54 @@
           </a>
         </li>
 
-
+        <% if url.include?('configs') || url.include?('activecolors') || url.include?('explains') || url.include?('freeposts') || url.include?('delivercodes') || url.include?('monitors') || url.include?('sysqrs') %>
+        <li class="active">
+          <% else %>
         <li>
+          <% end %>
           <a href="#" class="dropdown-toggle">
             <i class="icon-cog"></i>
             <span class="menu-text"> 系统 </span>
             <b class="arrow icon-angle-down"></b>
           </a>
           <ul class="submenu">
-            <li data-turbolinks="false">
+            <li data-turbolinks="false" <%= url.include?('configs') ? 'class=active' : '' %>>
               <a href=<%= configs_path %>>
                 <i class="icon-double-angle-right"></i>
                 系统设置
               </a>
             </li>
-            <li data-turbolinks="false">
+            <li data-turbolinks="false" <%= url.include?('activecolors') ? 'class=active' : '' %>>
               <a href=<%= activecolors_path %>>
                 <i class="icon-double-angle-right"></i>
                 活动标签颜色
               </a>
             </li>
-            <li data-turbolinks="false">
+            <li data-turbolinks="false" <%= url.include?('explains') ? 'class=active' : '' %>>
               <a href=<%= explains_path %>>
                 <i class="icon-double-angle-right"></i>
                 产品说明
               </a>
             </li>
-            <li data-turbolinks="false">
+            <li data-turbolinks="false" <%= url.include?('freeposts') ? 'class=active' : '' %>>
               <a href=<%= freeposts_path %>>
                 <i class="icon-double-angle-right"></i>
                 免邮说明
               </a>
             </li>
-            <li data-turbolinks="false">
+            <li data-turbolinks="false" <%= url.include?('delivercodes') ? 'class=active' : '' %>>
               <a href=<%= delivercodes_path %>>
                 <i class="icon-double-angle-right"></i>
                 快递编码表
               </a>
             </li>
-            <li data-turbolinks="false">
+            <li data-turbolinks="false" <%= url.include?('monitors') ? 'class=active' : '' %>>
               <a href=<%= monitors_path %>>
                 <i class="icon-double-angle-right"></i>
                 队列监控
               </a>
             </li>
-            <li data-turbolinks="false">
+            <li data-turbolinks="false" <%= url.include?('sysqrs') ? 'class=active' : '' %>>
               <a href=<%= sysqrs_path %>>
                 <i class="icon-double-angle-right"></i>
                 平台二维码
@@ -153,60 +156,74 @@
           </ul>
         </li>
 
-        <li>
+        <% if url.include?('manufacturers') || url.include?('products') || url.include?('clas') || url.include?('postagerules') %>
+          <li class="active">
+        <% else %>
+          <li>
+        <% end %>
         <a href="#" class="dropdown-toggle">
           <i class="icon-ticket"></i>
           <span class="menu-text"> 产品 </span>
           <b class="arrow icon-angle-down"></b>
         </a>
         <ul class="submenu">
-          <li data-turbolinks="false">
+          <li data-turbolinks="false" <%= url.include?('manufacturers') ? 'class=active' : '' %>>
             <a href=<%= manufacturers_path %>>
               <i class="icon-double-angle-right"></i>
               厂商
             </a>
           </li>
-          <li data-turbolinks="false">
+          <li data-turbolinks="false" <%= url.include?('products') ? 'class=active' : '' %>>
             <a href=<%= products_path %>>
               <i class="icon-double-angle-right"></i>
               产品
             </a>
           </li>
-          <li data-turbolinks="false">
+          <li data-turbolinks="false" <%= url.include?('clas') ? 'class=active' : '' %>>
             <a href=<%= clas_path %>>
               <i class="icon-double-angle-right"></i>
               分类
             </a>
           </li>
+          <li data-turbolinks="false" <%= url.include?('postagerules') ? 'class=active' : '' %>>
+            <a href=<%= postagerules_path %>>
+              <i class="icon-double-angle-right"></i>
+              邮费规则
+            </a>
+          </li>
         </ul>
       </li>
 
-        <li>
+        <% if url.include?('secondactives') || url.include?('firstbuyactives') || url.include?('limitactives') || url.include?('buyfullactives') %>
+          <li class="active">
+        <% else %>
+          <li>
+        <% end %>
           <a href="#" class="dropdown-toggle">
             <i class="icon-gift"></i>
             <span class="menu-text"> 活动 </span>
             <b class="arrow icon-angle-down"></b>
           </a>
           <ul class="submenu">
-            <li data-turbolinks="false">
+            <li data-turbolinks="false" <%= url.include?('secondactives') ? 'class=active' : '' %>>
               <a href=<%= secondactives_path %>>
                 <i class="icon-double-angle-right"></i>
                 二级分润
               </a>
             </li>
-            <li data-turbolinks="false">
+            <li data-turbolinks="false" <%= url.include?('firstbuyactives') ? 'class=active' : '' %>>
               <a href=<%= firstbuyactives_path %>>
                 <i class="icon-double-angle-right"></i>
                 买满返
               </a>
             </li>
-            <li data-turbolinks="false">
+            <li data-turbolinks="false" <%= url.include?('limitactives') ? 'class=active' : '' %>>
               <a href=<%= limitactives_path %>>
                 <i class="icon-double-angle-right"></i>
                 限时优惠
               </a>
             </li>
-            <li data-turbolinks="false">
+            <li data-turbolinks="false" <%= url.include?('buyfullactives') ? 'class=active' : '' %>>
               <a href=<%= buyfullactives_path %>>
                 <i class="icon-double-angle-right"></i>
                 买满送
@@ -215,14 +232,18 @@
           </ul>
         </li>
 
-        <li>
+        <% if url.include?('orders') %>
+          <li class="active">
+        <% else %>
+          <li>
+        <% end %>
           <a href="#" class="dropdown-toggle">
             <i class="icon-suitcase"></i>
             <span class="menu-text"> 订单 </span>
             <b class="arrow icon-angle-down"></b>
           </a>
           <ul class="submenu">
-            <li data-turbolinks="false">
+            <li data-turbolinks="false" <%= url.include?('orders') ? 'class=active' : '' %>>
               <a href=<%= orders_path %>>
                 <i class="icon-double-angle-right"></i>
                 订单
@@ -231,14 +252,18 @@
           </ul>
         </li>
 
-        <li>
+        <% if url == 'users' %>
+          <li class="active">
+        <% else %>
+          <li>
+        <% end %>
           <a href="#" class="dropdown-toggle">
             <i class="icon-user"></i>
             <span class="menu-text"> 用户 </span>
             <b class="arrow icon-angle-down"></b>
           </a>
           <ul class="submenu">
-            <li data-turbolinks="false">
+            <li data-turbolinks="false" <%= url == 'users' ? 'class=active' : '' %>>
               <a href=<%= users_path %>>
                 <i class="icon-double-angle-right"></i>
                 用户
@@ -247,26 +272,30 @@
           </ul>
         </li>
 
-        <li>
+        <% if url.include?('agentlevels') || url.include?('agentusers') || url.include?('realnames') %>
+          <li class="active">
+        <% else %>
+          <li>
+        <% end %>
           <a href="#" class="dropdown-toggle">
             <i class="icon-cogs"></i>
             <span class="menu-text"> 代理 </span>
             <b class="arrow icon-angle-down"></b>
           </a>
           <ul class="submenu">
-            <li data-turbolinks="false">
+            <li data-turbolinks="false" <%= url.include?('agentlevels') ? 'class=active' : '' %>>
               <a href=<%= agentlevels_path %>>
                 <i class="icon-double-angle-right"></i>
                 代理级别
               </a>
             </li>
-            <li data-turbolinks="false">
+            <li data-turbolinks="false" <%= url.include?('agentusers') ? 'class=active' : '' %>>
               <a href=<%= agentusers_path %>>
                 <i class="icon-double-angle-right"></i>
                 代理
               </a>
             </li>
-            <li data-turbolinks="false">
+            <li data-turbolinks="false" <%= url.include?('realnames') ? 'class=active' : '' %>>
               <a href=<%= realnames_path %>>
                 <i class="icon-double-angle-right"></i>
                 实名
@@ -285,6 +314,7 @@
       </div>
 
       <script type="text/javascript">
+          ace.demo.init();
           try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
       </script>
     </div>

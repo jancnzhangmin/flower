@@ -13,6 +13,8 @@ gem 'sidekiq'
 gem 'will_paginate-bootstrap'
 gem 'faraday'
 gem 'weixin_authorize'
+gem 'wx_pay'
+gem 'rucaptcha'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.1'

@@ -1,8 +1,9 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:show, :edit, :update, :destroy]
+  before_action :check_auth
+  before_action :set_product, only: [:show, :edit, :update, :destroy, :up, :down]
 
   def index
-    @products = Product.all.order('addtop desc')
+    @products = Product.all.paginate(:page => params[:page], :per_page => 15).order('corder')
   end
 
   def show
@@ -20,6 +21,8 @@ class ProductsController < ApplicationController
     @product = Product.new(full_params)
     respond_to do |format|
       if @product.save
+        @product.corder = @product.id
+        @product.save
         format.html { redirect_to products_path, notice: 'Product was successfully created.' }
         format.json { render :show, status: :created, location: @product }
       else
@@ -92,6 +95,30 @@ class ProductsController < ApplicationController
     redirect_to products_path
   end
 
+  def up
+    products = Product.where('corder < ?',@product.corder).order('corder desc')
+    if products.size > 0
+      temorder = products.first.corder
+      products.first.corder = @product.corder
+      products.first.save
+      @product.corder = temorder
+      @product.save
+    end
+    redirect_to products_path
+  end
+
+  def down
+    products = Product.where('corder > ?',@product.corder).order('corder')
+    if products.size > 0
+      temorder = products.first.corder
+      products.first.corder = @product.corder
+      products.first.save
+      @product.corder = temorder
+      @product.save
+    end
+    redirect_to products_path
+  end
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_product
@@ -99,7 +126,7 @@ class ProductsController < ApplicationController
   end
 
   def product_params
-    params.require(:product).permit(:manufacturer_id, :name, :cost, :price, :content, :grounding, :unit, :spec, :subtitle, :weight, :brand, :pack, :season, :intask)
+    params.require(:product).permit(:manufacturer_id, :name, :cost, :price, :content, :grounding, :unit, :spec, :subtitle, :weight, :brand, :pack, :season, :intask, :shelflife, :trial)
   end
 
   def pinyin(str)

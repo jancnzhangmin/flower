@@ -1,4 +1,5 @@
 class ClaproductsController < ApplicationController
+  before_action :check_auth
   before_action :set_cla, only: [:show, :edit, :update, :destroy, :singleadd, :singleremove, :add, :remove]
   def index
     @cla = Cla.find(params[:cla_id])
