@@ -1,0 +1,105 @@
+<%= render 'layerbegin' %>
+
+<div class="page-content">
+  <div class="page-header">
+    <h1>
+      加钱换购
+    </h1>
+  </div><!-- /.page-header -->
+
+  <div class="row">
+    <div class="col-xs-12">
+      <!-- PAGE CONTENT BEGINS -->
+
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="table-responsive">
+            <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+              <thead>
+              <tr>
+                <th class="text-center">活动名称</th>
+                <th class="text-center">增加金额</th>
+                <th class="text-center">开始时间</th>
+                <th class="text-center">结束时间</th>
+                <th class="text-center">是否生效</th>
+                <th class="text-center">购买商品</th>
+                <th class="text-center">赠送商品</th>
+                <th class="text-center" width="360px">操作</th>
+              </tr>
+              </thead>
+              <tbody>
+              <% @addmoneyactives.each do |addmoneyactive| %>
+                <tr>
+                  <td>
+                    <%= addmoneyactive.name %>
+                  </td>
+                  <td>
+                    <%= addmoneyactive.amount %>
+                  </td>
+                  <td>
+                    <%= addmoneyactive.begintime.strftime('%Y-%m-%d %H:%M:%S') %>
+                  </td>
+                  <td>
+                    <%= addmoneyactive.endtime.strftime('%Y-%m-%d %H:%M:%S') %>
+                  </td>
+                  <td>
+                    <%= addmoneyactive.status %>
+                  </td>
+                  <td>
+                    <%= addmoneyactive.addmoneybuyproducts.map{|n|n.product.name}.join(' ') %>
+                  </td>
+                  <td>
+                    <%= addmoneyactive.addmoneygiveproducts.map{|n|n.product.name}.join(' ') %>
+                  </td>
+                  <td>
+                    <div class="visible-md visible-lg hidden-sm hidden-xs btn-group" data-turbolinks="false">
+                      <a class="btn btn-xs btn-primary" href=<%= edit_addmoneyactive_path(addmoneyactive) %>>
+                        <i class="fa fa-edit bigger-120"></i>
+                        编辑
+                      </a>
+                      <a class="btn btn-xs btn-primary" href=<%= addmoneyactive_addmoneybuyproducts_path(addmoneyactive) %>>
+                        <i class="fa fa-edit bigger-120"></i>
+                        <% if addmoneyactive.addmoneybuyproducts.size > 0 %>
+                        购买商品（<%= addmoneyactive.addmoneybuyproducts.size %>）
+                          <% else %>
+                          购买商品
+                        <% end %>
+                      </a>
+                      <a class="btn btn-xs btn-primary" href=<%= addmoneyactive_addmoneygiveproducts_path(addmoneyactive) %>>
+                        <i class="fa fa-edit bigger-120"></i>
+                        <% if addmoneyactive.addmoneygiveproducts.size > 0 %>
+                          赠送商品（<%= addmoneyactive.addmoneygiveproducts.size %>）
+                        <% else %>
+                          赠送商品
+                        <% end %>
+                      </a>
+                      <a data-confirm="确认删除?" data-method="delete" class="btn btn-xs btn-danger" href=<%= addmoneyactive_path(addmoneyactive) %>>
+                        <i class="fa fa-trash bigger-120"></i>
+                        删除
+                      </a>
+                    </div>
+                  </td>
+
+                </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="clearfix form-actions">
+        <div class="col-md-12 text-right" data-turbolinks="false">
+          <a class="btn btn-info" href=<%= new_addmoneyactive_path %>>
+            <i class="fa fa-plus bigger-110"></i>
+            新增
+          </a>
+        </div>
+      </div>
+
+
+
+
+
+
+<%= render 'layerend' %>

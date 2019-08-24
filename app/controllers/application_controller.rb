@@ -33,6 +33,7 @@ class ApplicationController < ActionController::Base
     attr :displaysale,true
     attr :trial,true
     attr :postage,true
+    attr :addmoney,true
   end
 
   class Activetypeclass
@@ -49,15 +50,30 @@ class ApplicationController < ActionController::Base
     attr :agentprice,true
   end
 
+  class Addmoneyclass
+    attr :buyproductids,true
+    attr :buynumber,true
+    attr :giveproductids,true
+    attr :givenumber,true
+    attr :amount,true
+  end
+
   def checkactive(activeproduct,openid) #productarr[product_id,number]
     productarr = Array.new
+    agent = User.find_by_openid(openid)
+    agentlevel = agent.agentlevel
     activeproduct.each do |p|
+
       product = Product.find(p.product_id)
       productcla = Productclass.new
       productcla.id = product.id
       productcla.name = product.name
       productcla.cost = product.cost
       productcla.price = product.price
+      productcla.agentprice = product.price
+      if agentlevel
+        productcla.agentprice = Agentprice.where('product_id = ? and agentlevel_id = ?',p.product_id,agentlevel.id).first.price
+      end
       productcla.number = p.number
       productcla.firstprofit = 0
       productcla.secondprofit = 0
@@ -96,7 +112,8 @@ class ApplicationController < ActionController::Base
     #productarr = checksecond(productarr)
     #productarr = checkfirstbuy(productarr)
     #productarr = buyfullactive(productarr)
-    #productarr = limitactive(productarr)
+    productarr = limitactive(productarr,openid)
+    productarr = checkaddmoneyactive(productarr)
     productarr = checkcollection(productarr,openid)
   end
 
@@ -104,6 +121,7 @@ class ApplicationController < ActionController::Base
     $client ||= WeixinAuthorize::Client.new(Config.first.appid, Config.first.appsecret)
     $client.send_temlate_msg(touser,template_id,url,topcolor,data)
   end
+
 
   def sendvcode(phone,vcode)
     #phone=params[:phone]
@@ -325,7 +343,7 @@ class ApplicationController < ActionController::Base
     productarr
   end
 
-  def limitactive(productarr)
+  def limitactive(productarr,openid)
     limitactive = Limitactive.where('begintime <= ? and endtime >= ? and status = 1',Time.now,Time.now)
     if limitactive.count > 0
       limitactive = limitactive.last
@@ -341,6 +359,15 @@ class ApplicationController < ActionController::Base
           if numbercount >= limitactivedetail.minnumber && p.id == limitactivedetail.product_id
             p.discount = p.price - limitactivedetail.price
             p.price = limitactivedetail.price
+            user = User.find_by_openid(openid)
+            agentlevel = user.agentlevel
+            if agentlevel
+              p.agentprice = Agentprice.where('product_id = ? and agentlevel_id = ?',p.id,agentlevel.id).first.price * limitactivedetail.discount.to_f
+              p.discount = Agentprice.where('product_id = ? and agentlevel_id = ?',p.id,agentlevel.id).first.price - p.agentprice
+            else
+              p.agentprice = Product.find(p.id).price * limitactivedetail.discount.to_f
+              p.discount = Product.find(p.id).price - p.agentprice
+            end
             if limitactivedetail.disableprofit == 1
               p.firstprofit = 0
               p.secondprofit = 0
@@ -362,6 +389,24 @@ class ApplicationController < ActionController::Base
             activetype.summary = limitactive.summary
             p.activetype.push activetype
           end
+        end
+      end
+    end
+    productarr
+  end
+
+  def checkaddmoneyactive(productarr) #检查加钱换购活动
+    addmoney = Addmoneyactive.where('begintime <= ? and endtime >= ? and status = 1',Time.now,Time.now)
+    if addmoney.size > 0
+      addmoney = addmoney.first
+      productarr.each do |p|
+        if p.producttype == 0 && addmoney.addmoneybuyproducts.map{|n|n.product_id}.include?(p.id)
+          activetype = Activetypeclass.new
+          activetype.active = addmoney.name
+          activetype.showlable = addmoney.showlable
+          activetype.keywords = 'addmoney'
+          activetype.summary = addmoney.summary
+          p.activetype.push activetype
         end
       end
     end
@@ -424,6 +469,7 @@ class ApplicationController < ActionController::Base
   def get_agentprice(productarr,userid) #获取代理价格
     user = User.find(userid)
     productarr.each do |p|
+      if p.producttype == 0
       p.agentprice = p.price
       if user
         agentlevel = user.agentlevel
@@ -431,6 +477,7 @@ class ApplicationController < ActionController::Base
           agentprice = Product.find(p.id).agentprices.where('agentlevel_id = ?',agentlevel.id).first.price
           p.agentprice = agentprice
         end
+      end
       end
     end
   end

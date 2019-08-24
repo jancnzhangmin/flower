@@ -104,7 +104,7 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:login, :openid, :nickname, :headurl, :income, :withdraw, :ordermsg, :up_id, :agentpayment, :deposit)
+    params.require(:user).permit(:login, :openid, :nickname, :headurl, :income, :withdraw, :ordermsg, :up_id, :agentpayment, :deposit, :receiveneworder)
   end
 
   def selfuser(selfid,notin_idarr)

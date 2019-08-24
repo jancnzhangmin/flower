@@ -1,0 +1,2 @@
+module AddmoneybuyproductsHelper
+end

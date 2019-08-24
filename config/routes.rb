@@ -162,6 +162,9 @@ Rails.application.routes.draw do
       post 'wxpay_notify'
       get 'get_postage'
       get 'get_user_info'
+      get 'shorturl'
+      get 'get_addmoneyactive'
+      get 'hidemenu'
     end
   end
   resources :getopenids do
@@ -237,5 +240,10 @@ Rails.application.routes.draw do
       get 'getopenid'
     end
   end
+  resources :addmoneyactives do
+    resources :addmoneybuyproducts
+    resources :addmoneygiveproducts
+  end
+  post '/pollcallback', to: 'pollcallback#create'
   mount ActionCable.server => '/cable'
   end

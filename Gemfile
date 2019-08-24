@@ -15,6 +15,7 @@ gem 'faraday'
 gem 'weixin_authorize'
 gem 'wx_pay'
 gem 'rucaptcha'
+gem "redis-namespace"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.1'

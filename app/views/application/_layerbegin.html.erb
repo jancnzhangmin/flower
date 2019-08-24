@@ -194,7 +194,7 @@
         </ul>
       </li>
 
-        <% if url.include?('secondactives') || url.include?('firstbuyactives') || url.include?('limitactives') || url.include?('buyfullactives') %>
+        <% if url.include?('secondactives') || url.include?('firstbuyactives') || url.include?('limitactives') || url.include?('buyfullactives') || url.include?('addmoneyactives')%>
           <li class="active">
         <% else %>
           <li>
@@ -227,6 +227,12 @@
               <a href=<%= buyfullactives_path %>>
                 <i class="icon-double-angle-right"></i>
                 买满送
+              </a>
+            </li>
+            <li data-turbolinks="false" <%= url.include?('addmoneyactives') ? 'class=active' : '' %>>
+              <a href=<%= addmoneyactives_path %>>
+                <i class="icon-double-angle-right"></i>
+                加钱换购
               </a>
             </li>
           </ul>

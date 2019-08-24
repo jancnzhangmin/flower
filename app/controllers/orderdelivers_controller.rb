@@ -17,12 +17,11 @@ class OrderdeliversController < ApplicationController
   end
 
   def create
-    @order.orderdelivers.create(orderdeliver_params)
-    if @order.deliverstatus == 0
-      @order.deliverstatus = 1
-      @order.save
-      AutoreceiptJob.set(wait: Config.first.autoreceipt.days).perform_later(@order.id)
-    end
+    orderdeliver = @order.orderdelivers.create(orderdeliver_params)
+    orderdeliver.status = -1
+    orderdeliver.save
+      #AutoreceiptJob.set(wait: Config.first.autoreceipt.days).perform_later(@order.id)
+      PollkuaidiJob.perform_later(orderdeliver.id)
     redirect_to order_orderdelivers_path(@order)
   end
 

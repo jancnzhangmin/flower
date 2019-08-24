@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_30_190653) do
+ActiveRecord::Schema.define(version: 2019_08_15_064737) do
 
   create_table "activecolors", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -28,6 +28,34 @@ ActiveRecord::Schema.define(version: 2019_07_30_190653) do
     t.string "keywords"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "addmoneyactives", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "buynumber"
+    t.integer "givenumber"
+    t.datetime "begintime"
+    t.datetime "endtime"
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
+    t.float "amount"
+    t.integer "showlable"
+    t.string "summary"
+  end
+
+  create_table "addmoneybuyproducts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "product_id"
+    t.bigint "addmoneyactive_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "addmoneygiveproducts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "product_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "addmoneyactive_id"
   end
 
   create_table "admins", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -351,6 +379,7 @@ ActiveRecord::Schema.define(version: 2019_07_30_190653) do
     t.float "owerprofitpencent"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "discount"
   end
 
   create_table "limitactives", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -420,6 +449,8 @@ ActiveRecord::Schema.define(version: 2019_07_30_190653) do
     t.string "num"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "status"
+    t.text "message"
   end
 
   create_table "orderdetails", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -671,6 +702,7 @@ ActiveRecord::Schema.define(version: 2019_07_30_190653) do
     t.string "password_digest"
     t.string "vcode"
     t.datetime "vcodetime"
+    t.integer "receiveneworder"
   end
 
   create_table "withdrawrecords", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

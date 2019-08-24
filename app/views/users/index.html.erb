@@ -24,6 +24,7 @@
                 <th class="text-center">货款</th>
                 <th class="text-center">保证金</th>
                 <th class="text-center">代理</th>
+                <th class="text-center">新订单提醒</th>
                 <th class="text-center" width="200px">操作</th>
               </tr>
               </thead>
@@ -52,12 +53,21 @@
                   <td style="vertical-align: middle;">
                     <%= user.agentlevel_id.to_i != 0 ? user.agentlevel.name : ''  %>
                   </td>
+                  <td style="vertical-align: middle;" class="text-center">
+                    <% if user.receiveneworder == 1 %>
+                      <i class="icon-ok green"></i>
+                    <% end %>
+                  </td>
 
                   <td style="vertical-align: middle;">
                     <div class="visible-md visible-lg hidden-sm hidden-xs btn-group" data-turbolinks="false">
                       <a class="btn btn-xs btn-primary" href=<%= user_path(user) %>>
                         <i class="fa fa-edit bigger-120"></i>
                         明细
+                      </a>
+                      <a class="btn btn-xs btn-primary" href=<%= edit_user_path(user) %>>
+                        <i class="fa fa-edit bigger-120"></i>
+                        编辑
                       </a>
                       <a class="btn btn-xs btn-primary" href=<%= addtoagent_user_path(user) %> <% if user.agentlevel %> disabled="true" <% end %> >
                         <i class="fa fa-edit bigger-120"></i>

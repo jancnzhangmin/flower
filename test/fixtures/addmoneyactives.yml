@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  buynumber: 1
+  givenumber: 1
+  begintime: 2019-08-12 14:30:35
+  endtime: 2019-08-12 14:30:35
+  status: 1
+
+two:
+  buynumber: 1
+  givenumber: 1
+  begintime: 2019-08-12 14:30:35
+  endtime: 2019-08-12 14:30:35
+  status: 1

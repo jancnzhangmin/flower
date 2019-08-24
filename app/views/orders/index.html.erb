@@ -88,7 +88,11 @@
                       </a>
                       <a class="btn btn-xs btn-primary" href=<%= order_orderdelivers_path(order) %>>
                         <i class="fa fa-edit bigger-120"></i>
-                        快递
+                        <% if order.orderdelivers.size > 0 %>
+                          快递(<%= order.orderdelivers.size %>)
+                        <% else %>
+                          快递
+                        <% end %>
                       </a>
                       <div class="btn-group" style="margin-left: 1px;">
                         <button data-toggle="dropdown" class="btn btn-xs btn-danger dropdown-toggle">

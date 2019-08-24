@@ -43,7 +43,7 @@ class LimitactivedetailsController < ApplicationController
 
   private
   def limitactivedetail_params
-    params.require(:limitactivedetail).permit(:product_id, :price, :minnumber, :limitnumber, :disableprofit, :profitpercent, :disableowerprofit, :owerprofitpencent)
+    params.require(:limitactivedetail).permit(:product_id, :price, :minnumber, :limitnumber, :disableprofit, :profitpercent, :disableowerprofit, :owerprofitpencent, :discount)
   end
 
 end

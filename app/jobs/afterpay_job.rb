@@ -6,13 +6,19 @@ class AfterpayJob < ApplicationJob
     orderids = mergepayorder.orderids.split(',')
     orderids.each do |orderid|
       order = Order.find(orderid)
+      bodyarr = []
       orderdetails = order.orderdetails
       orderdetails.each do |orderdetail|
         product = orderdetail.product
         if product
           product.salecount = product.salecount.to_f + orderdetail.number
           product.save
+          bodyarr.push product.name
         end
+      end
+      body = bodyarr.join(' ')
+      if body.size > 120
+        body = body[0..120] + '...'
       end
       agent = User.find_by(id:order.agentuser_id)
       if agent
@@ -25,6 +31,32 @@ class AfterpayJob < ApplicationJob
         p_enaccount(user,user,order,order.destock)
         p_agentpayment(user,order)
       end
+      msgtitle = Time.now.strftime('%Y-%m-%d %H:%M:%S') + '(第' + Order.where('paystatus = 1 and paytime between ? and ?',Time.now.beginning_of_day,Time.now.end_of_day).size.to_s + '单)'
+      data={
+          "first": {
+          "value":msgtitle,
+          "color":"#173177"
+      },
+          "keyword1":{
+          "value":order.ordernumber
+      },
+          "keyword2":{
+          "value":order.paytime.strftime('%Y-%m-%d %H:%M:%S')
+      },
+          "keyword3": {
+          "value":body
+      },
+          "remark":{
+          "value": '订单金额：￥' + order.paysum.to_s + '元 ' + order.province + order.city + order.district + order.address
+      }
+      }
+      users = User.all
+      users.each do |us|
+        if us.receiveneworder == 1
+          SendtemplatemsgJob.perform_later(us.openid,'ZFIMzBxU_91cbDh5QjutyK3_bI4hWVuC0tYnmVaVUZ8','http://flower.ysdsoft.com/getopenids','#173177',data)
+        end
+      end
+      AutoreceiptJob.set(wait: Config.first.autoreceipt.days).perform_later(order.id)
     end
   end
 
@@ -78,7 +110,7 @@ class AfterpayJob < ApplicationJob
   end
 
   def p_agentpayment(user,order) #处理货款
-    if user.agentpayment >= order.paysum
+    if user.agentpayment.to_f >= order.paysum
       orderdetails = order.orderdetails
       orderdetails.each do |orderdetail|
         product = orderdetail.product
@@ -149,10 +181,16 @@ class AfterpayJob < ApplicationJob
 
   def p_task(user,order,destock) #处理任务
     agentlevel = user.agentlevel
+    agentlevelname = ''
+    task = 0
+    if agentlevel
+      agentlevelname = agentlevel.name
+      task = agentlevel.task
+    end
     quarter = get_quarter(Time.now)
     examination = user.examinations.where('keyword = ?',quarter.split(',')[0])
     if examination.size == 0
-      examination = agent.examinations.create(keyword:quarter.split(',')[0], name:quarter.split(',')[1], begintime:quarter.split(',')[2], endtime:quarter.split(',')[3], agentlevel:agentlevelname, task:task)
+      examination = user.examinations.create(keyword:quarter.split(',')[0], name:quarter.split(',')[1], begintime:quarter.split(',')[2], endtime:quarter.split(',')[3], agentlevel:agentlevelname, task:task)
     else
       examination = examination.first
     end
