@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_15_064737) do
+ActiveRecord::Schema.define(version: 2019_09_03_033719) do
 
   create_table "activecolors", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -409,6 +409,27 @@ ActiveRecord::Schema.define(version: 2019_08_15_064737) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "mashupbuyproducts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "product_id"
+    t.bigint "mashup_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "mashups", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.integer "showlable"
+    t.string "summary"
+    t.string "keywords"
+    t.integer "buynumber"
+    t.bigint "giveproduct_id"
+    t.integer "status"
+    t.datetime "begintime"
+    t.datetime "endtime"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "mergepayorders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id"
     t.string "ordernumber"
@@ -419,6 +440,32 @@ ActiveRecord::Schema.define(version: 2019_08_15_064737) do
     t.datetime "updated_at", null: false
     t.float "wxpaysum"
     t.string "sign"
+  end
+
+  create_table "multibuyfullbuyproducts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "multibuyfull_id"
+    t.bigint "product_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "multibuyfullgiveproducts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "multibuyfull_id"
+    t.bigint "product_id"
+    t.float "buyprice"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "multibuyfulls", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.datetime "begintime"
+    t.datetime "endtime"
+    t.integer "status"
+    t.integer "showlable"
+    t.string "summary"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "optionals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -463,6 +510,7 @@ ActiveRecord::Schema.define(version: 2019_08_15_064737) do
     t.datetime "updated_at", null: false
     t.string "optional"
     t.integer "producttype"
+    t.string "summary"
   end
 
   create_table "orderoptionals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -586,6 +634,13 @@ ActiveRecord::Schema.define(version: 2019_08_15_064737) do
     t.float "amount"
     t.string "summary"
     t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "pushorders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "ordernumber"
+    t.text "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

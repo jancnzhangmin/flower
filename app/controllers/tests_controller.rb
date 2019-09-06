@@ -9,7 +9,26 @@ class TestsController < ApplicationController
     @tests = Test.all
 
 
-    ActionCable.server.broadcast 'wxmessage_channel',message:'这是websocket的对接测试'
+    if params[:ordernumber]
+      mergeorder = Mergepayorder.find_by_ordernumber(params[:ordernumber])
+      if mergeorder.paystatus == 0
+        mergeorder.paystatus = 1
+        mergeorder.paytime = Time.now
+        mergeorder.save
+        orderids = mergeorder.orderids.split(',')
+        orderids.each do |orderid|
+          order = Order.find(orderid)
+          order.paystatus = 1
+          order.paytime = Time.now
+          order.save
+          cablewxmessage('order',order.id,0)
+        end
+        AfterpayJob.perform_later(mergeorder.id)
+      end
+    end
+    render :xml => {return_code: "SUCCESS"}.to_xml(root: 'xml', dasherize: false)
+
+    #ActionCable.server.broadcast 'wxmessage_channel',message:'这是websocket的对接测试'
     #ActionCable.server.broadcast '',message:'asdfasdfsadf'
   end
 

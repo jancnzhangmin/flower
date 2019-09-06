@@ -1,0 +1,34 @@
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,
+ minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+</head>
+
+<div class="breadcrumbs" style="padding: 0px;padding-top: 5px;padding-bottom: 5px;">
+  <table style="width: 100%;">
+    <tr>
+      <td style="width: 76px;padding: 0px;">
+        <button class="btn btn-primary">前一天</button>
+      </td>
+      <td align="center">
+        <div class="text-center">
+          <input type="date"   style="height: 40px;line-height: 40px;" />
+        </div>
+      </td>
+      <td style="width: 76px;padding: 0px;">
+        <button class="btn btn-primary">后一天</button>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div style="background-color: white;padding-top: 20px;">
+<% @pushorders.each do |pushorder| %>
+  <div class="row" style="width: 100%;margin:0px;">
+    <div class="col-sm-12">
+      <%= pushorder.content.html_safe %>
+    </div>
+
+  </div>
+    <hr />
+<% end %>
+</div>

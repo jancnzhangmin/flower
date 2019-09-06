@@ -112,15 +112,18 @@ class ApplicationController < ActionController::Base
     #productarr = checksecond(productarr)
     #productarr = checkfirstbuy(productarr)
     #productarr = buyfullactive(productarr)
+    productarr = mashupactive(productarr)
     productarr = limitactive(productarr,openid)
     productarr = checkaddmoneyactive(productarr)
     productarr = checkcollection(productarr,openid)
+    productarr = multibuyfullactive(productarr)
   end
 
   def send_template_msg(touser, template_id, url, topcolor, data) #发送模板消息
     $client ||= WeixinAuthorize::Client.new(Config.first.appid, Config.first.appsecret)
     $client.send_temlate_msg(touser,template_id,url,topcolor,data)
   end
+
 
 
   def sendvcode(phone,vcode)
@@ -140,13 +143,12 @@ class ApplicationController < ActionController::Base
         SignatureVersion:'1.0',
         Timestamp:Time.now.gmtime.strftime('%Y-%m-%dT%H:%M:%SZ'),
         Format:'XML',
-
         Action:'SendSms',
         Version:'2017-05-25',
         RegionId:'cn-hangzhou',
         PhoneNumbers:phone,
         SignName:'花当家',
-        TemplateParam:"{\"code\":\""+vcode+"\"}" ,
+        TemplateParam:"{\"code\":\""+vcode+"\"}",
         TemplateCode:'SMS_171540182'
     }
 
@@ -198,6 +200,48 @@ class ApplicationController < ActionController::Base
             activecla.summary = secondactive.summary
             activecla.keywords = 'second'
             producta.activetype.push activecla
+          end
+        end
+      end
+    end
+    productarr
+  end
+
+  def multibuyfullactive(productarr)
+    multibuyfull = Multibuyfull.where('begintime <= ? and endtime >= ? and status = 1',Time.now, Time.now)
+    if multibuyfull.size > 0
+      multibuyfull = multibuyfull.first
+      paysum = 0
+      productarr.each do |p|
+        if p.producttype == 0
+          activecla = Activetypeclass.new
+          activecla.active = multibuyfull.name
+          activecla.showlable = multibuyfull.showlable
+          activecla.summary = multibuyfull.summary
+          activecla.keywords = 'multibuyfull'
+          p.activetype.push activecla
+        end
+      end
+
+    end
+    productarr
+  end
+
+  def mashupactive(productarr)
+    mashups = Mashup.where('begintime <= ? and endtime >= ? and status = 1', Time.now, Time.now)
+    if mashups.size > 0
+      mashups.each do |mashup|
+        mashupbuyproducts = mashup.mashupbuyproducts
+        mashupbuyproducts.each do |maspupbuyproduct|
+          productarr.each do |p|
+            if p.producttype == 0 && maspupbuyproduct.product.id == p.id && !p.activetype.map{|n| n.keywords}.include?('mashup')
+              activecla = Activetypeclass.new
+              activecla.active = mashup.name
+              activecla.showlable = mashup.showlable
+              activecla.summary = mashup.summary
+              activecla.keywords = 'mashup'
+              p.activetype.push activecla
+            end
           end
         end
       end
@@ -312,6 +356,7 @@ class ApplicationController < ActionController::Base
               productcla.owerprofit = 0
               productcla.optional = []
               productcla.producttype = 1
+              productcla.agentprice = 0
               productcla.unit = giveproduct.unit
               productcla.spec = giveproduct.spec
               productcla.subtitle = giveproduct.subtitle
@@ -470,14 +515,14 @@ class ApplicationController < ActionController::Base
     user = User.find(userid)
     productarr.each do |p|
       if p.producttype == 0
-      p.agentprice = p.price
-      if user
-        agentlevel = user.agentlevel
-        if agentlevel
-          agentprice = Product.find(p.id).agentprices.where('agentlevel_id = ?',agentlevel.id).first.price
-          p.agentprice = agentprice
+        p.agentprice = p.price
+        if user
+          agentlevel = user.agentlevel
+          if agentlevel
+            agentprice = Product.find(p.id).agentprices.where('agentlevel_id = ?',agentlevel.id).first.price
+            p.agentprice = agentprice
+          end
         end
-      end
       end
     end
   end

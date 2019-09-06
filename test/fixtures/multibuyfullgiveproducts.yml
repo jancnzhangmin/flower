@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  multibuyfull_id: 
+  product_id: 
+  buyprice: 1.5
+
+two:
+  multibuyfull_id: 
+  product_id: 
+  buyprice: 1.5

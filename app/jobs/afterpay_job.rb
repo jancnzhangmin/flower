@@ -7,15 +7,38 @@ class AfterpayJob < ApplicationJob
     orderids.each do |orderid|
       order = Order.find(orderid)
       bodyarr = []
+      pushorderbodyarr = []
+
       orderdetails = order.orderdetails
+      pushorderbody = ''
       orderdetails.each do |orderdetail|
         product = orderdetail.product
         if product
           product.salecount = product.salecount.to_f + orderdetail.number
           product.save
           bodyarr.push product.name
+
+          ###########公司推单消息############
+          pushorderbody = ''
+          pushorderbody += product.name
+          if orderdetail.orderoptionals.size > 0
+            pushorderbody += '(' + orderdetail.orderoptionals.map{|n| n.selectcondition_name}.join(' ') + ')'
+          end
+          pushorderbody += '×' + orderdetail.number.to_i.to_s
+          if orderdetail.producttype == 1 && orderdetail.orderactivetypes.size > 0
+            pushorderbody += '(注：' + orderdetail.orderactivetypes.map{|n| n.active}.join(' ') + ')'
+          end
+          pushorderbodyarr.push pushorderbody
+          ##########公司推单消息结束##########
         end
       end
+      pbody = '收件人姓名：' + order.contact + '<br>'+ '收件人电话：' + order.contactphone + '<br>' + '收件人地址：' + order.province + order.city + order.district + order.address
+      pbody += '<br>货品及数量：' + pushorderbodyarr.join(' ')
+
+      if order.summary.to_s.size > 0
+        pbody += '<br>备注：' + order.summary
+      end
+      Pushorder.create(ordernumber:order.ordernumber, content:pbody)
       body = bodyarr.join(' ')
       if body.size > 120
         body = body[0..120] + '...'
@@ -46,8 +69,11 @@ class AfterpayJob < ApplicationJob
           "keyword3": {
           "value":body
       },
+          "keyword4": {
+          "value":'(' + order.contact + order.contactphone + ')' + order.province + order.city + order.district + order.address
+      },
           "remark":{
-          "value": '订单金额：￥' + order.paysum.to_s + '元 ' + order.province + order.city + order.district + order.address
+          "value": '订单金额：￥' + order.paysum.to_s + '元 '
       }
       }
       users = User.all

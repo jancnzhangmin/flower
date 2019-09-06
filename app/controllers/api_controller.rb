@@ -192,6 +192,8 @@ class ApiController < ApplicationController
     if params[:addmoney]
       productarr = check_addmoney_active(productarr,params[:addmoney])
     end
+    productarr = check_multibuyfull(productarr)
+    productarr = check_mashup(productarr)
     ########写入购物车表
 
     CreatebuycarJob.perform_later(productarr.to_json,params[:openid])
@@ -202,40 +204,40 @@ class ApiController < ApplicationController
   def check_addmoney_active(productarr,addmoneyparams) #检查加钱换购活动
     addmoney = JSON.parse(addmoneyparams).first
     if addmoney
-    addmoney['giveproduct'].each do |give|
-      if give['number'] > 0
-        product = Product.find(give['id'])
-        productcla = Productclass.new
-        productcla.id = product.id
-        productcla.name = product.name
-        productcla.price = addmoney['amount']
-        productcla.number = give['number']
-        productcla.activetype = Array.new
-        activecla = Activetypeclass.new
-        activecla.active = addmoney['name']
-        activecla.showlable = 1
-        activecla.keywords = 'addmoney'
-        productcla.activetype.push activecla
-        productcla.discount = 0
-        productcla.firstprofit = 0
-        productcla.secondprofit = 0
-        productcla.owerprofit = 0
-        productcla.optional = []
-        productcla.producttype = 1
-        productcla.unit = product.unit
-        productcla.spec = product.spec
-        productcla.subtitle = product.subtitle
-        productcla.weight = product.weight
-        productcla.brand = product.brand
-        productcla.pack = product.pack
-        productcla.season = product.season
-        cover = product.productimgs.where('isdefault = 1')
-        if cover.count > 0
-          productcla.cover = cover.first.productimg.url
+      addmoney['giveproduct'].each do |give|
+        if give['number'] > 0
+          product = Product.find(give['id'])
+          productcla = Productclass.new
+          productcla.id = product.id
+          productcla.name = product.name
+          productcla.price = addmoney['amount']
+          productcla.number = give['number']
+          productcla.activetype = Array.new
+          activecla = Activetypeclass.new
+          activecla.active = addmoney['name']
+          activecla.showlable = 1
+          activecla.keywords = 'addmoney'
+          productcla.activetype.push activecla
+          productcla.discount = 0
+          productcla.firstprofit = 0
+          productcla.secondprofit = 0
+          productcla.owerprofit = 0
+          productcla.optional = []
+          productcla.producttype = 1
+          productcla.unit = product.unit
+          productcla.spec = product.spec
+          productcla.subtitle = product.subtitle
+          productcla.weight = product.weight
+          productcla.brand = product.brand
+          productcla.pack = product.pack
+          productcla.season = product.season
+          cover = product.productimgs.where('isdefault = 1')
+          if cover.count > 0
+            productcla.cover = cover.first.productimg.url
+          end
+          productarr.push productcla
         end
-        productarr.push productcla
       end
-    end
     end
     productarr
   end
@@ -478,6 +480,7 @@ class ApiController < ApplicationController
       productarr = calactive(params[:data],params[:openid])
     end
     productarr.concat(addmoneyarr)
+
     oweragent = User.find_by_openid(params[:openid])
     paytype = 0 # 0微信支付 1货款支付 2代理货款支付 3代理货款不足
     oweragentlevel = oweragent.agentlevel
@@ -570,6 +573,7 @@ class ApiController < ApplicationController
 
     discount = 0
     owerprofit = 0
+    productarr = check_multibuyfull(productarr)
     productarr.each do |p|
       if p.producttype == 0
         discount += p.discount * p.number
@@ -684,6 +688,8 @@ class ApiController < ApplicationController
         end
       end
       postage = check_postage(productids,order.adcode)
+      productarr = check_multibuyfull(productarr)
+      productarr = check_mashup(productarr)
       re_write_order(order.id,productarr,postage)
     end
     orders = user.orders.where('paystatus = 0').order('id desc').paginate(:page => params[:page], :per_page => 10)
@@ -1891,8 +1897,11 @@ class ApiController < ApplicationController
     datasort = data.sort{|a,b| b[:value][2] <=> a[:value][2]}
 
     datasort = datasort[0..9].select{|n| n[:value][2] > 0}
+    if datasort.size > 0
     scale = 10 / datasort.map{|n| n[:value][2]}.max
-
+    else
+      scale = 10
+      end
     render json: params[:callback]+'({"data":' + data.to_json + ',"datasort":' + datasort.to_json + ',"scale":"' + scale.to_s + '"})',content_type: "application/javascript"
   end
 
@@ -2049,13 +2058,13 @@ class ApiController < ApplicationController
     render json: params[:callback]+'({"addmoneyactive":' + addmoneyactivearr.to_json + '})',content_type: "application/javascript"
   end
 
-def hidemenu #隐藏微信菜单
-  $client ||= WeixinAuthorize::Client.new(Config.first.appid, Config.first.appsecret)
-  #sign_package = $client.get_jssign_package(request.url.split('#')[0])
+  def hidemenu #隐藏微信菜单
+    $client ||= WeixinAuthorize::Client.new(Config.first.appid, Config.first.appsecret)
+    #sign_package = $client.get_jssign_package(request.url.split('#')[0])
 
-   sign_package = $client.get_jssign_package(params[:url].split('#')[0])
-  render json: params[:callback]+'({"sign_package":' + sign_package.to_json + '})',content_type: "application/javascript"
-end
+    sign_package = $client.get_jssign_package(params[:url].split('#')[0])
+    render json: params[:callback]+'({"sign_package":' + sign_package.to_json + '})',content_type: "application/javascript"
+  end
 
 
 
@@ -2200,31 +2209,35 @@ end
       oweragent = User.find_by(id:order.user_id)
       productarr.each do |p|
         #if p.producttype == 0
-          if agent
-            agentlevel = agent.agentlevel
-            if agentlevel
-              #price = Agentprice.where('product_id = ? and agentlevel_id = ?',p.id,agentlevel.id).first.price
-              price = p.agentprice
-            end
-          elsif oweragent
-            agentlevel = oweragent.agentlevel
-            if agentlevel
-              #price = Agentprice.where('product_id = ? and agentlevel_id = ?',p.id,agentlevel.id).first.price
-              price = p.agentprice
-            else
-              #price = Product.find(p.id).price
-              price = p.agentprice
-            end
+        if agent
+          agentlevel = agent.agentlevel
+          if agentlevel
+            #price = Agentprice.where('product_id = ? and agentlevel_id = ?',p.id,agentlevel.id).first.price
+            price = p.agentprice
           end
-          p.optional.each do |o|
-            weighting = Condition.find(o[:selectcondition_id]).weighting
-            price += weighting
+        elsif oweragent
+          agentlevel = oweragent.agentlevel
+          if agentlevel
+            #price = Agentprice.where('product_id = ? and agentlevel_id = ?',p.id,agentlevel.id).first.price
+            price = p.agentprice
+          else
+            #price = Product.find(p.id).price
+            price = p.agentprice
           end
+        end
+        p.optional.each do |o|
+          weighting = Condition.find(o[:selectcondition_id]).weighting
+          price += weighting
+        end
 
-          paysum += price * p.number
-          discount += p.discount.to_f * p.number
-          owerprofit += p.owerprofit.to_f * p.number
+        paysum += price * p.number
+        discount += p.discount.to_f * p.number
+        owerprofit += p.owerprofit.to_f * p.number
         #end
+        summary = ''
+        if p.producttype == 1
+
+        end
         orderdetail = order.orderdetails.create(product_id:p.id, number:p.number, price:price, sum:p.number.to_f * price.to_f, producttype:p.producttype)
         price = 0
         p.optional.each do |o|
@@ -2315,6 +2328,93 @@ end
         end
       end
     end
+  end
+
+  def check_multibuyfull(productarr)
+    paysum = 0
+    productarr.each do |p|
+      if p.producttype == 1 && p.activetype.include?('multibuyfull')
+        p.delete
+      end
+      paysum += p.agentprice.to_f * p.number
+    end
+    multibuyfull = Multibuyfull.where('begintime <= ? and endtime >= ? and status = 1',Time.now, Time.now)
+    if multibuyfull.size > 0
+      multibuyfull = multibuyfull.first
+      multibuyfullgiveproducts = multibuyfull.multibuyfullgiveproducts.order('buyprice desc')
+      multibuyfullgiveproducts.each do |multibuyfullgiveproduct|
+        if (paysum / multibuyfullgiveproduct.buyprice).to_i >= 1
+          productcla = Productclass.new
+          productcla.id = multibuyfullgiveproduct.product.id
+          productcla.name = multibuyfullgiveproduct.product.name
+          productcla.number = (paysum / multibuyfullgiveproduct.buyprice).to_i
+          productcla.producttype = 1
+          cover = multibuyfullgiveproduct.product.productimgs.where('isdefault = 1')
+          if cover.count > 0
+            productcla.cover = cover.first.productimg.url
+          end
+          productcla.price = 0
+          productcla.agentprice = 0
+          productcla.agentuserid = 0
+          productcla.destock = 0
+          productcla.cost = 0
+          productcla.discount = 0
+          productcla.optional = []
+          activecla = Activetypeclass.new
+          activecla.active = multibuyfull.name
+          activecla.keywords = 'multibuyfull'
+          activecla.showlable = 0
+          activecla.summary = multibuyfull.summary
+          productcla.activetype = Array.new
+          productcla.activetype.push activecla
+          productarr.push productcla
+          paysum = paysum % multibuyfullgiveproduct.buyprice
+        end
+      end
+    end
+    productarr
+  end
+
+  def check_mashup(productarr) #检查混搭买满送活动
+    productarr.each do |p|
+      if p.activetype.map{|n| n.active}.include?('mashup') && p.producttype == 1
+        p.destroy
+      end
+    end
+    mashups = Mashup.where('begintime <= ? and endtime >= ? and status = 1', Time.now, Time.now)
+    if mashups.size > 0
+      mashups.each do |mashup|
+        mashup_product_count = 0
+        productarr.each do |p|
+          mashup_product_count += mashup.mashupbuyproducts.map{|n| n.product.id == p.id && p.producttype == 0 ? p.number : 0}.sum
+        end
+        if (mashup_product_count / mashup.buynumber).to_i > 0
+          productcla = Productclass.new
+          product = Product.find(mashup.giveproduct_id)
+          productcla.id = product.id
+          productcla.name = product.name
+          productcla.number = (mashup_product_count / mashup.buynumber).to_i
+          productcla.producttype = 1
+          productcla.cover = product.productimgs.where('isdefault = 1').first.productimg.url
+          productcla.price = 0
+          productcla.agentprice = 0
+          productcla.agentuserid = 0
+          productcla.destock = 0
+          productcla.cost = 0
+          productcla.discount = 0
+          productcla.optional = []
+          activecla = Activetypeclass.new
+          activecla.active = mashup.name
+          activecla.keywords = 'mashup'
+          activecla.showlable = 0
+          activecla.summary = mashup.summary
+          productcla.activetype = Array.new
+          productcla.activetype.push activecla
+          productarr.push productcla
+        end
+      end
+    end
+    productarr
   end
 
   def check_postage(productarr,adcode) #检查运费

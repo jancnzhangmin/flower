@@ -1,0 +1,44 @@
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,
+ minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+</head>
+
+<script>
+  $(document).ready(function () {
+      $('#nowdate').change(function(){
+          window.location.href = window.location.href.split('?')[0] + '?date=' + $('#nowdate').val();
+      });
+  });
+</script>
+
+<div class="breadcrumbs" style="padding: 0px;padding-top: 5px;padding-bottom: 5px;">
+  <table style="width: 100%;">
+    <tr>
+      <td style="width: 76px;padding: 0px;">
+        <%= link_to '前一天',upday_pushorders_path(date:params[:date]),class:'btn btn-primary' %>
+      </td>
+      <td align="center">
+        <div class="text-center">
+          <input id="nowdate" type="date" style="height: 40px;line-height: 40px;" value=<%= params[:date] ? Time.parse(params[:date]) : Time.now %> />
+        </div>
+      </td>
+      <td style="width: 76px;padding: 0px;">
+        <%= link_to '后一天',nextday_pushorders_path(date:params[:date]),class:'btn btn-primary' %>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div style="background-color: white;padding-top: 20px;">
+  <% @pushorders.each_with_index do |pushorder,index| %>
+    <div class="row" style="width: 100%;margin:0px;">
+      <h3 class="header smaller lighter blue" style="padding-left: 10px;margin-bottom: 5px;">
+        第<%= index + 1 %>单
+      </h3>
+
+      <div class="col-sm-12">
+        <%= pushorder.content.html_safe %>
+      </div>
+    </div>
+  <% end %>
+</div>

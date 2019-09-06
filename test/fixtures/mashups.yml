@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  showlable: 1
+  summary: MyString
+  keywords: MyString
+  buynumber: 1
+  giveproduct_id: 
+  status: 1
+  begintime: 2019-09-03 11:36:33
+  endtime: 2019-09-03 11:36:33
+
+two:
+  name: MyString
+  showlable: 1
+  summary: MyString
+  keywords: MyString
+  buynumber: 1
+  giveproduct_id: 
+  status: 1
+  begintime: 2019-09-03 11:36:33
+  endtime: 2019-09-03 11:36:33

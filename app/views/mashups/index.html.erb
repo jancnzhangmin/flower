@@ -1,0 +1,96 @@
+<%= render 'layerbegin' %>
+
+<div class="page-content">
+  <div class="page-header">
+    <h1>
+      混搭买满送
+    </h1>
+  </div><!-- /.page-header -->
+
+  <div class="row">
+    <div class="col-xs-12">
+      <!-- PAGE CONTENT BEGINS -->
+
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="table-responsive">
+            <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+              <thead>
+              <tr>
+                <th class="text-center">活动名称</th>
+                <th class="text-center">购买数量</th>
+                <th class="text-center">开始时间</th>
+                <th class="text-center">结束时间</th>
+                <th class="text-center">是否生效</th>
+                <th class="text-center">赠送商品</th>
+                <th class="text-center" width="240px">操作</th>
+              </tr>
+              </thead>
+              <tbody>
+              <% @mashups.each do |mashup| %>
+                <tr>
+                  <td>
+                    <%= mashup.name %>
+                  </td>
+                  <td>
+                    <%= mashup.buynumber %>
+                  </td>
+                  <td>
+                    <%= mashup.begintime.strftime('%Y-%m-%d %H:%M:%S') %>
+                  </td>
+                  <td>
+                    <%= mashup.endtime.strftime('%Y-%m-%d %H:%M:%S') %>
+                  </td>
+                  <td>
+                    <%= mashup.status %>
+                  </td>
+                  <td>
+                    <% product = Product.find(mashup.giveproduct_id) %>
+                    <% if product %>
+                    <%= product.name %>
+                    <% end %>
+                  </td>
+                  <td>
+                    <div class="visible-md visible-lg hidden-sm hidden-xs btn-group" data-turbolinks="false">
+                      <a class="btn btn-xs btn-primary" href=<%= edit_mashup_path(mashup) %>>
+                        <i class="fa fa-edit bigger-120"></i>
+                        编辑
+                      </a>
+                      <a class="btn btn-xs btn-primary" href=<%= mashup_mashupbuyproducts_path(mashup) %>>
+                        <i class="fa fa-edit bigger-120"></i>
+                        <% if mashup.mashupbuyproducts.size > 0 %>
+                        购买商品（<%= mashup.mashupbuyproducts.size %>）
+                          <% else %>
+                          购买商品
+                        <% end %>
+                      </a>
+                      <a data-confirm="确认删除?" data-method="delete" class="btn btn-xs btn-danger" href=<%= mashup_path(mashup) %>>
+                        <i class="fa fa-trash bigger-120"></i>
+                        删除
+                      </a>
+                    </div>
+                  </td>
+
+                </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="clearfix form-actions">
+        <div class="col-md-12 text-right" data-turbolinks="false">
+          <a class="btn btn-info" href=<%= new_mashup_path %>>
+            <i class="fa fa-plus bigger-110"></i>
+            新增
+          </a>
+        </div>
+      </div>
+
+
+
+
+
+
+<%= render 'layerend' %>

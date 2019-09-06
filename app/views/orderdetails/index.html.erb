@@ -51,10 +51,28 @@
                     <% if orderdetail.producttype == 0 %>
                       正常
                     <% else %>
-                      赠送
+                      <%= orderdetail.orderactivetypes.map{|n| n.active}.join(' ') %>
                     <% end %>
                   </td>
                 </tr>
+              <% end %>
+              <% if @order.postage.to_f > 0 %>
+              <tr>
+                <td>
+                  邮费
+                </td>
+                <td></td>
+                <td>
+                  <%= @order.postage %>
+                </td>
+                <td>
+                  1.0
+                </td>
+                <td>
+                  <%= @order.postage %>
+                </td>
+                <td></td>
+              </tr>
               <% end %>
               </tbody>
             </table>

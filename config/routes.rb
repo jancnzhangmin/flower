@@ -207,7 +207,7 @@ Rails.application.routes.draw do
     collection do
       get 'get_up_user_list'
     end
-   end
+  end
   require 'sidekiq/web'
   mount Sidekiq::Web => '/sidekiq'
   resources :monitors
@@ -244,6 +244,20 @@ Rails.application.routes.draw do
     resources :addmoneybuyproducts
     resources :addmoneygiveproducts
   end
+  resources :multibuyfulls do
+    resources :multibuyfullbuyproducts
+    resources :multibuyfullgiveproducts
+  end
+  resources :pushorders do
+    collection do
+      get 'today'
+      get 'upday'
+      get 'nextday'
+    end
+  end
+  resources :mashups do
+    resources :mashupbuyproducts
+  end
   post '/pollcallback', to: 'pollcallback#create'
   mount ActionCable.server => '/cable'
-  end
+end

@@ -1,0 +1,2 @@
+module MultibuyfullbuyproductsHelper
+end
